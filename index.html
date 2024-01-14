@@ -24,65 +24,7 @@
 <body>
   <canvas id="gameCanvas"></canvas>
 
-  <script>
-    // Získání canvas elementu a nastavení kontextu
-    var canvas = document.getElementById("gameCanvas");
-    var c = canvas.getContext("2d");
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth - 300;
-
-    // Načtení obrázku pozadí
-    const backgroundImage = new Image();
-    backgroundImage.src = 'images/lvl1-bg.jpg';
-
-    // Inicializace hráče
-    var player = {
-      x: canvas.width / 2 - 30, //240
-      y: canvas.height / 2 - 30, //420
-      size: 60 
-    };
-
-    var bg = {
-      x: player.x - 240,
-      y: player.y - 420,
-      h: 1800,
-      w: 1800
-    }
-
-    // Funkce pro vykreslení hráče a pozadí
-    function draw() {
-      c.clearRect(0, 0, canvas.width, canvas.height);
-      c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h); 
-
-      // Vykreslení hráče
-      c.fillStyle = "red";
-      c.fillRect(player.x, player.y, player.size, player.size);
-    }
-
-    // Posluchači klávesnice pro posunutí pozadí
-    window.addEventListener("keydown", function (event) {
-      switch (event.key) {
-        case "ArrowLeft":
-        bg.x += player.size;
-          break;
-        case "ArrowRight":
-        bg.x -= player.size;
-          break;
-        case 'ArrowUp':
-          bg.y += player.size;
-          break;
-        case 'ArrowDown':
-          bg.y -= player.size;
-          break;
-      }
-      draw();
-    });
-
-    // Načtení pozadí a první vykreslení
-    backgroundImage.onload = function () {
-      draw();
-    };
-  </script>
+  <script src="script.js"></script>
 </body>
 
 </html>
