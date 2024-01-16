@@ -31,30 +31,12 @@ var gameBox = {
 }
 
 var walls = {
-  Ax: bg.x + 180,
-  Ay: bg.y + 480,
-  Aw: 120,
-  Ah: 300,
-  Bx: bg.x + 300,
-  By: bg.y + 480,
-  Bw: 360,
-  Bh: 60,
-  Cx: bg.x + 840,
-  Cy: bg.y + 300,
-  Cw: 120,
-  Ch: 480,
-  Dx: bg.x + 780,
-  Dy: bg.y + 480,
-  Dw: 240,
-  Dh: 60,
-  Ex: bg.x + 1140,
-  Ey: bg.y + 480,
-  Ew: 360,
-  Eh: 60,
-  Fx: bg.x + 1500,
-  Fy: bg.y + 480,
-  Fw: 120,
-  Fh: 300,  
+  A: { x: bg.x + 180, y: bg.y + 480, w: 120, h: 300 },
+  B: { x: bg.x + 300, y: bg.y + 480, w: 360, h: 60 },
+  C: { x: bg.x + 840, y: bg.y + 300, w: 120, h: 480 },
+  D: { x: bg.x + 780, y: bg.y + 480, w: 240, h: 60 },
+  E: { x: bg.x + 1140, y: bg.y + 480, w: 360, h: 60 },
+  F: { x: bg.x + 1500, y: bg.y + 480, w: 120, h: 300 },
 }
 
 var block = {
@@ -64,71 +46,74 @@ var block = {
   down: false
 }
 
+const coinImg = new Image();
+coinImg.src = '../assets/images/coin.jpg';
+var coin = {
+  A: { state: true, x: bg.x + 420, y: bg.y + 600 },
+  B: { state: true, x: bg.x + 600, y: bg.y + 660 },
+  C: { state: true, x: bg.x + 1140, y: bg.y + 660 },
+  D: { state: true, x: bg.x + 1320, y: bg.y + 600 },
+  size: 60,
+  colected: 0,
+}
+
 // Funkce pro vykreslení hráče a pozadí
 function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.strokeRect(gameBox.x, gameBox.y, gameBox.w, gameBox.h);
-  c.strokeRect(walls.Ax, walls.Ay, walls.Aw, walls.Ah);
-  c.strokeRect(walls.Bx, walls.By, walls.Bw, walls.Bh);
-  c.strokeRect(walls.Cx, walls.Cy, walls.Cw, walls.Ch);
-  c.strokeRect(walls.Dx, walls.Dy, walls.Dw, walls.Dh);
-  c.strokeRect(walls.Ex, walls.Ey, walls.Ew, walls.Eh);
-  c.strokeRect(walls.Fx, walls.Fy, walls.Fw, walls.Fh);
+  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
+  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
+  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
+  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
+  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
+  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
-  
+  if (coin.A.state) c.drawImage(coinImg, coin.A.x, coin.A.y, coin.size, coin.size);
+  if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
+  if (coin.C.state) c.drawImage(coinImg, coin.C.x, coin.C.y, coin.size, coin.size);
+  if (coin.D.state) c.drawImage(coinImg, coin.D.x, coin.D.y, coin.size, coin.size);
+
   // Vykreslení hráče
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 }
 
 function move(side) {
+  function Move(prop, value) {
+    bg[prop] += value;
+    gameBox[prop] += value;
+    walls.A[prop] += value;
+    walls.B[prop] += value;
+    walls.C[prop] += value;
+    walls.D[prop] += value;
+    walls.E[prop] += value;
+    walls.F[prop] += value;
+    coin.A[prop] += value;
+    coin.B[prop] += value;
+    coin.C[prop] += value;
+    coin.D[prop] += value;
+  }
+
+
   switch (side) {
     case 1:
-      bg.x += 60;
-      gameBox.x += 60;
-      walls.Ax += 60;
-      walls.Bx += 60;
-      walls.Cx += 60;
-      walls.Dx += 60;
-      walls.Ex += 60;
-      walls.Fx += 60;
+      Move('x', 60);
       break;
     case 2:
-      bg.x -= 60;
-      gameBox.x -= 60;
-      walls.Ax -= 60;
-      walls.Bx -= 60;
-      walls.Cx -= 60;
-      walls.Dx -= 60;
-      walls.Ex -= 60;
-      walls.Fx -= 60;
+      Move('x', -60);
       break;
     case 3:
-      bg.y += 60;
-      gameBox.y += 60;
-      walls.Ay += 60;
-      walls.By += 60;
-      walls.Cy += 60;
-      walls.Dy += 60;
-      walls.Ey += 60;
-      walls.Fy += 60;
+      Move('y', 60);
       break;
     case 4:
-      bg.y -= 60;
-      gameBox.y -= 60;
-      walls.Ay -= 60;
-      walls.By -= 60;
-      walls.Cy -= 60;
-      walls.Dy -= 60;
-      walls.Ey -= 60;
-      walls.Fy -= 60;    
+      Move('y', -60);
       break;
   }
 }
 
 // Posluchači klávesnice pro posunutí pozadí
 window.addEventListener("keydown", function (event) {
-  
+
   switch (event.key) {
     case "ArrowLeft":
       if (!block.left) move(1);
@@ -142,28 +127,29 @@ window.addEventListener("keydown", function (event) {
     case 'ArrowDown':
       if (!block.down) move(4);
       break;
-    }
-    
-    block.left = false; block.right = false; block.up = false; block.down = false;
-    
-    for ([x, y, num] of player.projection) {
+  }
+
+  block.left = false; block.right = false; block.up = false; block.down = false;
+
+  for ([x, y, num] of player.projection) {
     let pr = { x: player.x + x * 60, y: player.y + y * 60 }
     if (pr.x < gameBox.x) block.left = true;
     else if (!(pr.x + player.size <= gameBox.x + gameBox.w)) block.right = true;
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    for (let i = 0; i < 6; i++) {
-      let items = [[walls.Ax, walls.Ay, walls.Aw, walls.Ah], [walls.Bx, walls.By, walls.Bw, walls.Bh], [walls.Cx, walls.Cy, walls.Cw, walls.Ch], [walls.Dx, walls.Dy, walls.Dw, walls.Dh], [walls.Ex, walls.Ey, walls.Ew, walls.Eh], [walls.Fx, walls.Fy, walls.Fw, walls.Fh]];
-      let wall = items[i];
-      
-      if (num == 0 && pr.x >= wall[0] && pr.x < wall[0] + wall[2] && pr.y < wall[1] + wall[3] && pr.y >= wall[1]) block.left = true;
-      else if (num == 1 && pr.x >= wall[0] && pr.x < wall[0] + wall[2] && pr.y < wall[1] + wall[3] && pr.y >= wall[1]) block.right = true;
-      else if (num == 2 && pr.y >= wall[1] && pr.y < wall[1] + wall[3] && pr.x < wall[0] + wall[2] && pr.x >= wall[0]) block.up = true;
-      else if (num == 3 && pr.y >= wall[1] && pr.y < wall[1] + wall[3] && pr.x < wall[0] + wall[2] && pr.x >= wall[0]) block.down = true;
+    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F];
+    for (wall of items) {
+      if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
+      else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
+      else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
+      else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
   }
-
+  let coins = [coin.A, coin.B, coin.C, coin.D]
+  for (coinObj of coins) {
+    if (coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y']) {coinObj['state'] = false; coin.colected++; console.log(coin.colected)}
+  }
   draw();
 });
 
