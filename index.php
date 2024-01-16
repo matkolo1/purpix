@@ -4,20 +4,25 @@ session_start();
 
 // Kontrola, zda je uživatel již přihlášen
 if (isset($_SESSION['user_id'])) {
-    header("Location: ./lvl1.php");
+    header("Location: ./main.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $enteredUsername = $_POST["username"];
     $enteredPassword = $_POST["password"];
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT id, username FROM users WHERE username = ? AND password = ?");
     $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
     $stmt->execute();
     $stmt->store_result();
     if ($stmt->num_rows > 0) {
-        $_SESSION['user_id'] = 1;
-        header("Location: ./lvl1.php");
+        $stmt->bind_result($userId, $username);
+        $stmt->fetch();
+
+        $_SESSION['user_id'] = $userId;
+        $_SESSION['username'] = $username;
+
+        header("Location: ./main.php");
         exit();
     } else {
         $loginError = "Nesprávné přihlašovací údaje!";
@@ -26,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
