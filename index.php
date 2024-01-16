@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
     if ($stmt->num_rows > 0) {
         $_SESSION['user_id'] = 1;
-        header("Location: ./main.php");
+        header("Location: ./lvl1.php");
         exit();
     } else {
         $loginError = "Nesprávné přihlašovací údaje!";

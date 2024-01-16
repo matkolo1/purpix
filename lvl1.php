@@ -28,7 +28,7 @@ if (isset($_POST['logout'])) {
     </form>
     <canvas id="gameCanvas"></canvas>
 
-    <script src="../assets\js\lvl1_script.js"></script>
+    <script src="./assets/js/lvl1_script.js"></script>
 
 </body>
 

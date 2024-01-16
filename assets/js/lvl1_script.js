@@ -6,7 +6,7 @@ canvas.width = window.innerWidth - 300;
 
 // Načtení obrázku pozadí
 const backgroundImage = new Image();
-backgroundImage.src = '../images/lvl1_bg.jpg';
+backgroundImage.src = '../assets/images/lvl1_bg.jpg';
 
 // Inicializace hráče
 var player = {
