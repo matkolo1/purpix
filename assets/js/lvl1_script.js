@@ -6,7 +6,7 @@ canvas.width = window.innerWidth - 300;
 
 // Načtení obrázku pozadí
 const backgroundImage = new Image();
-backgroundImage.src = 'images/lvl1-bg.jpg';
+backgroundImage.src = '../assets/images/lvl1_bg.jpg';
 
 // Inicializace hráče
 var player = {
@@ -47,7 +47,7 @@ var block = {
 }
 
 const coinImg = new Image();
-coinImg.src = 'images/coin.jpg';
+coinImg.src = '../assets/images/coin.jpg';
 var coin = {
   A: { state: true, x: bg.x + 420, y: bg.y + 600 },
   B: { state: true, x: bg.x + 600, y: bg.y + 660 },
