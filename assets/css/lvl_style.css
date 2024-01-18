@@ -1,15 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-size: cover;
     background-color: #000000;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    animation: fadeIn 2s ease-in-out;
 }
 
 input, button {
@@ -35,11 +27,9 @@ input, button[type="submit"]:hover {
 }
 
 canvas {
+    background-color: #782d2d;
+    position: absolute;
     display: block;
-    position: center;
-    background-color: #000000;
-    width: 70vw;
-    height: 70vh;
 }
 
 @keyframes slideIn {
