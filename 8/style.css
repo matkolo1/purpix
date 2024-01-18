@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+input,
+button {
+    margin: 10px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input,
+button[type="submit"] {
+    margin: 10px 0;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1fa232;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input,
+button[type="submit"]:hover {
+    background-color: #238731;
+}
+
+canvas {
+    position: absolute;
+    display: block;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
