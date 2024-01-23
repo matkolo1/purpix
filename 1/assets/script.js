@@ -6,7 +6,7 @@ canvas.width = window.innerWidth - 300;
 
 // Načtení obrázku pozadí
 const backgroundImage = new Image();
-backgroundImage.src = './images/lvl1_bg.jpg';
+backgroundImage.src = './assets/lvl1_bg.jpg';
 
 // Inicializace hráče
 var player = {
@@ -47,7 +47,7 @@ var block = {
 }
 
 const coinImg = new Image();
-coinImg.src = './images/coin.jpg';
+coinImg.src = './assets/coin.jpg';
 var coin = {
   A: { state: true, x: bg.x + 420, y: bg.y + 600 },
   B: { state: true, x: bg.x + 600, y: bg.y + 660 },
@@ -55,6 +55,11 @@ var coin = {
   D: { state: true, x: bg.x + 1320, y: bg.y + 600 },
   size: 60,
   colected: 0,
+}
+
+var end = {
+  x: bg.x + 1500,
+  y: bg.y + 300,
 }
 
 // Funkce pro vykreslení hráče a pozadí
@@ -92,6 +97,7 @@ function move(side) {
     coin.B[prop] += value;
     coin.C[prop] += value;
     coin.D[prop] += value;
+    end[prop] += value;
   }
 
 
@@ -108,6 +114,58 @@ function move(side) {
     case 4:
       Move('y', -60);
       break;
+  }
+}
+
+const input = document.getElementById('input');
+input.addEventListener('keydown', (e) => {
+  if (e.key == 'Enter') {
+    let text = String(input.value);
+    input.value = "";
+    if (text == '') write('err', 'Žádný příkaz nezadán!');
+    else {
+      if (getCMD(text)) write('cmd', text);
+      else console.log('smůla');
+      console.log(text);
+    }
+  }
+})
+
+function getCMD(text) {
+  let names = ['bot1', 'door1', 'door2', 'door3'];
+  let works = ['moveup', 'movedown', 'moveright', 'moveleft', 'open', 'close'];
+  let item = text.split('.')[0]; 
+  let work = text.split('.')[1];
+  if (item != 'bot1' || item != 'doors') return false;
+  if (work != 'open')
+  if (item == 'bot1') {
+  }
+}
+
+function write(type, cont) {
+  for (let i = 11; i >= 0; i--) {
+    let info = document.getElementById(`info${i}`);
+    let inf = document.getElementById(`info${i + 1}`);
+    inf.innerHTML = info.innerHTML;
+    if (info.classList.contains('err')) {
+      if (inf.classList.contains('cmd')) inf.classList.remove('cmd');
+      if (!inf.classList.contains('err')) inf.classList.add('err');
+      info.classList.remove('err');
+    }
+    if (info.classList.contains('cmd')) {
+      if (inf.classList.contains('err')) inf.classList.remove('err');
+      if (!inf.classList.contains('cmd')) inf.classList.add('cmd');
+      info.classList.remove('cmd')
+    }
+  }
+
+  if (type == 'cmd') {
+    document.getElementById('info0').innerHTML = cont;
+    document.getElementById('info0').classList.add('cmd');
+  }
+  if (type == 'err') {
+    document.getElementById('info0').innerHTML = cont;
+    document.getElementById('info0').classList.add('err');
   }
 }
 
@@ -139,7 +197,7 @@ window.addEventListener("keydown", function (event) {
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
     let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F];
-    for (wall of items) {
+    for (let wall of items) {
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
       else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
@@ -148,12 +206,20 @@ window.addEventListener("keydown", function (event) {
   }
   let coins = [coin.A, coin.B, coin.C, coin.D]
   for (coinObj of coins) {
-    if (coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y']) {coinObj['state'] = false; coin.colected++; console.log(coin.colected)}
+    if (coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y']) { coinObj['state'] = false; coin.colected++; console.log(coin.colected) }
   }
   draw();
+  win();
 });
 
 // Načtení pozadí a první vykreslení
 backgroundImage.onload = function () {
   draw();
 };
+
+function win() {
+  if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
+    // dělej si co chceš
+    alert('win');
+  }
+}
