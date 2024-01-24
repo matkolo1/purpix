@@ -62,23 +62,32 @@ var end = {
   y: bg.y + 300,
 }
 
+const door1Img = new Image();
+const door2Img = new Image();
+door1Img.src = './assets/doorW2.jpg';
+door2Img.src = './assets/doorH.jpg';
+var door = {
+  A: { state: true, x: bg.x - 1 + 660, y: bg.y + 480, w: 122, h: 60, },
+  B: { state: true, x: bg.x + 840, y: bg.y - 1 + 180, w: 60, h: 122, },
+  C: { state: true, x: bg.x - 1 + 1020, y: bg.y + 480, w: 122, h: 60, },
+}
+
 // Funkce pro vykreslení hráče a pozadí
 function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
-  c.strokeRect(gameBox.x, gameBox.y, gameBox.w, gameBox.h);
-  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
-  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
-  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
-  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
-  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
-  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
+
   if (coin.A.state) c.drawImage(coinImg, coin.A.x, coin.A.y, coin.size, coin.size);
   if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
   if (coin.C.state) c.drawImage(coinImg, coin.C.x, coin.C.y, coin.size, coin.size);
   if (coin.D.state) c.drawImage(coinImg, coin.D.x, coin.D.y, coin.size, coin.size);
 
-  // Vykreslení hráče
+  c.fillStyle = '#aaaaaa';
+  if (door['A']['state']) c.fillRect(door.A.x, door.A.y, door.A.w, door.A.h);
+  if (door.B.state) c.fillRect(door.B.x, door.B.y, door.B.w, door.B.h);
+  if (door.C.state) c.fillRect(door.C.x, door.C.y, door.C.w, door.C.h);
+
+
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 }
@@ -98,6 +107,9 @@ function move(side) {
     coin.C[prop] += value;
     coin.D[prop] += value;
     end[prop] += value;
+    door.A[prop] += value;
+    door.B[prop] += value;
+    door.C[prop] += value;
   }
 
 
@@ -120,25 +132,139 @@ function move(side) {
 const input = document.getElementById('input');
 input.addEventListener('keydown', (e) => {
   if (e.key == 'Enter') {
-    let text = String(input.value);
+    let text = input.value;
     input.value = "";
     if (text == '') write('err', 'Žádný příkaz nezadán!');
     else {
-      if (getCMD(text)) write('cmd', text);
+      if (CMD(text, false)) { write('cmd', text); CMD(text, true); }
       else console.log('smůla');
       console.log(text);
     }
   }
 })
 
-function getCMD(text) {
+function CMD(text, comands) {
   let names = ['bot1', 'door1', 'door2', 'door3'];
-  let works = ['moveup', 'movedown', 'moveright', 'moveleft', 'open', 'close'];
-  let item = text.split('.')[0]; 
-  let work = text.split('.')[1];
-  if (item != 'bot1' || item != 'doors') return false;
-  if (work != 'open')
-  if (item == 'bot1') {
+  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'] };
+  let item = text.split('.')[0];
+  let workk = text.split('(')[0];
+  let work = workk.split('.')[1];
+  let num = text.split('(')[1];
+  let state = { name: '', work: '', num: '' };
+  if (!comands) {
+    for (let name of names) {
+      if (item == name) {
+        state.name = [true,]
+        break;
+      } else {
+        state.name = [false, `${item} nebyl nalezen.`]
+      }
+    }
+    if (item != 'bot1') {
+      for (let wok of works.door) {
+        if (work == wok) {
+          state.work = [true, false,];
+          break;
+        }
+        else {
+          state.work = [false, false, `${work} nebyl nalezen.`];
+        }
+      }
+    }
+    if (item == 'bot1') {
+      for (let wok of works.bot) {
+        if (work == wok) {
+          state.work = [true, true,];
+          if (num.at(1) == ')') {
+            state.num = [true,]
+            break;
+          } else {
+            state.num = [false, `Nedokončená závorka.`]
+            break
+          }
+        }
+        else {
+          state.work = [false, true, `${work} nebyl nalezen.`];
+        }
+      }
+    }
+    if (state.name[0]) {
+      if (state.work[0] && !state.work[1]) {
+        return true
+      } else if (state.work[0] && state.work[1] && !state.num[0]) {
+        write('err', state.num[1])
+        return false
+      } else if (state.work[0] && state.work[1] && state.num[0]) {
+        return true
+      } else if (!state.work[0]) {console.log(state.work);
+        write('err', state.work[2])
+        return false
+      }
+    } else if (!state.name[0]) {
+      write('err', state.name[1])
+      return false
+    }
+  }
+  if (comands) {
+    switch (item) {
+      case ('bot1'):
+        for (let i = 0; i < num.at(0); i++) {
+          switch (work) {
+            case ('moveup'):
+              checkBlock()
+              if (!block.up) move(3);
+              draw();
+              break;
+            case ('movedown'):
+              checkBlock()
+              if (!block.down) move(4);
+              draw();
+              break;
+            case ('moveleft'):
+              checkBlock()
+              if (!block.left) move(1);
+              draw();
+              break;
+            case ('moveright'):
+              checkBlock()
+              if (!block.right) move(2);
+              draw();
+              break;
+          }
+        }
+        break;
+      case ('door1'):
+        switch (work) {
+          case ('open'):
+            door.A.state = false
+            break;
+          case ('close'):
+            door.A.state = true
+            break;
+        }
+        break;
+      case ('door2'):
+        switch (work) {
+          case ('open'):
+            door.B.state = false
+            break;
+          case ('close'):
+            door.B.state = true
+            break;
+        }
+        break;
+      case ('door3'):
+        switch (work) {
+          case ('open'):
+            door.C.state = false
+            break;
+          case ('close'):
+            door.C.state = true
+            break;
+        }
+        break;
+    }
+    draw()
   }
 }
 
@@ -186,10 +312,15 @@ window.addEventListener("keydown", function (event) {
       if (!block.down) move(4);
       break;
   }
+  checkBlock();
+  draw();
+  win();
+});
 
+function checkBlock() {
   block.left = false; block.right = false; block.up = false; block.down = false;
 
-  for ([x, y, num] of player.projection) {
+  for (let [x, y, num] of player.projection) {
     let pr = { x: player.x + x * 60, y: player.y + y * 60 }
     if (pr.x < gameBox.x) block.left = true;
     else if (!(pr.x + player.size <= gameBox.x + gameBox.w)) block.right = true;
@@ -203,14 +334,23 @@ window.addEventListener("keydown", function (event) {
       else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
       else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
+
+    let doors = [door.A, door.B, door.C]
+    for (let obj of doors) {
+      if (obj['state'] && num == 0 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) block.left = true;
+      else if (obj['state'] && num == 1 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) block.right = true;
+      else if (obj['state'] && num == 2 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) block.up = true;
+      else if (obj['state'] && num == 3 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) block.down = true;
+    }
   }
+
   let coins = [coin.A, coin.B, coin.C, coin.D]
   for (coinObj of coins) {
     if (coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y']) { coinObj['state'] = false; coin.colected++; console.log(coin.colected) }
   }
-  draw();
-  win();
-});
+}
+
+
 
 // Načtení pozadí a první vykreslení
 backgroundImage.onload = function () {
@@ -223,3 +363,4 @@ function win() {
     alert('win');
   }
 }
+
