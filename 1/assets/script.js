@@ -62,10 +62,6 @@ var end = {
   y: bg.y + 300,
 }
 
-const door1Img = new Image();
-const door2Img = new Image();
-door1Img.src = './assets/doorW2.jpg';
-door2Img.src = './assets/doorH.jpg';
 var door = {
   A: { state: true, x: bg.x - 1 + 660, y: bg.y + 480, w: 122, h: 60, },
   B: { state: true, x: bg.x + 840, y: bg.y - 1 + 180, w: 60, h: 122, },
