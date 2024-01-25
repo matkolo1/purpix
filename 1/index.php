@@ -33,16 +33,40 @@ if ($urlNumber > 0) {
 		exit();
 	}
 }
-echo '<!DOCTYPE html>';
-echo '<html lang="en">';
-echo '<head>';
-echo '    <meta charset="UTF-8">';
-echo '    <meta name="viewport" content="width=device-width, initial-scale=1.0">';
-echo '    <link rel="stylesheet" href="./style.css">';
-echo '</head>';
-echo '<body>';
-echo '    <canvas id="gameCanvas"></canvas>';
-echo '    <script src="./script.js"></script>';
-echo '</body>';
-echo '</html>';
 ?>
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+	<canvas id="gameCanvas"></canvas>
+	<div class="cntrl" id="cntrl">
+		<input id="input" type="text" />
+		<div id="console">
+			<div class="info" id="info0"></div>
+			<div class="info" id="info1"></div>
+			<div class="info" id="info2"></div>
+			<div class="info" id="info3"></div>
+			<div class="info" id="info4"></div>
+			<div class="info" id="info5"></div>
+			<div class="info" id="info6"></div>
+			<div class="info" id="info7"></div>
+			<div class="info" id="info8"></div>
+			<div class="info" id="info9"></div>
+			<div class="info" id="info10"></div>
+			<div class="info" id="info11"></div>
+			<div class="info" id="info12"></div>
+		</div>
+	</div>
+	<script src="./assets/script.js"></script>
+
+
+</body>
+
+</html>
