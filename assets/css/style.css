@@ -38,7 +38,19 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
+button {
+    margin: 10px 0;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1fa232;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #238731;
+}
 input[type="submit"] {
     margin: 10px 0;
     padding: 8px;

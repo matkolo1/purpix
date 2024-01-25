@@ -33,21 +33,16 @@ if ($urlNumber > 0) {
 		exit();
 	}
 }
+echo '<!DOCTYPE html>';
+echo '<html lang="en">';
+echo '<head>';
+echo '    <meta charset="UTF-8">';
+echo '    <meta name="viewport" content="width=device-width, initial-scale=1.0">';
+echo '    <link rel="stylesheet" href="./style.css">';
+echo '</head>';
+echo '<body>';
+echo '    <canvas id="gameCanvas"></canvas>';
+echo '    <script src="./script.js"></script>';
+echo '</body>';
+echo '</html>';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./style.css">
-</head>
-
-<body>
-	<canvas id="gameCanvas"></canvas>
-	<script src="./script.js"></script>
-
-
-</body>
-
-</html>

@@ -26,15 +26,16 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/main_style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-    <div style="color: white;">
+    <div id="gameTitle">Název hry</div>
+    <div id="loginForm">
         <?php
-        echo "Uživatelské jméno: $username";
+        echo "Přihlášen jako: <b> $username</b>";
         ?><br>
-        Levely:<br>
+        Úrovně:<br>
         <?php
         include './assets/php/config.php';
         $userId = $_SESSION['user_id'];
@@ -47,23 +48,26 @@ $conn->close();
         $stmt->close();
         foreach ($userData as $columnName => $columnValue) {
             if (preg_match('/^level_(\d+)$/', $columnName, $matches)) {
-                $disabled = ($columnValue == 69) ? 'disabled' : '';
-                $levelName = ucfirst(str_replace('_', ' ', $matches[1]));
-                echo "<button type='button' $disabled onclick='window.open(\"./$levelName\", \"_blank\")'>$levelName</button>";
+                $levelNumber = $matches[1];
+                $disabled = ($columnValue == 69) ? 'disabled style="margin: 2px; background-color: #fff; border: none; border-radius: 5px; color: #000; transition: background-color 0.3s; font-size:15px;   ' : '';
+                $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
+                $buttonStyle = ($columnValue == 0 || $columnValue == 1) ? 'style=" margin: 2px;cursor: pointer; background-color: #1fa232; border: none; border-radius: 5px; color: white; transition: background-color 0.3s; font-size:15px;"' : '';
+                $hoverScript = ($columnValue == 0 || $columnValue == 1) ? "onmouseover=\"this.style.backgroundColor='#238731'\" onmouseout=\"this.style.backgroundColor='#1fa232'\"" : '';
+
+                echo "<button type='button' $disabled $buttonStyle $hoverScript onclick='window.open(\"./$levelName\", \"_blank\")'><b>$levelName</b></button>";
             }
         }
         $conn->close();
         ?>
-        <script>
-            function openLink(level) {
-                window.open("./" + level, "_blank");
-            }
-        </script>
+        <form method="post">
+            <input type="submit" name="logout" value="Odhlásit se">
+        </form>
     </div>
-    <form method="post">
-        <button type="submit" name="logout">Odhlásit
-            se</button>
-    </form>
+    <script>
+        function openLink(level) {
+            window.open("./" + level, "_blank");
+        }
+    </script>
 </body>
 
 </html>
