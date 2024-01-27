@@ -51,3 +51,15 @@ canvas {
   outline: 2px solid black;
   outline-offset: -1px;
 }
+
+.text {
+  color: white;
+  width: 300px;
+  height: 50vh;
+  position: absolute;
+  display: block;
+  right: 0;
+  top: 0;
+  font-size: 25px;
+  background-color: #000000;
+}

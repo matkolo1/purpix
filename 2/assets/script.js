@@ -320,6 +320,28 @@ function write(type, cont) {
   }
 }
 
+// Posluchači klávesnice pro posunutí pozadí
+window.addEventListener("keydown", function (event) {
+
+  switch (event.key) {
+    case "ArrowLeft":
+      if (!block.left) move(1);
+      break;
+    case "ArrowRight":
+      if (!block.right) move(2);
+      break;
+    case 'ArrowUp':
+      if (!block.up) move(3);
+      break;
+    case 'ArrowDown':
+      if (!block.down) move(4);
+      break;
+  }
+  checkBlock();
+  draw();
+  win();
+});
+
 function checkBlock() {
   block.left = false; block.right = false; block.up = false; block.down = false;
 

@@ -34,7 +34,6 @@ if ($urlNumber > 0) {
 	}
 }
 ?>
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,6 +45,7 @@ if ($urlNumber > 0) {
 
 <body>
 	<canvas id="gameCanvas"></canvas>
+	<div class="text" id="itex"></div>
 	<div class="cntrl" id="cntrl">
 		<input id="input" type="text" />
 		<div id="console">
