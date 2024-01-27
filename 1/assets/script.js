@@ -150,6 +150,7 @@ function move(side) {
       Move('y', -60);
       break;
   }
+  checkBlock();
 }
 
 const input = document.getElementById('input');
@@ -359,7 +360,7 @@ function checkBlock() {
   const sign1 = 'Pohybovat se můžete i do ostatích stran. <br> Stačí nahradit "moveup" za "movedown", "moveright" nebo "moveleft". <br> Také můžete zkusit nahradit číslo v závorce.';
   const sign2 = 'Dveře můžete otevřít použitím příkazu "door1.open" <br> nebo zavřít příkazem "door1.close". <br> Každé dveře mají jiné číslo.';
   const sign3 = 'Abyste dokončili level, musíte posbírat všechny peníze a dojít do cíle.';
-  const startinf = 'Když se kouknete do středu pole, tak uvidíte červený čtverec. <br> Zkuste zadat příkaz: "bot1.moveup(1)".';
+  const startinf = 'Když se kouknete do středu pole, tak uvidíte červený čtverec. To jste vy. <br> Zkuste zadat příkaz: "bot1.moveup(1)".';
   if (player.x == start.x && player.y == start.y) {
     document.getElementById('itex').innerHTML = startinf;
     document.getElementById('input').setAttribute('placeholder', 'Zadejte příkaz.');
