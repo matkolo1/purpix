@@ -80,6 +80,9 @@ var start = {
   y: player.y,
 }
 
+var interval = 0;
+var myInt;
+
 // Funkce pro vykreslení hráče a pozadí
 function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -234,30 +237,7 @@ function CMD(text, comands) {
   if (comands) {
     switch (item) {
       case ('bot1'):
-        for (let i = 0; i < num.at(0); i++) {
-          switch (work) {
-            case ('moveup'):
-              checkBlock()
-              if (!block.up) move(3);
-              draw();
-              break;
-            case ('movedown'):
-              checkBlock()
-              if (!block.down) move(4);
-              draw();
-              break;
-            case ('moveleft'):
-              checkBlock()
-              if (!block.left) move(1);
-              draw();
-              break;
-            case ('moveright'):
-              checkBlock()
-              if (!block.right) move(2);
-              draw();
-              break;
-          }
-        }
+        myInt = setInterval(timeout, 500, work, num);
         break;
       case ('door1'):
         switch (work) {
@@ -369,6 +349,37 @@ function checkBlock() {
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else if (sign.C.state) document.getElementById('itex').innerHTML = sign3;
   else document.getElementById('itex').innerHTML = '';
+}
+
+function timeout(work, num) {
+  switch (work) {
+    case ('moveup'):
+      checkBlock()
+      if (!block.up) move(3);
+      draw();
+      break;
+    case ('movedown'):
+      checkBlock()
+      if (!block.down) move(4);
+      draw();
+      break;
+    case ('moveleft'):
+      checkBlock()
+      if (!block.left) move(1);
+      draw();
+      break;
+    case ('moveright'):
+      checkBlock()
+      if (!block.right) move(2);
+      draw();
+      break;
+  }
+  interval++
+  if (interval == num.at(0)) {
+    clearInterval(myInt);
+    interval = 0
+    myInt = null;
+  }
 }
 
 backgroundImage.onload = function () {
