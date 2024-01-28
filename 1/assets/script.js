@@ -397,7 +397,7 @@ function win() {
       }
     });
 
-    document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj body se ti zapsaly.'
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) {
     write('err', `Nedostatek peněz ${coin.colected}/4`);
   }
