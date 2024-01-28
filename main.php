@@ -27,10 +27,13 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" href="./assets/images/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/images/icon.png" type="image/x-icon">
+    <title>PurPix</title>
 </head>
 
 <body>
-    <div id="gameTitle">Název hry</div>
+    <div id="gameTitle">PurPix</div>
     <div id="loginForm">
         <?php
         echo "Přihlášen jako: <b> $username</b>";
