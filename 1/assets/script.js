@@ -384,9 +384,13 @@ backgroundImage.onload = function () {
 
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
-    // dělej si co chceš
     block.down = true; block.left = true; block.right = true; block.up = true;
     document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj body se ti zapsaly.'
-  } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
+    window.location.href = '.././lost.php?id=1';
+  } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`)
+  else {
+
+  }
+
 }
 

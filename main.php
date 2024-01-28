@@ -49,11 +49,19 @@ $conn->close();
         foreach ($userData as $columnName => $columnValue) {
             if (preg_match('/^level_(\d+)$/', $columnName, $matches)) {
                 $levelNumber = $matches[1];
-                $disabled = ($columnValue == 69) ? 'disabled style="margin: 2px; background-color: #fff; border: none; border-radius: 5px; color: #000; transition: background-color 0.3s; font-size:15px;   ' : '';
                 $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
-                $buttonStyle = ($columnValue == 0 || $columnValue == 1) ? 'style=" margin: 2px;cursor: pointer; background-color: #1fa232; border: none; border-radius: 5px; color: white; transition: background-color 0.3s; font-size:15px;"' : '';
-                $hoverScript = ($columnValue == 0 || $columnValue == 1) ? "onmouseover=\"this.style.backgroundColor='#238731'\" onmouseout=\"this.style.backgroundColor='#1fa232'\"" : '';
-
+            
+                // Přidáme podmínku pro hodnotu 69
+                if ($columnValue == 69) {
+                    $disabled = 'disabled style="margin: 2px; background-color: #fff; border: none; border-radius: 5px; color: #000; transition: background-color 0.3s; font-size:15px; cursor: not-allowed;"';
+                    $buttonStyle = ''; // Žádný styl pro klikatelnost
+                    $hoverScript = ''; // Žádný hover script pro klikatelnost
+                } else {
+                    $disabled = '';
+                    $buttonStyle = ($columnValue == 0 || $columnValue == 1) ? 'style="margin: 2px;background-color: #1fa232; border: none; border-radius: 5px; color: white; transition: background-color 0.3s; font-size:15px;"' : '';
+                    $hoverScript = ($columnValue == 0 || $columnValue == 1) ? "onmouseover=\"this.style.backgroundColor='#238731'\" onmouseout=\"this.style.backgroundColor='#1fa232'\"" : '';
+                }
+            
                 echo "<button type='button' $disabled $buttonStyle $hoverScript onclick='window.open(\"./$levelName\", \"_blank\")'><b>$levelName</b></button>";
             }
         }
