@@ -196,10 +196,10 @@ function CMD(text, comands) {
       for (let wok of works.bot) {
         if (work == wok) {
           state.work = [true, true,];
-          if (String(Number(num.at(0))) == 'NaN') {
-            state.num = [false, `${num.at(0)} není číslo.`]
+          if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
+            state.num = [false, `${num.slice(0, num.length - 1)} není číslo.`]
             break;
-          } else if (num.at(1) == ')') {
+          } else if (num.at(num.length - 1) == ')') {
             state.num = [true,]
             break;
           } else {
@@ -232,7 +232,7 @@ function CMD(text, comands) {
   if (comands) {
     switch (item) {
       case ('bot1'):
-        myInt = setInterval(timeout, 500, work, num);
+        myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
       case ('door1'):
         switch (work) {
@@ -384,22 +384,22 @@ backgroundImage.onload = function () {
 
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
-      block.down = true; block.left = true; block.right = true; block.up = true;
-      $.ajax({
-          type: 'GET',
-          url: '.././win.php',
-          data: { id: 1 },
-          success: function(response) {
-              console.log(response);
-          },
-          error: function(error) {
-              console.error(error);
-          }
-      });
+    block.down = true; block.left = true; block.right = true; block.up = true;
+    $.ajax({
+      type: 'GET',
+      url: '.././win.php',
+      data: { id: 1 },
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.error(error);
+      }
+    });
 
-      document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj body se ti zapsaly.'
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj body se ti zapsaly.'
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) {
-      write('err', `Nedostatek peněz ${coin.colected}/4`);
+    write('err', `Nedostatek peněz ${coin.colected}/4`);
   }
 }
 
