@@ -65,7 +65,7 @@ $conn->close();
     </div>
     <script>
         function openLink(level) {
-            window.open("./" + level, "_blank");
+            window.open("./" + level);
         }
     </script>
 </body>
