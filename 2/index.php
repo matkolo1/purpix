@@ -41,6 +41,9 @@ if ($urlNumber > 0) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="icon" href="../assets/images/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/images/icon.png" type="image/x-icon">
+    <title>PurPix</title>
 </head>
 
 <body>
