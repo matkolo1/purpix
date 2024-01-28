@@ -50,12 +50,10 @@ $conn->close();
             if (preg_match('/^level_(\d+)$/', $columnName, $matches)) {
                 $levelNumber = $matches[1];
                 $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
-            
-                // Přidáme podmínku pro hodnotu 69
                 if ($columnValue == 69) {
                     $disabled = 'disabled style="margin: 2px; background-color: #fff; border: none; border-radius: 5px; color: #000; transition: background-color 0.3s; font-size:15px; cursor: not-allowed;"';
-                    $buttonStyle = ''; // Žádný styl pro klikatelnost
-                    $hoverScript = ''; // Žádný hover script pro klikatelnost
+                    $buttonStyle = '';
+                    $hoverScript = '';
                 } else {
                     $disabled = '';
                     $buttonStyle = ($columnValue == 0 || $columnValue == 1) ? 'style="margin: 2px;background-color: #1fa232; border: none; border-radius: 5px; color: white; transition: background-color 0.3s; font-size:15px;"' : '';
