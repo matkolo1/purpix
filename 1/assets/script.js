@@ -1,14 +1,8 @@
-// Získání canvas elementu a nastavení kontextu
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth - 300;
 
-// Načtení obrázku pozadí
-const backgroundImage = new Image();
-backgroundImage.src = './assets/lvl1_bg.jpg';
-
-// Inicializace hráče
 var player = {
   x: canvas.width / 2 - 30, //240
   y: canvas.height / 2 - 30, //420
@@ -16,6 +10,8 @@ var player = {
   projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
 };
 
+const backgroundImage = new Image();
+backgroundImage.src = './assets/lvl1_bg.jpg';
 var bg = {
   x: player.x - 240,
   y: player.y - 300,
@@ -83,7 +79,6 @@ var start = {
 var interval = 0;
 var myInt;
 
-// Funkce pro vykreslení hráče a pozadí
 function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
@@ -392,6 +387,6 @@ function win() {
     // dělej si co chceš
     block.down = true; block.left = true; block.right = true; block.up = true;
     document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj body se ti zapsaly.'
-  }
+  } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
 
