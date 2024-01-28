@@ -60,9 +60,9 @@ var end = {
 }
 
 var door = {
-  A: { state: false, x: bg.x - 1 + 540, y: bg.y + 480, w: 122, h: 60 },
-  B: { state: false, x: bg.x + 840, y: bg.y - 1 + 240, w: 60, h: 122 },
-  C: { state: false, x: bg.x - 1 + 1500, y: bg.y + 480, w: 122, h: 60 },
+  A: { state: true, x: bg.x - 1 + 540, y: bg.y + 480, w: 122, h: 60 },
+  B: { state: true, x: bg.x + 840, y: bg.y - 1 + 240, w: 60, h: 122 },
+  C: { state: true, x: bg.x - 1 + 1500, y: bg.y + 480, w: 122, h: 60 },
   num: { A: { x: bg.x + 520, y: bg.y + 500 }, B: { x: bg.x + 840, y: bg.y + 378 }, C: { x: bg.x + 1480, y: bg.y + 500 } },
 }
 
@@ -73,7 +73,6 @@ var codedoor = {
   B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + 1200, y: bg.y + 240, w: 60, h: 121 },
   num: { A: { x: bg.x + 840, y: bg.y + 718 }, B: { x: bg.x + 1200, y: bg.y + 378 } },
 } 
-console.log(codedoor.A.code, codedoor.B.code)
 
 var sign = {
   A: { state: false, x: bg.x + 720, y: bg.y + 660 },
@@ -334,7 +333,7 @@ function CMD(text, comands) {
             break;
         }
         break;
-      case ('codedoor1'): console.log(num.slice(0, num.length - 1), codedoor.A.code)
+      case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
           switch (work) {
             case ('open'):
@@ -346,7 +345,7 @@ function CMD(text, comands) {
           }
         }
         break;
-      case ('codedoor2'):console.log(num.slice(0, num.length - 1), codedoor.A.code)
+      case ('codedoor2'):
         if (codedoor.B.near && num.slice(0, num.length - 1) == codedoor.B.code) {
           switch (work) {
             case ('open'):
