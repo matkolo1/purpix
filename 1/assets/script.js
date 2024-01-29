@@ -385,10 +385,16 @@ backgroundImage.onload = function () {
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
     block.down = true; block.left = true; block.right = true; block.up = true;
+    var urlParams = new URLSearchParams(window.location.search);
+    var url = window.location.pathname;
+    var parts = url.split('/');
+    var lastPart = parts[parts.length - 2];
+    var levelId = parseInt(lastPart);
+    var points = 100;
+    var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
-      url: '.././win.php',
-      data: { id: 1 },
+      url: url,
       success: function (response) {
         console.log(response);
       },
@@ -396,7 +402,6 @@ function win() {
         console.error(error);
       }
     });
-
     document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) {
     write('err', `Nedostatek peněz ${coin.colected}/4`);

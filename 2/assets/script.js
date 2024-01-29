@@ -72,7 +72,7 @@ var codedoor = {
   A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + 840, y: bg.y + 720, w: 60, h: 121 },
   B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + 1200, y: bg.y + 240, w: 60, h: 121 },
   num: { A: { x: bg.x + 840, y: bg.y + 718 }, B: { x: bg.x + 1200, y: bg.y + 378 } },
-} 
+}
 
 var sign = {
   A: { state: false, x: bg.x + 720, y: bg.y + 660 },
@@ -480,6 +480,23 @@ function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
     block.down = true; block.left = true; block.right = true; block.up = true;
     document.getElementById('itex').innerHTML = 'Vyhrál jsi druhý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
+    var urlParams = new URLSearchParams(window.location.search);
+    var url = window.location.pathname;
+    var parts = url.split('/');
+    var lastPart = parts[parts.length - 2];
+    var levelId = parseInt(lastPart);
+    var points = 100;
+    var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
+    $.ajax({
+      type: 'GET',
+      url: url,
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.error(error);
+      }
+    });
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
 

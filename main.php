@@ -26,19 +26,22 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="icon" href="./assets/images/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./assets/images/icon.png" type="image/x-icon">
     <title>PurPix</title>
+    <style>
+
+    </style>
 </head>
 
 <body>
     <div id="gameTitle">PurPix</div>
     <div id="loginForm">
         <?php
-        echo "Přihlášen jako: <b> $username</b>";
+        echo "Přihlášen jako: <b>$username</b>";
         ?><br>
-        Úrovně:<br>
+        Úrovně:
         <?php
         include './assets/php/config.php';
         $userId = $_SESSION['user_id'];
@@ -49,32 +52,34 @@ $conn->close();
         $result = $stmt->get_result();
         $userData = $result->fetch_assoc();
         $stmt->close();
+
         foreach ($userData as $columnName => $columnValue) {
             if (preg_match('/^level_(\d+)$/', $columnName, $matches)) {
                 $levelNumber = $matches[1];
                 $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
+        
+                // Podmínky pro různé stavy tlačítek
                 if ($columnValue == 69) {
-                    $disabled = 'disabled style="margin: 2px; background-color: #fff; border: none; border-radius: 5px; color: #000; transition: background-color 0.3s; font-size:15px; cursor: not-allowed;"';
-                    $buttonStyle = '';
-                    $hoverScript = '';
+                    echo "<button class='level-button disabled' disabled><b>$levelName</b></button>";
+                } elseif ($columnValue == 0) {
+                    echo "<button class='level-button lost' onclick='openLink(\"$levelName\")'><b>$levelName</b></button>";
                 } else {
-                    $disabled = '';
-                    $buttonStyle = ($columnValue == 0 || $columnValue == 1) ? 'style="margin: 2px;background-color: #1fa232; border: none; border-radius: 5px; color: white; transition: background-color 0.3s; font-size:15px;"' : '';
-                    $hoverScript = ($columnValue == 0 || $columnValue == 1) ? "onmouseover=\"this.style.backgroundColor='#238731'\" onmouseout=\"this.style.backgroundColor='#1fa232'\"" : '';
+                    echo "<button class='level-button win' onclick='openLink(\"$levelName\")'><b>$levelName</b></button>";
                 }
-            
-                echo "<button type='button' $disabled $buttonStyle $hoverScript onclick='window.open(\"./$levelName\", \"_blank\")'><b>$levelName</b></button>";
             }
         }
+        
         $conn->close();
         ?>
+        <br>
+<b>Vysvětlivky</b>:<br> červená = 0 bodů za úroveň.<br> Zelená = 1 a víc bodů za level popřípadě přístupná úrveň. <br>Bílá = nepřístupná úrpveň
         <form method="post">
             <input type="submit" name="logout" value="Odhlásit se">
         </form>
     </div>
     <script>
         function openLink(level) {
-            window.open("./" + level);
+            window.location.href = "./" + level;
         }
     </script>
 </body>

@@ -38,19 +38,6 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-button {
-    margin: 10px 0;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    background-color: #1fa232;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-button:hover {
-    background-color: #238731;
-}
 input[type="submit"] {
     margin: 10px 0;
     padding: 8px;
@@ -65,7 +52,39 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #238731;
 }
+        /* Nový styl pro tlačítka */
+        .level-button {
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
+        /* Styl pro tlačítka s různými stavy */
+        .level-button.disabled {
+            background-color: #fff;
+            color: #000;
+            cursor: not-allowed;
+        }
+
+        .level-button.lost {
+            background-color: #ff6969;
+            color: white;
+        }
+
+        .level-button.lost:hover {
+            background-color: #ff2b2b;
+        }
+        .level-button.win {
+            background-color: #1fa232;
+            color: white;
+        }
+
+        .level-button.win:hover {
+            background-color: #238731;
+        }
 @keyframes slideIn {
     from {
         transform: translateY(-100%);

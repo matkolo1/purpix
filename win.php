@@ -1,14 +1,14 @@
 <?php
-session_start(); // Pokud ještě není spuštěná session
-include './assets/php/config.php'; // Zahrnuje soubor s připojením k databázi
+session_start();
+include './assets/php/config.php';
 
-// Funkce pro získání uživatelského ID z aktuální session
-function getUserId() {
+function getUserId()
+{
     return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 }
-
 // Funkce pro aktualizaci hodnoty levelu pro dané uživatelské ID a číslo levelu
-function updateLevel($userId, $levelNumber) {
+function updateLevel($userId, $levelNumber, $points)
+{
     global $conn;
 
     $columnName = "level_" . $levelNumber;
@@ -18,10 +18,13 @@ function updateLevel($userId, $levelNumber) {
     $nextColumnName = "level_" . $nextLevel;
 
     // Aktualizace hodnoty v tabulce 'users'
-    $sql = "UPDATE users SET $columnName = 1, $nextColumnName = 96 WHERE id = ?";
+    $sql = "UPDATE users SET $columnName = ?, $nextColumnName = 96 WHERE id = ?";
+
+    // Převedení $points na číslo a $nextColumnName na řetězec
+    $points = (int) $points;
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $userId);
+    $stmt->bind_param("ii", $points, $userId);
 
     if ($stmt->execute()) {
         echo "Record updated successfully";
@@ -32,28 +35,25 @@ function updateLevel($userId, $levelNumber) {
     $stmt->close();
 }
 
-// Získání hodnoty 'id' z URL
-if (isset($_GET['id'])) {
-    $levelNumber = $_GET['id'];
 
-    // Získání uživatelského ID z aktuální session
+
+if (isset($_GET['id'], $_GET['points'])) {
+    $levelNumber = $_GET['id'];
+    $points = $_GET['points'];
+
     $userId = getUserId();
 
-    // Kontrola, zda je uživatel přihlášen
     if ($userId) {
-        // Aktualizace hodnoty levelu pro dané uživatelské ID
-        updateLevel($userId, $levelNumber);
+        updateLevel($userId, $levelNumber, $points);
 
-        // Zavření okna nebo záložky
         echo '<script>window.close();</script>';
         exit();
     } else {
         echo "Uživatel není přihlášen.";
     }
 } else {
-    echo "Neplatný nebo chybějící 'id' parametr v URL.";
+    echo "Neplatný nebo chybějící 'id' nebo 'points' parametr v URL.";
 }
 
-// Uzavření připojení k databázi
 $conn->close();
 ?>
