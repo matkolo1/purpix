@@ -39,9 +39,9 @@ $conn->close();
     <div id="gameTitle">PurPix</div>
     <div id="loginForm">
         <?php
-        echo "Přihlášen jako: <b>$username</b>";
+        echo "<b>Přihlášen jako</b>: $username";
         ?><br>
-        Úrovně:
+       <b> Úrovně: </b>
         <?php
         include './assets/php/config.php';
         $userId = $_SESSION['user_id'];
@@ -60,20 +60,18 @@ $conn->close();
         
                 // Podmínky pro různé stavy tlačítek
                 if ($columnValue == 69) {
-                    echo "<button class='level-button disabled' disabled><b>$levelName</b></button>";
+                    echo "<button class='level-button disabled' disabled>$levelName</button>";
                 } elseif ($columnValue == 0) {
-                    echo "<button class='level-button lost' onclick='openLink(\"$levelName\")'><b>$levelName</b></button>";
+                    echo "<button class='level-button lost' onclick='openLink(\"$levelName\")'>$levelName</button>";
                 } else {
-                    echo "<button class='level-button win' onclick='openLink(\"$levelName\")'><b>$levelName</b></button>";
+                    echo "<button class='level-button win' onclick='openLink(\"$levelName\")'>$levelName</button>";
                 }
             }
         }
         
         $conn->close();
         ?>
-        <br>
-<b>Vysvětlivky</b>:<br> červená = 0 bodů za úroveň.<br> Zelená = 1 a víc bodů za level popřípadě přístupná úrveň. <br>Bílá = nepřístupná úrpveň
-        <form method="post">
+         <form method="post">
             <input type="submit" name="logout" value="Odhlásit se">
         </form>
     </div>
