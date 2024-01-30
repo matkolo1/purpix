@@ -78,7 +78,7 @@ var end = {
 
 var door = {
   A: { state: true, x: bg.x - 1 + siz(660), y: bg.y + siz(480), w: siz(122), h: siz(60) },
-  B: { state: true, x: bg.x + siz(840), y: bg.y - 1 + siz(180), w: 60, h: siz(122) },
+  B: { state: true, x: bg.x + siz(840), y: bg.y - 1 + siz(180), w: siz(60), h: siz(122) },
   C: { state: true, x: bg.x - 1 + siz(1020), y: bg.y + siz(480), w: siz(122), h: siz(60) },
   num: { A: { x: bg.x + siz(640), y: bg.y + siz(500) }, B: { x: bg.x + siz(840), y: bg.y + siz(318) }, C: { x: bg.x + siz(1000), y: bg.y + siz(500) } },
 }
