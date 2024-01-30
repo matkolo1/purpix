@@ -388,7 +388,7 @@ function timeout(work, num) {
       break;
   }
   interval++
-  if (interval == num.at(0)) {
+  if (interval == num) {
     clearInterval(myInt);
     interval = 0
     myInt = null;
