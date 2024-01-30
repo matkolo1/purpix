@@ -88,7 +88,7 @@ $conn->close();
         // Příklad pro vytvoření tabulky s možností skrolování
         echo '<div style="height: 300px; overflow-y: auto;">'; // Nastavte výšku podle potřeby
         echo '<table>';
-        echo '<tr><th>Název</th><th>Aktuální Skóre</th></tr>';
+        echo '<tr><th></th><th>Název</th><th>Aktuální Skóre</th></tr>';
 
         // Získání uživatelských dat z databáze a řazení podle aktuálního skóre sestupně
         $sql = "SELECT id, username,
@@ -127,7 +127,7 @@ ORDER BY total_score DESC";
                 $medal = getMedalIcon($medalCount);
 
                 // Vytisknout řádek tabulky
-                echo "<tr $highlight><td>$medal $username</td><td>$currentScore</td></tr>";
+                echo "<tr $highlight><td>$medalCount $medal</td><td> $username</td><td>$currentScore</td></tr>";
             }
         } else {
             echo "Žádní uživatelé nenalezeni.";
@@ -154,11 +154,6 @@ ORDER BY total_score DESC";
             }
         }
         ?>
-
-
-
-
-
 
     </div>
     <script>
