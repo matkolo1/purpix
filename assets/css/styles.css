@@ -12,6 +12,10 @@ body {
     animation: fadeIn 0.3s ease-in-out;
 }
 
+.lobby {
+    margin: 5px;
+}
+
 #gameTitle {
     font-family: sans-serif;
     font-size: 10em;
