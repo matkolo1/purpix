@@ -3,36 +3,42 @@ var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth - 300;
 
+function siz(size) {
+  size /= 50;
+  size *= Math.floor(canvas.height / 10);
+  return size;
+}
+
 var player = {
-  x: canvas.width / 2 - 30, //240
-  y: canvas.height / 2 - 30, //420
-  size: 60,
+  x: canvas.width / 2 - siz(30), //240
+  y: canvas.height / 2 - siz(30), //420
+  size: siz(60),
   projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
 };
 
 const backgroundImage = new Image();
 backgroundImage.src = './assets/lvl1_bg.jpg';
 var bg = {
-  x: player.x - 240,
-  y: player.y - 300,
-  h: 480 * 2,
-  w: 900 * 2
+  x: player.x - siz(240),
+  y: player.y - siz(300),
+  h: siz(480 * 2),
+  w: siz(900 * 2)
 }
 
 var gameBox = {
-  x: bg.x + 180,
-  y: bg.y + 180,
-  h: bg.h - 360,
-  w: bg.w - 360
+  x: bg.x + siz(180),
+  y: bg.y + siz(180),
+  h: bg.h - siz(360),
+  w: bg.w - siz(360)
 }
 
 var walls = {
-  A: { x: bg.x + 180, y: bg.y + 480, w: 120, h: 300 },
-  B: { x: bg.x + 300, y: bg.y + 480, w: 360, h: 60 },
-  C: { x: bg.x + 840, y: bg.y + 300, w: 120, h: 480 },
-  D: { x: bg.x + 780, y: bg.y + 480, w: 240, h: 60 },
-  E: { x: bg.x + 1140, y: bg.y + 480, w: 360, h: 60 },
-  F: { x: bg.x + 1500, y: bg.y + 480, w: 120, h: 300 },
+  A: { x: bg.x + siz(180), y: bg.y + siz(480), w: siz(120), h: siz(300) },
+  B: { x: bg.x + siz(300), y: bg.y + 480, w: siz(360), h: siz(60) },
+  C: { x: bg.x + siz(840), y: bg.y + siz(300), w: siz(120), h: siz(480) },
+  D: { x: bg.x + siz(780), y: bg.y + siz(480), w: siz(240), h: siz(60) },
+  E: { x: bg.x + siz(1140), y: bg.y + siz(480), w: siz(360), h: siz(60) },
+  F: { x: bg.x + siz(1500), y: bg.y + siz(480), w: siz(120), h: siz(300) },
 }
 
 var block = {
@@ -45,30 +51,30 @@ var block = {
 const coinImg = new Image();
 coinImg.src = './assets/coin.jpg';
 var coin = {
-  A: { state: true, x: bg.x + 420, y: bg.y + 600 },
-  B: { state: true, x: bg.x + 600, y: bg.y + 660 },
-  C: { state: true, x: bg.x + 1140, y: bg.y + 660 },
-  D: { state: true, x: bg.x + 1320, y: bg.y + 600 },
-  size: 60,
+  A: { state: true, x: bg.x + siz(420), y: bg.y + siz(600) },
+  B: { state: true, x: bg.x + siz(600), y: bg.y + siz(660) },
+  C: { state: true, x: bg.x + siz(1140), y: bg.y + siz(660) },
+  D: { state: true, x: bg.x + siz(1320), y: bg.y + siz(600) },
+  size: siz(60),
   colected: 0,
 }
 
 var end = {
-  x: bg.x + 1500,
-  y: bg.y + 300,
+  x: bg.x + siz(1500),
+  y: bg.y + siz(300),
 }
 
 var door = {
-  A: { state: true, x: bg.x - 1 + 660, y: bg.y + 480, w: 122, h: 60 },
-  B: { state: true, x: bg.x + 840, y: bg.y - 1 + 180, w: 60, h: 122 },
-  C: { state: true, x: bg.x - 1 + 1020, y: bg.y + 480, w: 122, h: 60 },
-  num: { A: { x: bg.x + 640, y: bg.y + 500 }, B: { x: bg.x + 840, y: bg.y + 318 }, C: { x: bg.x + 1000, y: bg.y + 500 } },
+  A: { state: true, x: bg.x - 1 + siz(660), y: bg.y + siz(480), w: siz(122), h: siz(60) },
+  B: { state: true, x: bg.x + siz(840), y: bg.y - 1 + siz(180), w: 60, h: siz(122) },
+  C: { state: true, x: bg.x - 1 + siz(1020), y: bg.y + siz(480), w: siz(122), h: siz(60) },
+  num: { A: { x: bg.x + siz(640), y: bg.y + siz(500) }, B: { x: bg.x + siz(840), y: bg.y + siz(318) }, C: { x: bg.x + siz(1000), y: bg.y + siz(500) } },
 }
 
 var sign = {
-  A: { state: false, x: bg.x + 240, y: bg.y + 240 },
-  B: { state: false, x: bg.x + 600, y: bg.y + 180 },
-  C: { state: false, x: bg.x + 1320, y: bg.y + 180 },
+  A: { state: false, x: bg.x + siz(240), y: bg.y + siz(240) },
+  B: { state: false, x: bg.x + siz(600), y: bg.y + siz(180) },
+  C: { state: false, x: bg.x + siz(1320), y: bg.y + siz(180) },
 }
 
 var start = {
@@ -136,16 +142,16 @@ function move(side) {
 
   switch (side) {
     case 1:
-      Move('x', 60);
+      Move('x', player.size);
       break;
     case 2:
-      Move('x', -60);
+      Move('x', -player.size);
       break;
     case 3:
-      Move('y', 60);
+      Move('y', player.size);
       break;
     case 4:
-      Move('y', -60);
+      Move('y', -player.size);
       break;
   }
   checkBlock();

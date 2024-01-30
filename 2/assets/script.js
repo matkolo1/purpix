@@ -1,39 +1,45 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
-canvas.width = window.innerWidth - 300;
+canvas.width = window.innerWidth - siz(300);
+
+function siz(size) {
+  size /= 50;
+  size *= Math.floor(canvas.height / 10);
+  return size;
+}
 
 var player = {
-  x: canvas.width / 2 - 30, //240
-  y: canvas.height / 2 - 30, //420
-  size: 60,
+  x: canvas.width / 2 - siz(30),
+  y: canvas.height / 2 - siz(30),
+  size: siz(60),
   projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
 };
 
 const backgroundImage = new Image();
 backgroundImage.src = './assets/lvl2_bg.jpg';
 var bg = {
-  x: player.x - 240,
-  y: player.y - 660,
-  h: 540 * 2,
-  w: 900 * 2
+  x: player.x - siz(240),
+  y: player.y - siz(660),
+  h: siz(540 * 2),
+  w: siz(900 * 2)
 }
 
 var gameBox = {
-  x: bg.x + 180,
-  y: bg.y + 180,
-  h: bg.h - 360,
-  w: bg.w - 360
+  x: bg.x + siz(180),
+  y: bg.y + siz(180),
+  h: bg.h - siz(360),
+  w: bg.w - siz(360)
 }
 
 var walls = {
-  A: { x: bg.x + 840, y: bg.y + 180, w: 60, h: 60 },
-  B: { x: bg.x + 180, y: bg.y + 480, w: 360, h: 60 },
-  C: { x: bg.x + 840, y: bg.y + 360, w: 60, h: 360 },
-  D: { x: bg.x + 660, y: bg.y + 480, w: 840, h: 60 },
-  E: { x: bg.x + 1200, y: bg.y + 360, w: 60, h: 120 },
-  F: { x: bg.x + 840, y: bg.y + 840, w: 60, h: 60 },
-  G: { x: bg.x + 1200, y: bg.y + 180, w: 60, h: 60 },
+  A: { x: bg.x + siz(840), y: bg.y + siz(180), w: siz(60), h: siz(60) },
+  B: { x: bg.x + siz(180), y: bg.y + siz(480), w: siz(360), h: siz(60) },
+  C: { x: bg.x + siz(840), y: bg.y + siz(360), w: siz(60), h: siz(360) },
+  D: { x: bg.x + siz(660), y: bg.y + siz(480), w: siz(840), h: siz(60) },
+  E: { x: bg.x + siz(1200), y: bg.y + siz(360), w: siz(60), h: siz(120) },
+  F: { x: bg.x + siz(840), y: bg.y + siz(840), w: siz(60), h: siz(60) },
+  G: { x: bg.x + siz(1200), y: bg.y + siz(180), w: siz(60), h: siz(60) },
 }
 
 var block = {
@@ -46,37 +52,37 @@ var block = {
 const coinImg = new Image();
 coinImg.src = './assets/coin.jpg';
 var coin = {
-  A: { state: true, x: bg.x + 240, y: bg.y + 240 },
-  B: { state: true, x: bg.x + 240, y: bg.y + 360 },
-  C: { state: true, x: bg.x + 1500, y: bg.y + 240 },
-  D: { state: true, x: bg.x + 1500, y: bg.y + 360 },
-  size: 60,
+  A: { state: true, x: bg.x + siz(240), y: bg.y + siz(240) },
+  B: { state: true, x: bg.x + siz(240), y: bg.y + siz(360) },
+  C: { state: true, x: bg.x + siz(1500), y: bg.y + siz(240) },
+  D: { state: true, x: bg.x + siz(1500), y: bg.y + siz(360) },
+  size: siz(60),
   colected: 0,
 }
 
 var end = {
-  x: bg.x + 1500,
-  y: bg.y + 660,
+  x: bg.x + siz(1500),
+  y: bg.y + siz(660),
 }
 
 var door = {
-  A: { state: true, x: bg.x - 1 + 540, y: bg.y + 480, w: 122, h: 60 },
-  B: { state: true, x: bg.x + 840, y: bg.y - 1 + 240, w: 60, h: 122 },
-  C: { state: true, x: bg.x - 1 + 1500, y: bg.y + 480, w: 122, h: 60 },
-  num: { A: { x: bg.x + 520, y: bg.y + 500 }, B: { x: bg.x + 840, y: bg.y + 378 }, C: { x: bg.x + 1480, y: bg.y + 500 } },
+  A: { state: true, x: bg.x - 1 + siz(540), y: bg.y + siz(480), w: siz(122), h: siz(60) },
+  B: { state: true, x: bg.x + siz(840), y: bg.y - 1 + siz(240), w: siz(60), h: siz(122) },
+  C: { state: true, x: bg.x - 1 + siz(1500), y: bg.y + siz(480), w: siz(122), h: siz(60) },
+  num: { A: { x: bg.x + siz(520), y: bg.y + siz(500) }, B: { x: bg.x + siz(840), y: bg.y + siz(378) }, C: { x: bg.x + siz(1480), y: bg.y + siz(500) } },
 }
 
 const codedoorImg = new Image();
 codedoorImg.src = './assets/CodedoorsH.jpg';
 var codedoor = {
-  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + 840, y: bg.y + 720, w: 60, h: 121 },
-  B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + 1200, y: bg.y + 240, w: 60, h: 121 },
-  num: { A: { x: bg.x + 840, y: bg.y + 718 }, B: { x: bg.x + 1200, y: bg.y + 378 } },
+  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(840), y: bg.y + siz(720), w: siz(60), h: siz(121) },
+  B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1200), y: bg.y + siz(240), w: siz(60), h: siz(121) },
+  num: { A: { x: bg.x + siz(840), y: bg.y + siz(718) }, B: { x: bg.x + siz(1200), y: bg.y + siz(378) } },
 }
 
 var sign = {
-  A: { state: false, x: bg.x + 720, y: bg.y + 660 },
-  B: { state: false, x: bg.x + 1020, y: bg.y + 300 },
+  A: { state: false, x: bg.x + siz(720), y: bg.y + siz(660) },
+  B: { state: false, x: bg.x + siz(1020), y: bg.y + siz(300) },
 }
 
 var start = {
@@ -154,16 +160,16 @@ function move(side) {
 
   switch (side) {
     case 1:
-      Move('x', 60);
+      Move('x', player.size);
       break;
     case 2:
-      Move('x', -60);
+      Move('x', -player.size);
       break;
     case 3:
-      Move('y', 60);
+      Move('y', player.size);
       break;
     case 4:
-      Move('y', -60);
+      Move('y', -player.size);
       break;
   }
   checkBlock();

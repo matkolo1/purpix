@@ -1,57 +1,65 @@
 body {
     margin: 0;
-    padding: 0;
+    overflow: hidden;
     background-color: #000000;
-}
-
-input,
-button {
-    margin: 10px 0;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-input,
-button[type="submit"] {
-    margin: 10px 0;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    background-color: #1fa232;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-input,
-button[type="submit"]:hover {
-    background-color: #238731;
-}
-
-canvas {
+  }
+  
+  canvas {
+    display: block;
+    position: absolute;
+    background-color: #000000;
+  }
+  
+  .cntrl {
+    right: 0;
+    bottom: 0;
     position: absolute;
     display: block;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
+    background-color: #303030;
+    width: 299px;
+    height: 50vh;
+    border: 1px solid #000000;
+    border-bottom: none;
+    border-right: none;
+  }
+  
+  #input {
+    width: 300px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: #303030;
+    color: greenyellow;
+    border-bottom: 1px solid white;
+    display: flex;
+  }
+  
+  .info {
+    margin-top: 2px;
+    width: 300px;
+    height: 19px;
+    color:greenyellow;
+  }
+  
+  .err {
+    background-color: #ff0000;
+    outline: 2px solid #850303 ;
+    outline-offset: -1px;
+  }
+  
+  .cmd {
+    outline: 2px solid black;
+    outline-offset: -1px;
+  }
+  
+  .text {
+    color: white;
+    width: 300px;
+    height: 50vh;
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    font-size: 25px;
+    background-color: #000000;
+  }
