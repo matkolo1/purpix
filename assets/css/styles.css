@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url('../images/index_bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+#gameTitle {
+    font-family: sans-serif;
+    font-size: 10em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards 0.3s;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#loginForm {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0;
+    animation: slideIn 0.3s forwards 0.3s;
+}
+
+input {
+    margin: 10px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+input[type="submit"] {
+    margin: 10px 0;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1fa232;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #238731;
+}
+        /* Nový styl pro tlačítka */
+        .level-button {
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Styl pro tlačítka s různými stavy */
+        .level-button.disabled {
+            background-color: #fff;
+            color: #000;
+            cursor: not-allowed;
+        }
+
+        .level-button.lost {
+            background-color: #ff6969;
+            color: white;
+        }
+
+        .level-button.lost:hover {
+            background-color: #ff2b2b;
+        }
+        .level-button.win {
+            background-color: #1fa232;
+            color: white;
+        }
+
+        .level-button.win:hover {
+            background-color: #238731;
+        }
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
