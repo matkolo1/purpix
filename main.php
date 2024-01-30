@@ -78,6 +78,89 @@ $conn->close();
             <input type="submit" name="logout" value="Odhlásit se">
         </form>
     </div>
+    <div id="loginForm" style="margin: 5px;">
+        <?php
+        include './assets/php/config.php';
+
+        // Získání aktuálního uživatele
+        $currentUser = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+
+        // Příklad pro vytvoření tabulky s možností skrolování
+        echo '<div style="height: 300px; overflow-y: auto;">'; // Nastavte výšku podle potřeby
+        echo '<table>';
+        echo '<tr><th>Název</th><th>Aktuální Skóre</th></tr>';
+
+        // Získání uživatelských dat z databáze a řazení podle aktuálního skóre sestupně
+        $sql = "SELECT id, username,
+    COALESCE(SUM(CASE WHEN level_1 NOT IN (69, 96) THEN level_1 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_2 NOT IN (69, 96) THEN level_2 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_3 NOT IN (69, 96) THEN level_3 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_4 NOT IN (69, 96) THEN level_4 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_5 NOT IN (69, 96) THEN level_5 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_6 NOT IN (69, 96) THEN level_6 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0) +
+    COALESCE(SUM(CASE WHEN level_10 NOT IN (69, 96) THEN level_10 ELSE 0 END), 0) AS total_score
+FROM users 
+GROUP BY id, username 
+ORDER BY total_score DESC";
+
+        $result = $conn->query($sql);
+
+        // Počítadlo pro medaile
+        $medalCount = 0;
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $userId = $row['id'];
+                $username = $row['username'];
+                $currentScore = $row['total_score'];
+
+                // Zvýraznit přihlášeného uživatele
+                $highlight = ($username == $currentUser) ? 'style="background-color: white; color: black;"' : '';
+
+                // Zvýšit počet medailí
+                $medalCount++;
+
+                // Přidat medaili před jméno prvních tří uživatelů
+                $medal = getMedalIcon($medalCount);
+
+                // Vytisknout řádek tabulky
+                echo "<tr $highlight><td>$medal $username</td><td>$currentScore</td></tr>";
+            }
+        } else {
+            echo "Žádní uživatelé nenalezeni.";
+        }
+
+        echo '</table>';
+        echo '</div>';
+
+        // Uzavřít připojení k databázi
+        $conn->close();
+
+        // Funkce pro získání ikony medaile
+        function getMedalIcon($position)
+        {
+            switch ($position) {
+                case 1:
+                    return '🥇';
+                case 2:
+                    return '🥈';
+                case 3:
+                    return '🥉';
+                default:
+                    return '';
+            }
+        }
+        ?>
+
+
+
+
+
+
+    </div>
     <script>
         function openLink(level) {
             window.location.href = "./" + level;

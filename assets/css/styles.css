@@ -98,6 +98,36 @@ input[type="submit"]:hover {
     background-color: #fccf03;
 }
 
+/* Styl pro tabulku */
+/* Skrolovací lišta v tabulce */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+/* Styl pro první řádek tabulky */
+table th {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid white;
+}
+
+/* Styl pro všechny řádky kromě prvního */
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Ohraničení spodního řádku mezi všemi řádky */
+table tr:last-child td {
+    border-bottom: 2px solid white;
+}
+
 @keyframes slideIn {
     from {
         transform: translateY(-100%);
