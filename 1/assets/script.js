@@ -318,7 +318,7 @@ function checkBlock() {
   block.left = false; block.right = false; block.up = false; block.down = false;
 
   for (let [x, y, num] of player.projection) {
-    let pr = { x: player.x + x * 60, y: player.y + y * 60 }
+    let pr = { x: player.x + x * player.size, y: player.y + y * player.size }
     if (pr.x < gameBox.x) block.left = true;
     else if (!(pr.x + player.size <= gameBox.x + gameBox.w)) block.right = true;
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;

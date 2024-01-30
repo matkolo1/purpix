@@ -44,8 +44,8 @@ var gameBox = {
 }
 
 var walls = {
-  A: { x: bg.x + siz(840), y: bg.y + siz(180), w: siz(60), h: siz(60) },
-  B: { x: bg.x + siz(180), y: bg.y + siz(480), w: siz(360), h: siz(60) },
+  A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(240), h: siz(60) },
+  B: { x: bg.x + siz(540), y: bg.y + siz(360), w: siz(300), h: siz(60) },
   C: { x: bg.x + siz(840), y: bg.y + siz(360), w: siz(60), h: siz(360) },
   D: { x: bg.x + siz(660), y: bg.y + siz(480), w: siz(840), h: siz(60) },
   E: { x: bg.x + siz(1200), y: bg.y + siz(360), w: siz(60), h: siz(120) },
@@ -63,37 +63,35 @@ var block = {
 const coinImg = new Image();
 coinImg.src = './assets/coin.jpg';
 var coin = {
-  A: { state: true, x: bg.x + siz(240), y: bg.y + siz(240) },
-  B: { state: true, x: bg.x + siz(240), y: bg.y + siz(360) },
-  C: { state: true, x: bg.x + siz(1500), y: bg.y + siz(240) },
-  D: { state: true, x: bg.x + siz(1500), y: bg.y + siz(360) },
+  A: { state: true, x: bg.x + siz(720), y: bg.y + siz(480) },
+  B: { state: true, x: bg.x + siz(240), y: bg.y + siz(660) },
+  C: { state: true, x: bg.x + siz(720), y: bg.y + siz(1020) },
+  D: { state: true, x: bg.x + siz(720), y: bg.y + siz(1140) },
   size: siz(60),
   colected: 0,
 }
 
 var end = {
-  x: bg.x + siz(1500),
-  y: bg.y + siz(660),
+  x: bg.x + siz(660),
+  y: bg.y + siz(1500),
 }
 
 var door = {
-  A: { state: true, x: bg.x + siz(540), y: bg.y + siz(480), w: siz(122), h: siz(60) },
-  B: { state: true, x: bg.x + siz(840), y: bg.y + siz(240), w: siz(60), h: siz(122) },
-  C: { state: true, x: bg.x + siz(1500), y: bg.y + siz(480), w: siz(122), h: siz(60) },
-  num: { A: { x: bg.x + siz(520), y: bg.y + siz(500) }, B: { x: bg.x + siz(840), y: bg.y + siz(378) }, C: { x: bg.x + siz(1480), y: bg.y + siz(500) } },
+  A: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
+  B: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
+  num: { A: { x: bg.x + siz(400), y: bg.y + siz(375) }, B: { x: bg.x + siz(400), y: bg.y + siz(1395) } },
 }
 
 const codedoorImg = new Image();
-codedoorImg.src = './assets/CodedoorsH.jpg';
+codedoorImg.src = './assets/CodedoorsW.jpg';
 var codedoor = {
-  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(840), y: bg.y + siz(720), w: 60, h: siz(121) },
-  B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1200), y: bg.y + siz(240), w: 60, h: siz(121) },
-  num: { A: { x: bg.x + siz(840), y: bg.y + siz(718) }, B: { x: bg.x + siz(1200), y: bg.y + siz(378) } },
+  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(840), y: bg.y + siz(720), w: siz(121), h: siz(60) },
+  num: { A: { x: bg.x + siz(840), y: bg.y + siz(718) } },
 }
 
 var sign = {
-  A: { state: false, x: bg.x + siz(720), y: bg.y + siz(660) },
-  B: { state: false, x: bg.x + siz(1020), y: bg.y + siz(300) },
+  A: { state: false, x: bg.x + siz(540), y: bg.y + siz(480) },
+  B: { state: false, x: bg.x + siz(720), y: bg.y + siz(720) },
 }
 
 var start = {
@@ -108,6 +106,16 @@ function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
 
+  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
+  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
+  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
+  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
+  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
+  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
+  c.strokeRect(walls.G.x, walls.G.y, walls.G.w, walls.G.h);
+
+
+
   if (coin.A.state) c.drawImage(coinImg, coin.A.x, coin.A.y, coin.size, coin.size);
   if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
   if (coin.C.state) c.drawImage(coinImg, coin.C.x, coin.C.y, coin.size, coin.size);
@@ -116,18 +124,14 @@ function draw() {
   c.fillStyle = '#aaaaaa';
   if (door.A.state) c.fillRect(door.A.x, door.A.y, door.A.w, door.A.h);
   if (door.B.state) c.fillRect(door.B.x, door.B.y, door.B.w, door.B.h);
-  if (door.C.state) c.fillRect(door.C.x, door.C.y, door.C.w, door.C.h);
 
   if (codedoor.A.state) c.drawImage(codedoorImg, codedoor.A.x, codedoor.A.y, codedoor.A.w, codedoor.A.h);
-  if (codedoor.B.state) c.drawImage(codedoorImg, codedoor.B.x, codedoor.B.y, codedoor.B.w, codedoor.B.h);
 
   c.fillStyle = 'black';
   c.font = '20px Verdana';
   c.fillText('1', door.num.A.x, door.num.A.y);
   c.fillText('2', door.num.B.x, door.num.B.y);
-  c.fillText('3', door.num.C.x, door.num.C.y);
   c.fillText('1', codedoor.num.A.x, codedoor.num.A.y);
-  c.fillText('2', codedoor.num.B.x, codedoor.num.B.y);
 
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
@@ -155,17 +159,13 @@ function move(side) {
     end[prop] += value;
     door.A[prop] += value;
     door.B[prop] += value;
-    door.C[prop] += value;
     door.num.A[prop] += value;
     door.num.B[prop] += value;
-    door.num.C[prop] += value;
     sign.A[prop] += value;
     sign.B[prop] += value;
     start[prop] += value;
     codedoor.A[prop] += value;
-    codedoor.B[prop] += value;
     codedoor.num.A[prop] += value;
-    codedoor.num.B[prop] += value;
   }
 
 
@@ -223,7 +223,7 @@ function CMD(text, comands) {
         if (work == wok) {
           if (item == ('codedoor1' || 'codedoor2')) {
             state.work = [true, 'codedoor',];
-            if (!(codedoor.A.near) && !(codedoor.B.near)) {
+            if (!(codedoor.A.near)) {
               state.code = [false, 'Nejste u dveří.']
               break;
             } else if (code == null) {
@@ -237,11 +237,11 @@ function CMD(text, comands) {
               } else if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
                 state.num = [false, `${num.slice(0, num.length - 1)} není číslo.`]
                 break;
-              } else if (!(num.slice(0, num.length - 1) == (codedoor.A.code || codedoor.B.code))) {
+              } else if (!(num.slice(0, num.length - 1) == (codedoor.A.code))) {
                 state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
                 break;
               } else if (num.at(num.length - 1) == ')') {
-                if (num.slice(0, num.length - 1) == (codedoor.A.code || codedoor.B.code)) {
+                if (num.slice(0, num.length - 1) == (codedoor.A.code)) {
                   state.num = [true,]
                   break;
                 } else state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
@@ -340,16 +340,6 @@ function CMD(text, comands) {
             break;
         }
         break;
-      case ('door3'):
-        switch (work) {
-          case ('open'):
-            door.C.state = false
-            break;
-          case ('close'):
-            door.C.state = true
-            break;
-        }
-        break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
           switch (work) {
@@ -358,18 +348,6 @@ function CMD(text, comands) {
               break;
             case ('close'):
               codedoor.A.state = true
-              break;
-          }
-        }
-        break;
-      case ('codedoor2'):
-        if (codedoor.B.near && num.slice(0, num.length - 1) == codedoor.B.code) {
-          switch (work) {
-            case ('open'):
-              codedoor.B.state = false
-              break;
-            case ('close'):
-              codedoor.B.state = true
               break;
           }
         }
@@ -408,10 +386,10 @@ function write(type, cont) {
 
 function checkBlock() {
   block.left = false; block.right = false; block.up = false; block.down = false;
-  codedoor.A.near = false; codedoor.B.near = false
+  codedoor.A.near = false;
 
   for (let [x, y, num] of player.projection) {
-    let pr = { x: player.x + x * 60, y: player.y + y * 60 }
+    let pr = { x: player.x + x * player.size, y: player.y + y * player.size }
     if (pr.x < gameBox.x) block.left = true;
     else if (!(pr.x + player.size <= gameBox.x + gameBox.w)) block.right = true;
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
@@ -425,7 +403,7 @@ function checkBlock() {
       else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
 
-    let doors = [door.A, door.B, door.C]
+    let doors = [door.A, door.B]
     for (let obj of doors) {
       if (obj['state'] && num == 0 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) { block.left = true; }
       else if (obj['state'] && num == 1 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) { block.right = true; }
@@ -433,7 +411,7 @@ function checkBlock() {
       else if (obj['state'] && num == 3 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) { block.down = true; }
     }
 
-    doors = [codedoor.A, codedoor.B]
+    doors = [codedoor.A]
     for (let obj of doors) {
       if (obj['state'] && num == 0 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) { block.left = true; obj['near'] = true; }
       else if (obj['state'] && num == 1 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) { block.right = true; obj['near'] = true; }
@@ -451,7 +429,7 @@ function checkBlock() {
   if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
   const sign1 = 'Tyto dveře jsou uzamčeny kódem. Kód k těmto dveřím najdete na cedulkách s tečkou. <br> Dveře jdou otevřít jen když u nich stojíte a to příkazem "codedoor1.open.code(<i>kód</i>)"';
-  const sign2 = `codedoor1 = ${codedoor.A.code} <br> codedoor2 = ${codedoor.B.code}`;
+  const sign2 = `codedoor1 = ${codedoor.A.code}`;
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
