@@ -433,7 +433,7 @@ function checkBlock() {
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
   if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
-  const sign1 = 'Tyto dveře jsou uzamčeny kódem. Kód k těmto dveřím najdete na cedulkách s tečkou. <br> Dveře jdou otevřít jen když u nich stojíte a to příkazen "codedoor1.open.code(<i>kód</i>)"';
+  const sign1 = 'Tyto dveře jsou uzamčeny kódem. Kód k těmto dveřím najdete na cedulkách s tečkou. <br> Dveře jdou otevřít jen když u nich stojíte a to příkazem "codedoor1.open.code(<i>kód</i>)"';
   const sign2 = `codedoor1 = ${codedoor.A.code} <br> codedoor2 = ${codedoor.B.code}`;
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
@@ -485,7 +485,7 @@ function win() {
     var parts = url.split('/');
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
-    var points = 100;
+    var points = 1;
     var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
@@ -500,22 +500,3 @@ function win() {
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
 
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
-  }
-  draw();
-});
