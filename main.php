@@ -41,7 +41,7 @@ $conn->close();
         <?php
         echo "<b>Přihlášen jako</b>: $username";
         ?><br>
-       <b> Úrovně: </b>
+        <b> Úrovně: </b>
         <?php
         include './assets/php/config.php';
         $userId = $_SESSION['user_id'];
@@ -57,21 +57,24 @@ $conn->close();
             if (preg_match('/^level_(\d+)$/', $columnName, $matches)) {
                 $levelNumber = $matches[1];
                 $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
-        
+
                 // Podmínky pro různé stavy tlačítek
                 if ($columnValue == 69) {
                     echo "<button class='level-button disabled' disabled>$levelName</button>";
                 } elseif ($columnValue == 0) {
+                    $foundZero = true;
                     echo "<button class='level-button lost' onclick='openLink(\"$levelName\")'>$levelName</button>";
-                } else {
+                } elseif ($columnValue >= 1 && $columnValue < 96) {
                     echo "<button class='level-button win' onclick='openLink(\"$levelName\")'>$levelName</button>";
+                } elseif ($columnValue == 96) {
+                    echo "<button class='level-button active' onclick='openLink(\"$levelName\")'>$levelName</button>";
                 }
             }
         }
-        
+
         $conn->close();
         ?>
-         <form method="post">
+        <form method="post">
             <input type="submit" name="logout" value="Odhlásit se">
         </form>
     </div>

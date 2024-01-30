@@ -38,6 +38,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 input[type="submit"] {
     margin: 10px 0;
     padding: 8px;
@@ -52,39 +53,51 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #238731;
 }
-        /* Nový styl pro tlačítka */
-        .level-button {
-            margin: 2px;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
 
-        /* Styl pro tlačítka s různými stavy */
-        .level-button.disabled {
-            background-color: #fff;
-            color: #000;
-            cursor: not-allowed;
-        }
+/* Nový styl pro tlačítka */
+.level-button {
+    margin: 2px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .level-button.lost {
-            background-color: #ff6969;
-            color: white;
-        }
+/* Styl pro tlačítka s různými stavy */
+.level-button.disabled {
+    background-color: #fff;
+    color: #000;
+    cursor: not-allowed;
+}
 
-        .level-button.lost:hover {
-            background-color: #ff2b2b;
-        }
-        .level-button.win {
-            background-color: #1fa232;
-            color: white;
-        }
+.level-button.lost {
+    background-color: #FF0000;
+    color: white;
+}
 
-        .level-button.win:hover {
-            background-color: #238731;
-        }
+.level-button.lost:hover {
+    background-color: #cb0505;
+}
+
+.level-button.win {
+    background-color: #1fa232;
+    color: white;
+}
+
+.level-button.win:hover {
+    background-color: #238731;
+}
+
+.level-button.active {
+    background-color: #f4fc03;
+    color: black;
+}
+
+.level-button.active:hover {
+    background-color: #fccf03;
+}
+
 @keyframes slideIn {
     from {
         transform: translateY(-100%);
