@@ -22,7 +22,6 @@ $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,19 +30,13 @@ $conn->close();
     <link rel="shortcut icon" href="./assets/images/icon.png" type="image/x-icon">
     <title>PurPix</title>
     <style>
-
     </style>
 </head>
-
 <body>
     <div id="gameTitle">PurPix</div>
-    <div id="contentContainer">
         <?php
         include './assets/php/config.php';
-
         $userId = $_SESSION['user_id'];
-
-        // Získání aktuálního uživatele
         $sqlUser = "SELECT * FROM users WHERE id = ?";
         $stmtUser = $conn->prepare($sqlUser);
         $stmtUser->bind_param("i", $userId);
@@ -51,7 +44,6 @@ $conn->close();
         $resultUser = $stmtUser->get_result();
         $userData = $resultUser->fetch_assoc();
         $stmtUser->close();
-
         // Získání aktuálního skóre
         $currentScore = 0;
         foreach ($userData as $columnName => $columnValue) {
@@ -59,18 +51,14 @@ $conn->close();
                 $currentScore += $columnValue;
             }
         }
-
         echo '<div id="loginForm" style="float: left; margin-right: 10px;">';
         echo '<div class="lobby"><b>Přihlášen jako</b>: ' . $userData['username'] . '<br></div>';
         echo '<div class="lobby"><b> Aktuální skóre:</b> ' . $currentScore . '<br></div>';
         echo '<div class="lobby"> <b> Úrovně: </b>';
-
-
         foreach ($userData as $columnName => $columnValue) {
             if (strpos($columnName, 'level_') === 0) {
                 $levelNumber = substr($columnName, 6);
                 $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
-
                 if ($columnValue == 69) {
                     echo "<button class='level-button disabled' disabled>$levelName</button>";
                 } elseif ($columnValue == 0) {
@@ -84,8 +72,6 @@ $conn->close();
             }
         }
         echo '</div>';
-
-
         echo <<<HTML
     <form method="post">
         <input type="submit" name="logout" value="Odhlásit se">
@@ -94,92 +80,10 @@ HTML;
         echo '</div>';
         $conn->close();
         ?>
-
-
-
-        <div id="loginForm" style="float: left; margin-right: 10px;">
-            <?php
-            include './assets/php/config.php';
-
-            // Získání aktuálního uživatele
-            $currentUser = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-
-            // Příklad pro vytvoření tabulky s možností skrolování
-            echo '<div style="height: 300px; overflow-y: auto;">'; // Nastavte výšku podle potřeby
-            echo '<table>';
-            echo '<tr><th></th><th>Název</th><th>Aktuální Skóre</th></tr>';
-
-            // Získání uživatelských dat z databáze a řazení podle aktuálního skóre sestupně
-            $sql = "SELECT id, username,
-    COALESCE(SUM(CASE WHEN level_1 NOT IN (69, 96) THEN level_1 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_2 NOT IN (69, 96) THEN level_2 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_3 NOT IN (69, 96) THEN level_3 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_4 NOT IN (69, 96) THEN level_4 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_5 NOT IN (69, 96) THEN level_5 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_6 NOT IN (69, 96) THEN level_6 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_10 NOT IN (69, 96) THEN level_10 ELSE 0 END), 0) AS total_score
-FROM users 
-GROUP BY id, username 
-ORDER BY total_score DESC";
-
-            $result = $conn->query($sql);
-
-            // Počítadlo pro medaile
-            $medalCount = 0;
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $userId = $row['id'];
-                    $username = $row['username'];
-                    $currentScore = $row['total_score'];
-
-                    // Zvýraznit přihlášeného uživatele
-                    $highlight = ($username == $currentUser) ? 'style="background-color: white; color: black;"' : '';
-
-                    // Zvýšit počet medailí
-                    $medalCount++;
-
-                    // Přidat medaili před jméno prvních tří uživatelů
-                    $medal = getMedalIcon($medalCount);
-
-                    // Vytisknout řádek tabulky
-                    echo "<tr $highlight><td>$medalCount $medal</td><td> $username</td><td>$currentScore</td></tr>";
-                }
-            } else {
-                echo "Žádní uživatelé nenalezeni.";
-            }
-
-            echo '</table>';
-            echo '</div>';
-
-            // Uzavřít připojení k databázi
-            $conn->close();
-
-            // Funkce pro získání ikony medaile
-            function getMedalIcon($position)
-            {
-                switch ($position) {
-                    case 1:
-                        return '🥇';
-                    case 2:
-                        return '🥈';
-                    case 3:
-                        return '🥉';
-                    default:
-                        return '';
-                }
-            }
-            ?>
-        </div>
-    </div>
     <script>
         function openLink(level) {
             window.location.href = "./" + level;
         }
     </script>
 </body>
-
 </html>
