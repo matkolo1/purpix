@@ -1,19 +1,19 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
-canvas.width = window.innerWidth - siz(300);
+canvas.width = window.innerWidth - sie(200);
 document.getElementById('console').style.width = `${sie(200)}px`
 document.getElementById('itex').style.width = `${sie(200)}px`;
 document.getElementById('itex').style.fontSize = `${siz(25)}px`;
 for (let i = 0; i <= 12; i++) {
-  document.getElementById(`info${i}`).style.width = `${sie(300)}px`;
-  document.getElementById(`info${i}`).style.height = `${siz(19)}px`;
+  document.getElementById(`info${i}`).style.width = `${sie(200)}px`;
+  document.getElementById(`info${i}`).style.height = `${siz(20)}px`;
   document.getElementById(`info${i}`).style.fontSize = `${siz(15)}px`;
 }
-document.getElementById('input').style.width = `${sie(198)}px`;
+document.getElementById('input').style.width = `${sie(200)}px`;
 document.getElementById('input').style.height = `${siz(30)}px`;
 document.getElementById('input').style.fontSize = `${siz(15)}px`
-document.getElementById('cntrl').style.width = `${sie(199)}px`;
+document.getElementById('cntrl').style.width = `${sie(200)}px`;
 
 function siz(size) {
   size /= 60;
@@ -98,27 +98,27 @@ var codedoor = {
 var turrets = {
   A: {
     way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(420), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 5, a1: 0, a2: -1, },
   },
   B: {
     way: [-1, 0], x: bg.x + siz(780), y: bg.y + siz(600), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
   },
   C: {
     way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
   },
   D: {
     way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(960), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
   },
   E: {
     way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(1200), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
   },
   F: {
-    way: [0, -1], x: bg.x + siz(660), y: bg.y + siz(1310), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+    way: [0, -1], x: bg.x + siz(660), y: bg.y + siz(1320), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
   },
 }
 
@@ -488,6 +488,15 @@ function checkBlock() {
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
+
+  let turretts = [turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F]
+  for (let turret of turretts) {
+    for (let i = 1; i < 2; i++) {
+      let x = turret.pro[`x${i}`]
+      let y = turret.pro[`y${i}`]
+      if (player.x == x && player.y == y) ded()
+    }
+  }
 }
 
 function timeout(work, num) {
@@ -549,15 +558,45 @@ function win() {
     });
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
-
+setInterval(fire, 500)
 function fire() {
-  for (let turret of turrets) {
-    let prp = turret.pro;
-    if (prp.state1) {
-
+  let turretts = [turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F]
+  for (let turret of turretts) {
+    let prp = turret['pro'];
+    let next = { x: turret.way[0] * player.size, y: turret.way[1] * player.size };
+    if (prp.state1 && (prp.a1 < prp.l) && (prp.a1 >= 0)) {
+      prp.x1 += next.x
+      prp.y1 += next.y
+    } else if (prp.state1 && (prp.a1 == prp.l)) {
+      prp.state1 = false
+      prp.x1 = 0
+      prp.y1 = 0
+      prp.a1 = -1
+    } else {
+      prp.state1 = true
+      prp.x1 = turret.x + next.x
+      prp.y1 = turret.y + next.y
     }
-
+    if (prp.state2 && (prp.a2 < prp.l) && (prp.a2 >= 0)) {
+      prp.x2 += next.x
+      prp.y2 += next.y
+    } else if (prp.state2 && (prp.a2 == prp.l)) {
+      prp.state2 = false
+      prp.x2 = 0
+      prp.y2 = 0
+      prp.a2 = -1
+    } else {
+      prp.state2 = true
+      prp.x2 = turret.x + next.x
+      prp.y2 = turret.y + next.y
+    }
+    prp.a1++; prp.a2++;
   }
+  draw()
+}
+
+function ded() {
+  
 }
 
 // Posluchači klávesnice pro posunutí pozadí
