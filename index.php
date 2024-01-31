@@ -55,6 +55,11 @@ $conn->close();
             <input type="submit" value="Přihlásit se">
         </form>
     </div>
+    <?php
+    echo '<div id="loginForm" style="position: fixed; bottom: 10px; right: 10px; width: 300px; height: auto; margin-bottom: 5px;">';
+    echo '<div class="lobby" style="width: 100%;"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beráněk<br>Jiří Boucník</div>';
+    echo '</div>';
+    ?>
 </body>
 
 </html>
