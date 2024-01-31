@@ -1,23 +1,28 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
-canvas.width = window.innerWidth - siz(300);
-document.getElementById('console').style.width = `${siz(300)}px`
-document.getElementById('itex').style.width = `${siz(300)}px`;
+canvas.width = window.innerWidth - sie(200);
+document.getElementById('console').style.width = `${sie(200)}px`
+document.getElementById('itex').style.width = `${sie(200)}px`;
 document.getElementById('itex').style.fontSize = `${siz(25)}px`;
 for (let i = 0; i <= 12; i++) {
-  document.getElementById(`info${i}`).style.width = `${siz(300)}px`;
-  document.getElementById(`info${i}`).style.height = `${siz(19)}px`;
+  document.getElementById(`info${i}`).style.width = `${sie(200)}px`;
+  document.getElementById(`info${i}`).style.height = `${siz(20)}px`;
   document.getElementById(`info${i}`).style.fontSize = `${siz(15)}px`;
 }
-document.getElementById('input').style.width = `${siz(297)}px`;
+document.getElementById('input').style.width = `${sie(200)}px`;
 document.getElementById('input').style.height = `${siz(30)}px`;
 document.getElementById('input').style.fontSize = `${siz(15)}px`
-document.getElementById('cntrl').style.width = `${siz(299)}px`;
+document.getElementById('cntrl').style.width = `${sie(200)}px`;
 
 function siz(size) {
-  size /= 50;
+  size /= 60;
   size *= Math.floor(canvas.height / 10);
+  return size;
+}
+function sie(size) {
+  size /= 60;
+  size *= Math.floor(canvas.width / 10);
   return size;
 }
 
@@ -46,7 +51,7 @@ var gameBox = {
 
 var walls = {
   A: { x: bg.x + siz(180), y: bg.y + siz(480), w: siz(120), h: siz(300) },
-  B: { x: bg.x + siz(300), y: bg.y + 480, w: siz(360), h: siz(60) },
+  B: { x: bg.x + siz(300), y: bg.y + siz(480), w: siz(360), h: siz(60) },
   C: { x: bg.x + siz(840), y: bg.y + siz(300), w: siz(120), h: siz(480) },
   D: { x: bg.x + siz(780), y: bg.y + siz(480), w: siz(240), h: siz(60) },
   E: { x: bg.x + siz(1140), y: bg.y + siz(480), w: siz(360), h: siz(60) },
@@ -214,7 +219,9 @@ function CMD(text, comands) {
       for (let wok of works.bot) {
         if (work == wok) {
           state.work = [true, true,];
-          if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
+          if (num == null) {
+            num = 1
+          } else if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
             state.num = [false, `${num.slice(0, num.length - 1)} není číslo.`]
             break;
           } else if (num.at(num.length - 1) == ')') {

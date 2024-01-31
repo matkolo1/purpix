@@ -1,26 +1,30 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
-canvas.width = window.innerWidth - siz(300);
-document.getElementById('console').style.width = `${siz(300)}px`
-document.getElementById('itex').style.width = `${siz(300)}px`;
+canvas.width = window.innerWidth - sie(200);
+document.getElementById('console').style.width = `${sie(200)}px`
+document.getElementById('itex').style.width = `${sie(200)}px`;
 document.getElementById('itex').style.fontSize = `${siz(25)}px`;
 for (let i = 0; i <= 12; i++) {
-  document.getElementById(`info${i}`).style.width = `${siz(300)}px`;
-  document.getElementById(`info${i}`).style.height = `${siz(19)}px`;
+  document.getElementById(`info${i}`).style.width = `${sie(200)}px`;
+  document.getElementById(`info${i}`).style.height = `${siz(20)}px`;
   document.getElementById(`info${i}`).style.fontSize = `${siz(15)}px`;
 }
-document.getElementById('input').style.width = `${siz(297)}px`;
+document.getElementById('input').style.width = `${sie(200)}px`;
 document.getElementById('input').style.height = `${siz(30)}px`;
 document.getElementById('input').style.fontSize = `${siz(15)}px`
-document.getElementById('cntrl').style.width = `${siz(299)}px`;
+document.getElementById('cntrl').style.width = `${sie(200)}px`;
 
 function siz(size) {
-  size /= 50;
+  size /= 60;
   size *= Math.floor(canvas.height / 10);
   return size;
 }
-
+function sie(size) {
+  size /= 60;
+  size *= Math.floor(canvas.width / 10);
+  return size;
+}
 var player = {
   x: canvas.width / 2 - siz(30),
   y: canvas.height / 2 - siz(30),

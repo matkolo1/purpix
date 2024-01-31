@@ -2,24 +2,30 @@ var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth - siz(300);
-document.getElementById('console').style.width = `${siz(300)}px`
-document.getElementById('itex').style.width = `${siz(300)}px`;
+document.getElementById('console').style.width = `${sie(200)}px`
+document.getElementById('itex').style.width = `${sie(200)}px`;
 document.getElementById('itex').style.fontSize = `${siz(25)}px`;
 for (let i = 0; i <= 12; i++) {
-  document.getElementById(`info${i}`).style.width = `${siz(300)}px`;
+  document.getElementById(`info${i}`).style.width = `${sie(300)}px`;
   document.getElementById(`info${i}`).style.height = `${siz(19)}px`;
   document.getElementById(`info${i}`).style.fontSize = `${siz(15)}px`;
 }
-document.getElementById('input').style.width = `${siz(297)}px`;
+document.getElementById('input').style.width = `${sie(198)}px`;
 document.getElementById('input').style.height = `${siz(30)}px`;
 document.getElementById('input').style.fontSize = `${siz(15)}px`
-document.getElementById('cntrl').style.width = `${siz(299)}px`;
+document.getElementById('cntrl').style.width = `${sie(199)}px`;
 
 function siz(size) {
-  size /= 50;
+  size /= 60;
   size *= Math.floor(canvas.height / 10);
   return size;
 }
+function sie(size) {
+  size /= 60;
+  size *= Math.floor(canvas.width / 10);
+  return size;
+}
+
 var player = {
   x: canvas.width / 2 - siz(30),
   y: canvas.height / 2 - siz(30),
@@ -46,11 +52,11 @@ var gameBox = {
 var walls = {
   A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(240), h: siz(60) },
   B: { x: bg.x + siz(540), y: bg.y + siz(360), w: siz(300), h: siz(60) },
-  C: { x: bg.x + siz(840), y: bg.y + siz(360), w: siz(60), h: siz(360) },
-  D: { x: bg.x + siz(660), y: bg.y + siz(480), w: siz(840), h: siz(60) },
-  E: { x: bg.x + siz(1200), y: bg.y + siz(360), w: siz(60), h: siz(120) },
-  F: { x: bg.x + siz(840), y: bg.y + siz(840), w: siz(60), h: siz(60) },
-  G: { x: bg.x + siz(1200), y: bg.y + siz(180), w: siz(60), h: siz(60) },
+  C: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(240), h: siz(60) },
+  D: { x: bg.x + siz(540), y: bg.y + siz(780), w: siz(300), h: siz(60) },
+  E: { x: bg.x + siz(180), y: bg.y + siz(1380), w: siz(240), h: siz(60) },
+  F: { x: bg.x + siz(540), y: bg.y + siz(1380), w: siz(300), h: siz(60) },
+
 }
 
 var block = {
@@ -77,16 +83,43 @@ var end = {
 }
 
 var door = {
-  A: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
-  B: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
-  num: { A: { x: bg.x + siz(400), y: bg.y + siz(375) }, B: { x: bg.x + siz(400), y: bg.y + siz(1395) } },
+  A: { state: false, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
+  B: { state: false, x: bg.x - 1 + siz(420), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
+  num: { A: { x: bg.x + siz(405), y: bg.y + siz(375) }, B: { x: bg.x + siz(405), y: bg.y + siz(1395) } },
 }
 
 const codedoorImg = new Image();
 codedoorImg.src = './assets/CodedoorsW.jpg';
 var codedoor = {
-  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(840), y: bg.y + siz(720), w: siz(121), h: siz(60) },
-  num: { A: { x: bg.x + siz(840), y: bg.y + siz(718) } },
+  A: { state: false, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
+  num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
+}
+
+var turrets = {
+  A: {
+    way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(420), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+  },
+  B: {
+    way: [-1, 0], x: bg.x + siz(780), y: bg.y + siz(600), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+  },
+  C: {
+    way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+  },
+  D: {
+    way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(960), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+  },
+  E: {
+    way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(1200), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+  },
+  F: {
+    way: [0, -1], x: bg.x + siz(660), y: bg.y + siz(1310), w: siz(60), h: siz(60),
+    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, },
+  },
 }
 
 var sign = {
@@ -101,20 +134,11 @@ var start = {
 
 var interval = 0;
 var myInt;
+var points = 5;
 
 function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
-
-  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
-  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
-  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
-  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
-  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
-  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
-  c.strokeRect(walls.G.x, walls.G.y, walls.G.w, walls.G.h);
-
-
 
   if (coin.A.state) c.drawImage(coinImg, coin.A.x, coin.A.y, coin.size, coin.size);
   if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
@@ -136,6 +160,20 @@ function draw() {
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 
+  c.fillStyle = 'darkred';
+  if (turrets.A.pro.state1) c.fillRect(turrets.A.pro.x1, turrets.A.pro.y1, player.size, player.size);
+  if (turrets.B.pro.state1) c.fillRect(turrets.B.pro.x1, turrets.B.pro.y1, player.size, player.size);
+  if (turrets.C.pro.state1) c.fillRect(turrets.C.pro.x1, turrets.C.pro.y1, player.size, player.size);
+  if (turrets.D.pro.state1) c.fillRect(turrets.D.pro.x1, turrets.D.pro.y1, player.size, player.size);
+  if (turrets.E.pro.state1) c.fillRect(turrets.E.pro.x1, turrets.E.pro.y1, player.size, player.size);
+  if (turrets.F.pro.state1) c.fillRect(turrets.F.pro.x1, turrets.F.pro.y1, player.size, player.size);
+  if (turrets.A.pro.state2) c.fillRect(turrets.A.pro.x2, turrets.A.pro.y2, player.size, player.size);
+  if (turrets.B.pro.state2) c.fillRect(turrets.B.pro.x2, turrets.B.pro.y2, player.size, player.size);
+  if (turrets.C.pro.state2) c.fillRect(turrets.C.pro.x2, turrets.C.pro.y2, player.size, player.size);
+  if (turrets.D.pro.state2) c.fillRect(turrets.D.pro.x2, turrets.D.pro.y2, player.size, player.size);
+  if (turrets.E.pro.state2) c.fillRect(turrets.E.pro.x2, turrets.E.pro.y2, player.size, player.size);
+  if (turrets.F.pro.state2) c.fillRect(turrets.F.pro.x2, turrets.F.pro.y2, player.size, player.size);
+
 
 
   win()
@@ -151,7 +189,6 @@ function move(side) {
     walls.D[prop] += value;
     walls.E[prop] += value;
     walls.F[prop] += value;
-    walls.G[prop] += value;
     coin.A[prop] += value;
     coin.B[prop] += value;
     coin.C[prop] += value;
@@ -166,6 +203,24 @@ function move(side) {
     start[prop] += value;
     codedoor.A[prop] += value;
     codedoor.num.A[prop] += value;
+    turrets.A[prop] += value;
+    turrets.B[prop] += value;
+    turrets.C[prop] += value;
+    turrets.D[prop] += value;
+    turrets.E[prop] += value;
+    turrets.F[prop] += value;
+    turrets.A.pro[`${prop}1`] += value;
+    turrets.B.pro[`${prop}1`] += value;
+    turrets.C.pro[`${prop}1`] += value;
+    turrets.D.pro[`${prop}1`] += value;
+    turrets.E.pro[`${prop}1`] += value;
+    turrets.F.pro[`${prop}1`] += value;
+    turrets.A.pro[`${prop}2`] += value;
+    turrets.B.pro[`${prop}2`] += value;
+    turrets.C.pro[`${prop}2`] += value;
+    turrets.D.pro[`${prop}2`] += value;
+    turrets.E.pro[`${prop}2`] += value;
+    turrets.F.pro[`${prop}2`] += value;
   }
 
 
@@ -395,7 +450,7 @@ function checkBlock() {
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, walls.G];
+    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F];
     for (let wall of items) {
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
@@ -428,7 +483,7 @@ function checkBlock() {
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
   if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
-  const sign1 = 'Tyto dveře jsou uzamčeny kódem. Kód k těmto dveřím najdete na cedulkách s tečkou. <br> Dveře jdou otevřít jen když u nich stojíte a to příkazem "codedoor1.open.code(<i>kód</i>)"';
+  const sign1 = `Toto je laser. <br>Když se ho dotkneš ztratíš bod a začínáš tento level odzačátku. <br>Tvůj aktuální počet bodů je ${points}.`;
   const sign2 = `codedoor1 = ${codedoor.A.code}`;
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
@@ -480,7 +535,7 @@ function win() {
     var parts = url.split('/');
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
-    var points = 1;
+
     var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
@@ -493,6 +548,16 @@ function win() {
       }
     });
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
+}
+
+function fire() {
+  for (let turret of turrets) {
+    let prp = turret.pro;
+    if (prp.state1) {
+
+    }
+
+  }
 }
 
 // Posluchači klávesnice pro posunutí pozadí
