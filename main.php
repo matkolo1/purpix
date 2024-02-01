@@ -35,31 +35,35 @@ $conn->close();
 </head>
 
 <body>
-<?php
-include './assets/php/config.php';
+    <?php
+    include './assets/php/config.php';
 
-// Získání dat o uživateli
-$userId = $_SESSION['user_id'];
-$sqlUser = "SELECT * FROM users WHERE id = ?";
-$stmtUser = $conn->prepare($sqlUser);
-$stmtUser->bind_param("i", $userId);
-$stmtUser->execute();
-$resultUser = $stmtUser->get_result();
-$userData = $resultUser->fetch_assoc();
-$stmtUser->close();
+    // Získání dat o uživateli
+    $userId = $_SESSION['user_id'];
+    $sqlUser = "SELECT * FROM users WHERE id = ?";
+    $stmtUser = $conn->prepare($sqlUser);
+    $stmtUser->bind_param("i", $userId);
+    $stmtUser->execute();
+    $resultUser = $stmtUser->get_result();
+    $userData = $resultUser->fetch_assoc();
+    $stmtUser->close();
 
-// Získání aktuálního skóre
-$currentScore = 0;
-foreach ($userData as $columnName => $columnValue) {
-    if (strpos($columnName, 'level_') === 0 && $columnValue != 69 && $columnValue != 96) {
-        $currentScore += $columnValue;
+    // Získání aktuálního skóre
+    $currentScore = 0;
+    foreach ($userData as $columnName => $columnValue) {
+        if (strpos($columnName, 'level_') === 0 && $columnValue != 69 && $columnValue != 96) {
+            $currentScore += $columnValue;
+        }
     }
-}
-?>
-<div id="loginForm" style="position: fixed; bottom: 10px; left: 10px; width: 300px; height: auto; margin-bottom: 5px;">
-    <div class="lobby" style="width: 100%;"><b>Vítej v PurPix! &#x2B50;</b><br> Tady máš šanci ovládat malého červeného kamaráda, který má za úkol co nejrychleji dorazit do cíle. <br>Při své cestě můžeš navíc sbírat spoustu drobných pokladů - peníze! <br>Samozřejmě, aby to nebylo tak jednoduché, čekají tě i různé překážky, takže pozor, ať tvůj čtvereček nepřijde o cestu k vítězství! &#x1F3C6;&#x1F579;&#x1F680;<br></div>
-</div>
-<div id="gameTitle">PurPix</div>
+    ?>
+    <div id="loginForm"
+        style="position: fixed; bottom: 10px; left: 10px; width: 300px; height: auto; margin-bottom: 5px;">
+        <div class="lobby" style="width: 100%;"><b>Vítej v PurPix! &#x2B50;</b><br> Tady máš šanci ovládat malého
+            červeného kamaráda, který má za úkol co nejrychleji dorazit do cíle. <br>Při své cestě můžeš navíc sbírat
+            spoustu drobných pokladů - peníze! <br>Samozřejmě, aby to nebylo tak jednoduché, čekají tě i různé překážky,
+            takže pozor, ať tvůj čtvereček nepřijde o cestu k vítězství! &#x1F3C6;&#x1F579;&#x1F680;<br></div>
+    </div>
+    <div id="gameTitle">PurPix</div>
     <div id="loginForm">
         <div class="lobby"><b>Přihlášen jako</b>:
             <?php echo $userData['username']; ?><br>
@@ -92,9 +96,10 @@ foreach ($userData as $columnName => $columnValue) {
         </form>
     </div>
 
-    <div id="creditsForm" style="background-color: black; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
-    <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beráněk<br>Jiří Boucník</div>
-</div>
+    <div id="creditsForm"
+        style="background-color: black; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
+        <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beránek<br>Jiří Boucník</div>
+    </div>
 
     <?php $conn->close(); ?>
 
