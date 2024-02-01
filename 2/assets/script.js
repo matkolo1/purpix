@@ -245,16 +245,16 @@ function CMD(text, comands) {
               } else if (!(num.slice(0, num.length - 1) == (codedoor.A.code || codedoor.B.code))) {
                 state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
                 break;
-              } else if (num.at(num.length - 1) == ')') {
+              } else if (num.at(num.length - 1) != ')'){
+                state.num = [false, `Nedokončená závorka.`]
+                break;
+              } else if (num.at(num.length - 1) === ')') {
                 if (num.slice(0, num.length - 1) == (codedoor.A.code || codedoor.B.code)) {
                   state.num = [true,]
                   break;
                 } else state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
                 break;
-              } else {
-                state.num = [false, `Nedokončená závorka.`]
-                break;
-              }
+              } 
             } else {
               state.code = [false, `${code} nebyl nalezen.`]
               break;
@@ -486,7 +486,7 @@ function timeout(work, num) {
       break;
   }
   interval++
-  if (interval == num) {
+  if (interval == num || block.down || block.left || block.right || block.up) {
     clearInterval(myInt);
     interval = 0
     myInt = null;

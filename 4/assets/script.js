@@ -439,7 +439,7 @@ function timeout(work, num) {
       break;
   }
   interval++
-  if (interval == num) {
+  if (interval == num || block.down || block.left || block.right || block.up) {
     clearInterval(myInt);
     interval = 0
     myInt = null;
