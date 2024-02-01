@@ -48,7 +48,8 @@ if ($urlNumber > 0) {
 
 <body>
 	<canvas id="gameCanvas"></canvas>
-	<script src="./script.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="./assets/script.js"></script>
 
 
 </body>
