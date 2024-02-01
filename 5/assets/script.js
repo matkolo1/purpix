@@ -25,20 +25,19 @@ function sie(size) {
   size *= Math.floor(canvas.width / 10);
   return size;
 }
-
 var player = {
-  x: canvas.width / 2 - siz(30), //240
-  y: canvas.height / 2 - siz(30), //420
+  x: canvas.width / 2 - siz(30),
+  y: canvas.height / 2 - siz(30),
   size: siz(60),
   projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
 };
 
 const backgroundImage = new Image();
-backgroundImage.src = './assets/lvl1_bg.jpg';
+backgroundImage.src = './assets/lvl5_bg.jpg';
 var bg = {
-  x: player.x - siz(240),
-  y: player.y - siz(300),
-  h: siz(480 * 2),
+  x: player.x - siz(300),
+  y: player.y - siz(240),
+  h: siz(660 * 2),
   w: siz(900 * 2)
 }
 
@@ -50,12 +49,12 @@ var gameBox = {
 }
 
 var walls = {
-  A: { x: bg.x + siz(180), y: bg.y + siz(480), w: siz(120), h: siz(300) },
-  B: { x: bg.x + siz(300), y: bg.y + siz(480), w: siz(360), h: siz(60) },
-  C: { x: bg.x + siz(840), y: bg.y + siz(300), w: siz(120), h: siz(480) },
-  D: { x: bg.x + siz(780), y: bg.y + siz(480), w: siz(240), h: siz(60) },
-  E: { x: bg.x + siz(1140), y: bg.y + siz(480), w: siz(360), h: siz(60) },
-  F: { x: bg.x + siz(1500), y: bg.y + siz(480), w: siz(120), h: siz(300) },
+  A: { x: bg.x + siz(180), y: bg.y + siz(660), w: siz(1440), h: siz(60) },
+  B: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(1440), h: siz(60) },
+  C: { x: bg.x + siz(480), y: bg.y + siz(180), w: siz(60), h: siz(960) },
+  D: { x: bg.x + siz(840), y: bg.y + siz(180), w: siz(120), h: siz(960) },
+  E: { x: bg.x + siz(1260), y: bg.y + siz(180), w: siz(60), h: siz(960) },
+  F: { x: bg.x + siz(540), y: bg.y + siz(420), w: siz(720), h: siz(60) }
 }
 
 var block = {
@@ -68,35 +67,32 @@ var block = {
 const coinImg = new Image();
 coinImg.src = './assets/coin.jpg';
 var coin = {
-  A: { state: true, x: bg.x + siz(420), y: bg.y + siz(600) },
-  B: { state: true, x: bg.x + siz(600), y: bg.y + siz(660) },
-  C: { state: true, x: bg.x + siz(1140), y: bg.y + siz(660) },
-  D: { state: true, x: bg.x + siz(1320), y: bg.y + siz(600) },
+  A: { state: true, x: bg.x + siz(240), y: bg.y + siz(240) },
+  B: { state: true, x: bg.x + siz(360), y: bg.y + siz(240) },
+  C: { state: true, x: bg.x + siz(480), y: bg.y + siz(240) },
+  D: { state: true, x: bg.x + siz(600), y: bg.y + siz(240) },
   size: siz(60),
   colected: 0,
 }
 
 var end = {
-  x: bg.x + siz(1500),
-  y: bg.y + siz(300),
-}
-
-var door = {
-  A: { state: true, x: bg.x - 1 + siz(660), y: bg.y + siz(480), w: siz(122), h: siz(60) },
-  B: { state: true, x: bg.x + siz(840), y: bg.y - 1 + siz(180), w: siz(60), h: siz(122) },
-  C: { state: true, x: bg.x - 1 + siz(1020), y: bg.y + siz(480), w: siz(122), h: siz(60) },
-  num: { A: { x: bg.x + siz(640), y: bg.y + siz(500) }, B: { x: bg.x + siz(840), y: bg.y + siz(318) }, C: { x: bg.x + siz(1000), y: bg.y + siz(500) } },
+  x: bg.x + siz(1380),
+  y: bg.y + siz(720),
 }
 
 var sign = {
-  A: { state: false, x: bg.x + siz(240), y: bg.y + siz(240) },
-  B: { state: false, x: bg.x + siz(600), y: bg.y + siz(180) },
-  C: { state: false, x: bg.x + siz(1320), y: bg.y + siz(180) },
+  A: { state: false, x: bg.x + siz(360), y: bg.y + siz(420) },
 }
 
 var start = {
   x: player.x,
   y: player.y,
+}
+
+var jumppad = {
+  x: { A: bg.x + siz(720), B: bg.x + siz(840), C: bg.x + siz(1080), D: bg.x + siz(1200), E: bg.x + siz(960), F: bg.x + siz(960), G: bg.x + siz(1260), H: bg.x + siz(1260), I: bg.x + siz(1320), J: bg.x + siz(1400), },
+  y: { A: bg.y + siz(240), B: bg.y + siz(240), C: bg.y + siz(240), D: bg.y + siz(240), E: bg.y + siz(300), F: bg.y + siz(420), G: bg.y + siz(300), H: bg.y + siz(420), I: bg.y + siz(480), J: bg.y + siz(480), },
+  way: { A: 2, B: 1, C: 2, D: 1, E: 4, F: 3, G: 4, H: 3, I: 2, J: 1 }
 }
 
 var interval = 0;
@@ -110,16 +106,6 @@ function draw() {
   if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
   if (coin.C.state) c.drawImage(coinImg, coin.C.x, coin.C.y, coin.size, coin.size);
   if (coin.D.state) c.drawImage(coinImg, coin.D.x, coin.D.y, coin.size, coin.size);
-
-  c.fillStyle = '#aaaaaa';
-  if (door['A']['state']) c.fillRect(door.A.x, door.A.y, door.A.w, door.A.h);
-  if (door.B.state) c.fillRect(door.B.x, door.B.y, door.B.w, door.B.h);
-  if (door.C.state) c.fillRect(door.C.x, door.C.y, door.C.w, door.C.h);
-  c.fillStyle = 'black';
-  c.font = '20px Verdana';
-  c.fillText('1', door.num.A.x, door.num.A.y);
-  c.fillText('2', door.num.B.x, door.num.B.y);
-  c.fillText('3', door.num.C.x, door.num.C.y);
 
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
@@ -144,16 +130,18 @@ function move(side) {
     coin.C[prop] += value;
     coin.D[prop] += value;
     end[prop] += value;
-    door.A[prop] += value;
-    door.B[prop] += value;
-    door.C[prop] += value;
-    door.num.A[prop] += value;
-    door.num.B[prop] += value;
-    door.num.C[prop] += value;
     sign.A[prop] += value;
-    sign.B[prop] += value;
-    sign.C[prop] += value;
     start[prop] += value;
+    jumppad[prop].A += value;
+    jumppad[prop].B += value;
+    jumppad[prop].C += value;
+    jumppad[prop].D += value;
+    jumppad[prop].E += value;
+    jumppad[prop].F += value;
+    jumppad[prop].G += value;
+    jumppad[prop].H += value;
+    jumppad[prop].I += value;
+    jumppad[prop].J += value;
   }
 
 
@@ -187,18 +175,20 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'door1', 'door2', 'door3', 'menu'];
-  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'] };
+  let names = ['bot1', 'menu', 'jumppad'];
+  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'], jumppad: ['activate'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
   let work = workk.split('.')[1];
+  let code = null;
   let num = text.split('(')[1];
-  let state = { name: '', work: '', num: '' };
+  let state = { name: '', work: '', num: '', code: '' };
   if (!comands) {
     for (let name of names) {
       if (item == name) {
         state.name = [true,]
         if (item == 'menu') location.replace("../main.php");
+        if (item == ('codedoor1')) code = workk.split('.')[2];
         break;
       } else {
         state.name = [false, `${item} nebyl nalezen.`]
@@ -207,21 +197,62 @@ function CMD(text, comands) {
     if (item != 'bot1') {
       for (let wok of works.door) {
         if (work == wok) {
-          state.work = [true, false,];
+          if (item == ('codedoor1')) {
+            state.work = [true, 'codedoor',];
+            if (!(codedoor.A.near)) {
+              state.code = [false, 'Nejste u dveří.']
+              break;
+            } else if (code == null) {
+              state.code = [false, `Nebyl zadán kód.`]
+              break;
+            } else if (code == 'code') {
+              state.code = [true,]
+              if (num == null) {
+                state.num = [false, 'Nebyl zadán kód']
+                break;
+              } else if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
+                state.num = [false, `${num.slice(0, num.length - 1)} není číslo.`]
+                break;
+              } else if (!(num.slice(0, num.length - 1) == (codedoor.A.code))) {
+                state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
+                break;
+              } else if (num.at(num.length - 1) == ')') {
+                if (num.slice(0, num.length - 1) == (codedoor.A.code)) {
+                  state.num = [true,]
+                  break;
+                } else state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
+                break;
+              } else {
+                state.num = [false, `Nedokončená závorka.`]
+                break;
+              }
+            } else {
+              state.code = [false, `${code} nebyl nalezen.`]
+              break;
+            }
+          } else {
+            state.work = [true, 'door',];
+          }
           break;
         }
         else {
-          state.work = [false, false, `${work} nebyl nalezen.`];
+          state.work = [false, 'door', `${work} nebyl nalezen.`];
         }
       }
+    }
+
+    if (item == 'jumppad') {
+      if (work == 'activate') {
+        if (jump(true)) {
+          state.work = [true, 'jumppad',]
+        } else state.work = [false, 'jumppad', `Nestojíte na jumppadu.`]
+      } else state.work = [false, 'jumppad', `${work} nebylo nalezeno.`]
     }
     if (item == 'bot1') {
       for (let wok of works.bot) {
         if (work == wok) {
-          state.work = [true, true,];
-          if (num == null) {
-            num = 1
-          } else if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
+          state.work = [true, 'bot',];
+          if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
             state.num = [false, `${num.slice(0, num.length - 1)} není číslo.`]
             break;
           } else if (num.at(num.length - 1) == ')') {
@@ -233,23 +264,41 @@ function CMD(text, comands) {
           }
         }
         else {
-          state.work = [false, true, `${work} nebyl nalezen.`];
+          state.work = [false, 'bot', `${work} nebyl nalezen.`];
         }
       }
     }
     if (state.name[0]) {
-      if (state.work[0] && !state.work[1]) {
-        return true
-      } else if (state.work[0] && state.work[1] && !state.num[0]) {
-        write('err', state.num[1])
-        return false
-      } else if (state.work[0] && state.work[1] && state.num[0]) {
-        return true
-      } else if (!state.work[0]) {
+      if (state.work[0]) {
+        if (state.work[1] == 'door') {
+          return true
+        } else if (state.work[1] == 'codedoor') {
+          if (state.code[0]) {
+            if (state.num[0]) {
+              return true
+            } else {
+              write('err', state.num[1]);
+              return false
+            }
+          } else {
+            write('err', state.code[1]);
+            return false
+          }
+        } else if (state.work[1] == 'bot') {
+          if (state.num[0]) {
+            return true
+          } else {
+            write('err', state.num[1]);
+            return false
+          }
+        } else if (state.work[1] == 'jumppad') {
+          return true
+        }
+      } else {
         write('err', state.work[2])
         return false
       }
-    } else if (!state.name[0]) {
+    } else {
       write('err', state.name[1])
       return false
     }
@@ -259,35 +308,20 @@ function CMD(text, comands) {
       case ('bot1'):
         myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
-      case ('door1'):
-        switch (work) {
-          case ('open'):
-            door.A.state = false
-            break;
-          case ('close'):
-            door.A.state = true
-            break;
+      case ('codedoor1'):
+        if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
+          switch (work) {
+            case ('open'):
+              codedoor.A.state = false
+              break;
+            case ('close'):
+              codedoor.A.state = true
+              break;
+          }
         }
         break;
-      case ('door2'):
-        switch (work) {
-          case ('open'):
-            door.B.state = false
-            break;
-          case ('close'):
-            door.B.state = true
-            break;
-        }
-        break;
-      case ('door3'):
-        switch (work) {
-          case ('open'):
-            door.C.state = false
-            break;
-          case ('close'):
-            door.C.state = true
-            break;
-        }
+      case ('jumppad'):
+        jump()
         break;
     }
     draw();
@@ -338,14 +372,6 @@ function checkBlock() {
       else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
       else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
-
-    let doors = [door.A, door.B, door.C]
-    for (let obj of doors) {
-      if (obj['state'] && num == 0 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) block.left = true;
-      else if (obj['state'] && num == 1 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) block.right = true;
-      else if (obj['state'] && num == 2 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) block.up = true;
-      else if (obj['state'] && num == 3 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) block.down = true;
-    }
   }
 
   let coins = [coin.A, coin.B, coin.C, coin.D]
@@ -354,23 +380,11 @@ function checkBlock() {
   }
 
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
-  if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
-  if (player.x == sign.C.x && player.y == sign.C.y) sign.C.state = true; else sign.C.state = false;
 
-  const sign1 = 'Pohybovat se můžete i do ostatích stran. <br> Stačí nahradit "moveup" za "movedown", "moveright" nebo "moveleft". <br> Také můžete zkusit nahradit číslo v závorce.';
-  const sign2 = 'Dveře můžete otevřít použitím příkazu "door1.open" <br> nebo zavřít příkazem "door1.close". <br> Každé dveře mají jiné číslo.';
-  const sign3 = 'Abyste dokončili level, musíte posbírat všechny peníze a dojít do cíle.';
-  const startinf = 'Když se kouknete do středu pole, tak uvidíte červený čtverec. To jste vy. <br> Zkuste zadat příkaz: "bot1.moveup(1)".';
-  if (player.x == start.x && player.y == start.y) {
-    document.getElementById('itex').innerHTML = startinf;
-    document.getElementById('input').setAttribute('placeholder', 'Zadejte příkaz.');
-  }
-  else if (sign.A.state) { document.getElementById('itex').innerHTML = sign1; document.getElementById('input').removeAttribute('placeholder'); }
-  else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
-  else if (sign.C.state) document.getElementById('itex').innerHTML = sign3;
+  const sign1 = 'Tohle jsou teleportéry. Když na ně stoupneš a napíšeš příkaz "teleport.send", přemístíš se na druhý teleportér se stejnou barvou.';
+  if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else document.getElementById('itex').innerHTML = '';
 }
-
 var b;
 function timeout(work, num) { console.log('timeout')
   switch (work) {
@@ -416,13 +430,14 @@ backgroundImage.onload = function () {
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
     block.down = true; block.left = true; block.right = true; block.up = true;
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi pátý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
     var urlParams = new URLSearchParams(window.location.search);
     var url = window.location.pathname;
     var parts = url.split('/');
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
     var points = 1;
-    var url = '.././points.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
+    var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
       url: url,
@@ -433,10 +448,46 @@ function win() {
         console.error(error);
       }
     });
-    document.getElementById('itex').innerHTML = 'Vyhrál jsi první level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
-  } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) {
-    write('err', `Nedostatek peněz ${coin.colected}/4`);
-  }
+  } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
 
+function jump(ask) {
+  let jumpp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+  for (let j of jumpp) {
+    let x = jumppad.x[j]
+    let y = jumppad.y[j]
+    let way = jumppad.way[j]
 
+    if (player.x == x && player.y == y) {
+      if (ask) {
+        return true
+      } else {
+        move(way)
+        move(way)
+        draw()
+        break;
+      }
+    }
+  }
+  if (ask) return false
+}
+
+// Posluchači klávesnice pro posunutí pozadí
+window.addEventListener("keydown", function (event) {
+  checkBlock()
+  switch (event.key) {
+    case "ArrowLeft":
+      if (!block.left) move(1);
+      break;
+    case "ArrowRight":
+      if (!block.right) move(2);
+      break;
+    case 'ArrowUp':
+      if (!block.up) move(3);
+      break;
+    case 'ArrowDown':
+      if (!block.down) move(4);
+      break;
+  }
+  draw();
+});

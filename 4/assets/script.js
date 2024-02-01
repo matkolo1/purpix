@@ -415,34 +415,40 @@ function checkBlock() {
   else document.getElementById('itex').innerHTML = '';
 }
 
-function timeout(work, num) {
+var b;
+function timeout(work, num) { console.log('timeout')
   switch (work) {
     case ('moveup'):
       checkBlock()
       if (!block.up) move(3);
+      else b = true
       draw();
       break;
     case ('movedown'):
       checkBlock()
       if (!block.down) move(4);
+      else b = true
       draw();
       break;
     case ('moveleft'):
       checkBlock()
       if (!block.left) move(1);
+      else b = true
       draw();
       break;
     case ('moveright'):
       checkBlock()
       if (!block.right) move(2);
+      else b = true
       draw();
       break;
   }
   interval++
-  if (interval == num || block.down || block.left || block.right || block.up) {
+  if (interval == num || b) {
     clearInterval(myInt);
     interval = 0
     myInt = null;
+    b = null;
   }
 }
 
