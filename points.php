@@ -47,10 +47,10 @@ if (isset($_GET['id'], $_GET['points'])) {
         updateLevel($userId, $levelNumber, $points);
         exit();
     } else {
-        echo "The user is not logged in.";
+        echo "\033[31mThe user is not logged in.\033[0m\n";
     }
 } else {
-    echo "Invalid or missing 'id' or 'points' parameter in URL.";
+    echo "\033[31mInvalid or missing 'id' or 'points' parameter in URL.\033[0m\n";
 }
 
 $conn->close();
