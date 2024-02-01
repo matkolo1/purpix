@@ -92,9 +92,9 @@ foreach ($userData as $columnName => $columnValue) {
         </form>
     </div>
 
-    <div id="creditsForm">
-        <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beráněk<br>Jiří Boucník</div>
-    </div>
+    <div id="creditsForm" style="background-color: black; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
+    <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beráněk<br>Jiří Boucník</div>
+</div>
 
     <?php $conn->close(); ?>
 
