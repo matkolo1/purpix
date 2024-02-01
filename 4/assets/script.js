@@ -109,12 +109,6 @@ function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
 
-  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h)
-  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h)
-  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h)
-  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h)
-  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h)
-
   if (coin.A.state) c.drawImage(coinImg, coin.A.x, coin.A.y, coin.size, coin.size);
   if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
   if (coin.C.state) c.drawImage(coinImg, coin.C.x, coin.C.y, coin.size, coin.size);
