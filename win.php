@@ -17,8 +17,8 @@ function updateLevel($userId, $levelNumber, $points)
     $nextLevel = $levelNumber + 1;
     $nextColumnName = "level_" . $nextLevel;
 
-    // Aktualizace hodnoty v tabulce 'users' pouze pokud aktuální hodnota je rovna 69
-    $sql = "UPDATE users SET $columnName = ?, $nextColumnName = 96 WHERE id = ? AND $nextColumnName = 69";
+    // Aktualizace hodnoty v tabulce 'users'
+    $sql = "UPDATE users SET $columnName = ?, $nextColumnName = 96 WHERE id = ?";
 
     // Převedení $points na číslo a $nextColumnName na řetězec
     $points = (int) $points;
@@ -34,7 +34,6 @@ function updateLevel($userId, $levelNumber, $points)
 
     $stmt->close();
 }
-
 
 
 
