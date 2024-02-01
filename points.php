@@ -27,9 +27,9 @@ function updateLevel($userId, $levelNumber, $points)
     $stmt->bind_param("ii", $points, $userId);
 
     if ($stmt->execute()) {
-        echo "Record updated successfully";
+        echo "\033[32mRecord updated successfully.\033[0m\n";
     } else {
-        echo "Error updating record: " . $stmt->error;
+        echo "\033[31mError updating record: \033[0m\n" . $stmt->error;
     }
 
     $stmt->close();
@@ -45,14 +45,12 @@ if (isset($_GET['id'], $_GET['points'])) {
 
     if ($userId) {
         updateLevel($userId, $levelNumber, $points);
-
-        echo '<script>window.close();</script>';
         exit();
     } else {
-        echo "Uživatel není přihlášen.";
+        echo "The user is not logged in.";
     }
 } else {
-    echo "Neplatný nebo chybějící 'id' nebo 'points' parametr v URL.";
+    echo "Invalid or missing 'id' or 'points' parameter in URL.";
 }
 
 $conn->close();
