@@ -15,6 +15,11 @@ document.getElementById('input').style.height = `${siz(30)}px`;
 document.getElementById('input').style.fontSize = `${siz(15)}px`
 document.getElementById('cntrl').style.width = `${sie(200)}px`;
 
+var start, codedoor, sign, bg, player, gameBox, walls, block, coin, end, door;
+const codedoorImg = new Image();
+const backgroundImage = new Image();
+const coinImg = new Image();
+
 function siz(size) {
   size /= 60;
   size *= Math.floor(canvas.height / 10);
@@ -26,110 +31,110 @@ function sie(size) {
   return size;
 }
 
-var player = {
-  x: canvas.width / 2 - siz(30),
-  y: canvas.height / 2 - siz(30),
-  size: siz(60),
-  projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
-};
+strt()
+function strt() {
+  player = {
+    x: canvas.width / 2 - siz(30),
+    y: canvas.height / 2 - siz(30),
+    size: siz(60),
+    projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
+  };
 
-const backgroundImage = new Image();
-backgroundImage.src = './assets/lvl3_bg.jpg';
-var bg = {
-  x: player.x - siz(660),
-  y: player.y - siz(240),
-  h: siz(900 * 2),
-  w: siz(510 * 2)
-}
+  backgroundImage.src = './assets/lvl3_bg.jpg';
+  bg = {
+    x: player.x - siz(660),
+    y: player.y - siz(240),
+    h: siz(900 * 2),
+    w: siz(510 * 2)
+  }
 
-var gameBox = {
-  x: bg.x + siz(180),
-  y: bg.y + siz(180),
-  h: bg.h - siz(360),
-  w: bg.w - siz(360)
-}
+  gameBox = {
+    x: bg.x + siz(180),
+    y: bg.y + siz(180),
+    h: bg.h - siz(360),
+    w: bg.w - siz(360)
+  }
 
-var walls = {
-  A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(240), h: siz(60) },
-  B: { x: bg.x + siz(540), y: bg.y + siz(360), w: siz(300), h: siz(60) },
-  C: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(240), h: siz(60) },
-  D: { x: bg.x + siz(540), y: bg.y + siz(780), w: siz(300), h: siz(60) },
-  E: { x: bg.x + siz(180), y: bg.y + siz(1380), w: siz(240), h: siz(60) },
-  F: { x: bg.x + siz(540), y: bg.y + siz(1380), w: siz(300), h: siz(60) },
+  walls = {
+    A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(240), h: siz(60) },
+    B: { x: bg.x + siz(540), y: bg.y + siz(360), w: siz(300), h: siz(60) },
+    C: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(240), h: siz(60) },
+    D: { x: bg.x + siz(540), y: bg.y + siz(780), w: siz(300), h: siz(60) },
+    E: { x: bg.x + siz(180), y: bg.y + siz(1380), w: siz(240), h: siz(60) },
+    F: { x: bg.x + siz(540), y: bg.y + siz(1380), w: siz(300), h: siz(60) },
 
-}
+  }
 
-var block = {
-  left: false,
-  right: false,
-  up: false,
-  down: false
-}
+  block = {
+    left: false,
+    right: false,
+    up: false,
+    down: false
+  }
 
-const coinImg = new Image();
-coinImg.src = './assets/coin.jpg';
-var coin = {
-  A: { state: true, x: bg.x + siz(720), y: bg.y + siz(480) },
-  B: { state: true, x: bg.x + siz(240), y: bg.y + siz(660) },
-  C: { state: true, x: bg.x + siz(720), y: bg.y + siz(1020) },
-  D: { state: true, x: bg.x + siz(720), y: bg.y + siz(1140) },
-  size: siz(60),
-  colected: 0,
-}
+  coinImg.src = './assets/coin.jpg';
+  coin = {
+    A: { state: true, x: bg.x + siz(720), y: bg.y + siz(480) },
+    B: { state: true, x: bg.x + siz(240), y: bg.y + siz(660) },
+    C: { state: true, x: bg.x + siz(720), y: bg.y + siz(1020) },
+    D: { state: true, x: bg.x + siz(720), y: bg.y + siz(1140) },
+    size: siz(60),
+    colected: 0,
+  }
 
-var end = {
-  x: bg.x + siz(660),
-  y: bg.y + siz(1500),
-}
+  end = {
+    x: bg.x + siz(660),
+    y: bg.y + siz(1500),
+  }
 
-var door = {
-  A: { state: false, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
-  B: { state: false, x: bg.x - 1 + siz(420), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
-  num: { A: { x: bg.x + siz(405), y: bg.y + siz(375) }, B: { x: bg.x + siz(405), y: bg.y + siz(1395) } },
-}
+  door = {
+    A: { state: false, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
+    B: { state: false, x: bg.x - 1 + siz(420), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
+    num: { A: { x: bg.x + siz(405), y: bg.y + siz(375) }, B: { x: bg.x + siz(405), y: bg.y + siz(1395) } },
+  }
 
-const codedoorImg = new Image();
-codedoorImg.src = './assets/CodedoorsW.jpg';
-var codedoor = {
-  A: { state: false, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
-  num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
-}
+  codedoorImg.src = './assets/CodedoorsW.jpg';
+  codedoor = {
+    A: { state: false, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
+    num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
+  }
 
-var turrets = {
-  A: {
-    way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(420), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 5, a1: 0, a2: -1, },
-  },
-  B: {
-    way: [-1, 0], x: bg.x + siz(780), y: bg.y + siz(600), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
-  },
-  C: {
-    way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
-  },
-  D: {
-    way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(960), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
-  },
-  E: {
-    way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(1200), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
-  },
-  F: {
-    way: [0, -1], x: bg.x + siz(660), y: bg.y + siz(1320), w: siz(60), h: siz(60),
-    pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
-  },
-}
+  turrets = {
+    A: {
+      way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(420), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 5, a1: 0, a2: -1, },
+    },
+    B: {
+      way: [-1, 0], x: bg.x + siz(780), y: bg.y + siz(600), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
+    },
+    C: {
+      way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
+    },
+    D: {
+      way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(960), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
+    },
+    E: {
+      way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(1200), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
+    },
+    F: {
+      way: [0, -1], x: bg.x + siz(660), y: bg.y + siz(1320), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
+    },
+  }
 
-var sign = {
-  A: { state: false, x: bg.x + siz(540), y: bg.y + siz(480) },
-  B: { state: false, x: bg.x + siz(720), y: bg.y + siz(720) },
-}
+  sign = {
+    A: { state: false, x: bg.x + siz(540), y: bg.y + siz(480) },
+    B: { state: false, x: bg.x + siz(720), y: bg.y + siz(720) },
+  }
 
-var start = {
-  x: player.x,
-  y: player.y,
+  start = {
+    x: player.x,
+    y: player.y,
+  }
 }
 
 var interval = 0;
@@ -175,7 +180,7 @@ function draw() {
   if (turrets.F.pro.state2) c.fillRect(turrets.F.pro.x2, turrets.F.pro.y2, player.size, player.size);
 
 
-
+  checkBlock()
   win()
 }
 
@@ -491,7 +496,7 @@ function checkBlock() {
 
   let turretts = [turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F]
   for (let turret of turretts) {
-    for (let i = 1; i < 2; i++) {
+    for (let i = 1; i <= 2; i++) {
       let x = turret.pro[`x${i}`]
       let y = turret.pro[`y${i}`]
       if (player.x == x && player.y == y) ded()
@@ -596,7 +601,8 @@ function fire() {
 }
 
 function ded() {
-  
+  strt()
+  if (points != 1) points--
 }
 
 // Posluchači klávesnice pro posunutí pozadí
