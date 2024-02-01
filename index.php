@@ -39,26 +39,27 @@ $conn->close();
 </head>
 
 <body>
-<div id="gameTitle">PurPix</div>
-<div id="loginForm">
-    <div class="lobby">Přihlášení</div>
-    <?php
-    if (isset($loginError)) {
-        echo '<div style="color: #ff0000;"><b>' . $loginError . '</b></div>';
-    }
-    ?>
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <input type="text" name="username" required placeholder="Uživatelské jméno">
-        <br>
-        <input type="password" name="password" required placeholder="Heslo">
-        <br>
-        <input type="submit" value="Přihlásit se">
-    </form>
-</div>
+    <div id="gameTitle">PurPix</div>
+    <div id="loginForm">
+        <div class="lobby">Přihlášení</div>
+        <?php
+        if (isset($loginError)) {
+            echo '<div style="color: #ff0000;"><b>' . $loginError . '</b></div>';
+        }
+        ?>
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="text" name="username" required placeholder="Uživatelské jméno">
+            <br>
+            <input type="password" name="password" required placeholder="Heslo">
+            <br>
+            <input type="submit" value="Přihlásit se">
+        </form>
+    </div>
 
-<div id="creditsForm" style="background-color: black; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
-    <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beráněk<br>Jiří Boucník</div>
-</div>
+    <div id="creditsForm"
+        style="background-color: black; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
+        <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beránek<br>Jiří Boucník</div>
+    </div>
 
 
 
