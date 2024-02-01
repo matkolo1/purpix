@@ -416,7 +416,7 @@ function win() {
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
     var points = 1;
-    var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
+    var url = '.././points.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
       url: url,
