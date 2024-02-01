@@ -15,11 +15,6 @@ document.getElementById('input').style.height = `${siz(30)}px`;
 document.getElementById('input').style.fontSize = `${siz(15)}px`
 document.getElementById('cntrl').style.width = `${sie(200)}px`;
 
-var start, codedoor, sign, bg, player, gameBox, walls, block, coin, end, door;
-const codedoorImg = new Image();
-const backgroundImage = new Image();
-const coinImg = new Image();
-
 function siz(size) {
   size /= 60;
   size *= Math.floor(canvas.height / 10);
@@ -30,158 +25,113 @@ function sie(size) {
   size *= Math.floor(canvas.width / 10);
   return size;
 }
+var player = {
+  x: canvas.width / 2 - siz(30),
+  y: canvas.height / 2 - siz(30),
+  size: siz(60),
+  projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
+};
 
-strt()
-function strt() {
-  player = {
-    x: canvas.width / 2 - siz(30),
-    y: canvas.height / 2 - siz(30),
-    size: siz(60),
-    projection: [[1, 0, 1], [-1, 0, 0], [0, 1, 3], [0, -1, 2]]
-  };
+const backgroundImage = new Image();
+backgroundImage.src = './assets/lvl4_bg.jpg';
+var bg = {
+  x: player.x - siz(300),
+  y: player.y - siz(600),
+  h: siz(510 * 2),
+  w: siz(900 * 2)
+}
 
-  backgroundImage.src = './assets/lvl3_bg.jpg';
-  bg = {
-    x: player.x - siz(660),
-    y: player.y - siz(240),
-    h: siz(900 * 2),
-    w: siz(510 * 2)
-  }
+var gameBox = {
+  x: bg.x + siz(180),
+  y: bg.y + siz(180),
+  h: bg.h - siz(360),
+  w: bg.w - siz(360)
+}
 
-  gameBox = {
-    x: bg.x + siz(180),
-    y: bg.y + siz(180),
-    h: bg.h - siz(360),
-    w: bg.w - siz(360)
-  }
+var walls = {
+  A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(1440), h: siz(60) },
+  B: { x: bg.x + siz(780), y: bg.y + siz(180), w: siz(60), h: siz(660) },
+  C: { x: bg.x + siz(1140), y: bg.y + siz(180), w: siz(60), h: siz(660) },
+  D: { x: bg.x + siz(1200), y: bg.y + siz(600), w: siz(300), h: siz(60) },
+  E: { x: bg.x + siz(1380), y: bg.y + siz(420), w: siz(60), h: siz(180) },
+}
 
-  walls = {
-    A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(240), h: siz(60) },
-    B: { x: bg.x + siz(540), y: bg.y + siz(360), w: siz(300), h: siz(60) },
-    C: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(240), h: siz(60) },
-    D: { x: bg.x + siz(540), y: bg.y + siz(780), w: siz(300), h: siz(60) },
-    E: { x: bg.x + siz(180), y: bg.y + siz(1380), w: siz(240), h: siz(60) },
-    F: { x: bg.x + siz(540), y: bg.y + siz(1380), w: siz(300), h: siz(60) },
+var block = {
+  left: false,
+  right: false,
+  up: false,
+  down: false
+}
 
-  }
+const coinImg = new Image();
+coinImg.src = './assets/coin.jpg';
+var coin = {
+  A: { state: true, x: bg.x + siz(240), y: bg.y + siz(240) },
+  B: { state: true, x: bg.x + siz(360), y: bg.y + siz(240) },
+  C: { state: true, x: bg.x + siz(480), y: bg.y + siz(240) },
+  D: { state: true, x: bg.x + siz(600), y: bg.y + siz(240) },
+  size: siz(60),
+  colected: 0,
+}
 
-  block = {
-    left: false,
-    right: false,
-    up: false,
-    down: false
-  }
+var end = {
+  x: bg.x + siz(1380),
+  y: bg.y + siz(720),
+}
 
-  coinImg.src = './assets/coin.jpg';
-  coin = {
-    A: { state: true, x: bg.x + siz(720), y: bg.y + siz(480) },
-    B: { state: true, x: bg.x + siz(240), y: bg.y + siz(660) },
-    C: { state: true, x: bg.x + siz(720), y: bg.y + siz(1020) },
-    D: { state: true, x: bg.x + siz(720), y: bg.y + siz(1140) },
-    size: siz(60),
-    colected: 0,
-  }
+const codedoorImg = new Image();
+codedoorImg.src = './assets/CodedoorsW.jpg';
+var codedoor = {
+  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1500), y: bg.y + siz(600), w: siz(121), h: siz(60) },
+  num: { A: { x: bg.x + siz(1480), y: bg.y + siz(615) }, },
+}
 
-  end = {
-    x: bg.x + siz(660),
-    y: bg.y + siz(1500),
-  }
+var sign = {
+  A: { state: false, x: bg.x + siz(600), y: bg.y + siz(540) },
+  B: { state: false, x: bg.x + siz(1500), y: bg.y + siz(240) },
+}
 
-  door = {
-    A: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
-    B: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
-    num: { A: { x: bg.x + siz(405), y: bg.y + siz(375) }, B: { x: bg.x + siz(405), y: bg.y + siz(1395) } },
-  }
+var start = {
+  x: player.x,
+  y: player.y,
+}
 
-  codedoorImg.src = './assets/CodedoorsW.jpg';
-  codedoor = {
-    A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
-    num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
-  }
-
-  turrets = {
-    A: {
-      way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(420), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 5, a1: 0, a2: -1, },
-    },
-    B: {
-      way: [-1, 0], x: bg.x + siz(780), y: bg.y + siz(600), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
-    },
-    C: {
-      way: [0, 1], x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
-    },
-    D: {
-      way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(960), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
-    },
-    E: {
-      way: [1, 0], x: bg.x + siz(180), y: bg.y + siz(1200), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
-    },
-    F: {
-      way: [0, -1], x: bg.x + siz(660), y: bg.y + siz(1320), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
-    },
-  }
-
-  sign = {
-    A: { state: false, x: bg.x + siz(540), y: bg.y + siz(480) },
-    B: { state: false, x: bg.x + siz(720), y: bg.y + siz(720) },
-  }
-
-  start = {
-    x: player.x,
-    y: player.y,
-  }
+var jumppad = {
+  x: { A: bg.x + siz(720), B: bg.x + siz(840), C: bg.x + siz(1080), D: bg.x + siz(1200), E: bg.x + siz(960), F: bg.x + siz(960), G: bg.x + siz(1260), H: bg.x + siz(1260), I: bg.x + siz(1320), J: bg.x + siz(1400), K: bg.x + siz(720), L: bg.x + siz(840) },
+  y: { A: bg.y + siz(240), B: bg.y + siz(240), C: bg.y + siz(240), D: bg.y + siz(240), E: bg.y + siz(300), F: bg.y + siz(420), G: bg.y + siz(300), H: bg.y + siz(420), I: bg.y + siz(480), J: bg.y + siz(480), K: bg.y + siz(600), L: bg.y + siz(600) },
+  way: { A: 2, B: 1, C: 2, D: 1, E: 4, F: 3, G: 4, H: 3, I: 2, J: 1, K: 2, L: 1 }
 }
 
 var interval = 0;
 var myInt;
-var points = 5;
 
-function draw(fire) {
+function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.drawImage(backgroundImage, bg.x, bg.y, bg.w, bg.h);
+
+  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h)
+  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h)
+  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h)
+  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h)
+  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h)
 
   if (coin.A.state) c.drawImage(coinImg, coin.A.x, coin.A.y, coin.size, coin.size);
   if (coin.B.state) c.drawImage(coinImg, coin.B.x, coin.B.y, coin.size, coin.size);
   if (coin.C.state) c.drawImage(coinImg, coin.C.x, coin.C.y, coin.size, coin.size);
   if (coin.D.state) c.drawImage(coinImg, coin.D.x, coin.D.y, coin.size, coin.size);
 
-  c.fillStyle = '#aaaaaa';
-  if (door.A.state) c.fillRect(door.A.x, door.A.y, door.A.w, door.A.h);
-  if (door.B.state) c.fillRect(door.B.x, door.B.y, door.B.w, door.B.h);
-
   if (codedoor.A.state) c.drawImage(codedoorImg, codedoor.A.x, codedoor.A.y, codedoor.A.w, codedoor.A.h);
 
   c.fillStyle = 'black';
   c.font = '20px Verdana';
-  c.fillText('1', door.num.A.x, door.num.A.y);
-  c.fillText('2', door.num.B.x, door.num.B.y);
   c.fillText('1', codedoor.num.A.x, codedoor.num.A.y);
 
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 
-  c.fillStyle = 'darkred';
-  if (turrets.A.pro.state1) c.fillRect(turrets.A.pro.x1, turrets.A.pro.y1, player.size, player.size);
-  if (turrets.B.pro.state1) c.fillRect(turrets.B.pro.x1, turrets.B.pro.y1, player.size, player.size);
-  if (turrets.C.pro.state1) c.fillRect(turrets.C.pro.x1, turrets.C.pro.y1, player.size, player.size);
-  if (turrets.D.pro.state1) c.fillRect(turrets.D.pro.x1, turrets.D.pro.y1, player.size, player.size);
-  if (turrets.E.pro.state1) c.fillRect(turrets.E.pro.x1, turrets.E.pro.y1, player.size, player.size);
-  if (turrets.F.pro.state1) c.fillRect(turrets.F.pro.x1, turrets.F.pro.y1, player.size, player.size);
-  if (turrets.A.pro.state2) c.fillRect(turrets.A.pro.x2, turrets.A.pro.y2, player.size, player.size);
-  if (turrets.B.pro.state2) c.fillRect(turrets.B.pro.x2, turrets.B.pro.y2, player.size, player.size);
-  if (turrets.C.pro.state2) c.fillRect(turrets.C.pro.x2, turrets.C.pro.y2, player.size, player.size);
-  if (turrets.D.pro.state2) c.fillRect(turrets.D.pro.x2, turrets.D.pro.y2, player.size, player.size);
-  if (turrets.E.pro.state2) c.fillRect(turrets.E.pro.x2, turrets.E.pro.y2, player.size, player.size);
-  if (turrets.F.pro.state2) c.fillRect(turrets.F.pro.x2, turrets.F.pro.y2, player.size, player.size);
 
 
-  checkBlock()
-  if (!fire) win()
+  win()
 }
 
 function move(side) {
@@ -193,39 +143,28 @@ function move(side) {
     walls.C[prop] += value;
     walls.D[prop] += value;
     walls.E[prop] += value;
-    walls.F[prop] += value;
     coin.A[prop] += value;
     coin.B[prop] += value;
     coin.C[prop] += value;
     coin.D[prop] += value;
     end[prop] += value;
-    door.A[prop] += value;
-    door.B[prop] += value;
-    door.num.A[prop] += value;
-    door.num.B[prop] += value;
     sign.A[prop] += value;
     sign.B[prop] += value;
     start[prop] += value;
     codedoor.A[prop] += value;
     codedoor.num.A[prop] += value;
-    turrets.A[prop] += value;
-    turrets.B[prop] += value;
-    turrets.C[prop] += value;
-    turrets.D[prop] += value;
-    turrets.E[prop] += value;
-    turrets.F[prop] += value;
-    turrets.A.pro[`${prop}1`] += value;
-    turrets.B.pro[`${prop}1`] += value;
-    turrets.C.pro[`${prop}1`] += value;
-    turrets.D.pro[`${prop}1`] += value;
-    turrets.E.pro[`${prop}1`] += value;
-    turrets.F.pro[`${prop}1`] += value;
-    turrets.A.pro[`${prop}2`] += value;
-    turrets.B.pro[`${prop}2`] += value;
-    turrets.C.pro[`${prop}2`] += value;
-    turrets.D.pro[`${prop}2`] += value;
-    turrets.E.pro[`${prop}2`] += value;
-    turrets.F.pro[`${prop}2`] += value;
+    jumppad[prop].A += value;
+    jumppad[prop].B += value;
+    jumppad[prop].C += value;
+    jumppad[prop].D += value;
+    jumppad[prop].E += value;
+    jumppad[prop].F += value;
+    jumppad[prop].G += value;
+    jumppad[prop].H += value;
+    jumppad[prop].I += value;
+    jumppad[prop].J += value;
+    jumppad[prop].K += value;
+    jumppad[prop].L += value;
   }
 
 
@@ -259,8 +198,8 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'door1', 'door2', 'door3', 'menu', 'codedoor1', 'codedoor2'];
-  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'] };
+  let names = ['bot1', 'menu', 'codedoor1', 'jumppad'];
+  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'], jumppad: ['activate'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
   let work = workk.split('.')[1];
@@ -272,7 +211,7 @@ function CMD(text, comands) {
       if (item == name) {
         state.name = [true,]
         if (item == 'menu') location.replace("../main.php");
-        if (item == ('codedoor1' || 'codedoor2')) code = workk.split('.')[2];
+        if (item == ('codedoor1')) code = workk.split('.')[2];
         break;
       } else {
         state.name = [false, `${item} nebyl nalezen.`]
@@ -281,7 +220,7 @@ function CMD(text, comands) {
     if (item != 'bot1') {
       for (let wok of works.door) {
         if (work == wok) {
-          if (item == ('codedoor1' || 'codedoor2')) {
+          if (item == ('codedoor1')) {
             state.work = [true, 'codedoor',];
             if (!(codedoor.A.near)) {
               state.code = [false, 'Nejste u dveří.']
@@ -314,13 +253,23 @@ function CMD(text, comands) {
               state.code = [false, `${code} nebyl nalezen.`]
               break;
             }
-          } else state.work = [true, 'door',];
+          } else {
+            state.work = [true, 'door',];
+          }
           break;
         }
         else {
           state.work = [false, 'door', `${work} nebyl nalezen.`];
         }
       }
+    }
+
+    if (item == 'jumppad') {
+      if (work == 'activate') {
+        if (jump(true)) {
+          state.work = [true, 'jumppad',]
+        } else state.work = [false, 'jumppad', `Nestojíte na jumppadu.`]
+      } else state.work = [false, 'jumppad', `${work} nebylo nalezeno.`]
     }
     if (item == 'bot1') {
       for (let wok of works.bot) {
@@ -365,6 +314,8 @@ function CMD(text, comands) {
             write('err', state.num[1]);
             return false
           }
+        } else if (state.work[1] == 'jumppad') {
+          return true
         }
       } else {
         write('err', state.work[2])
@@ -380,26 +331,6 @@ function CMD(text, comands) {
       case ('bot1'):
         myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
-      case ('door1'):
-        switch (work) {
-          case ('open'):
-            door.A.state = false
-            break;
-          case ('close'):
-            door.A.state = true
-            break;
-        }
-        break;
-      case ('door2'):
-        switch (work) {
-          case ('open'):
-            door.B.state = false
-            break;
-          case ('close'):
-            door.B.state = true
-            break;
-        }
-        break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
           switch (work) {
@@ -411,6 +342,9 @@ function CMD(text, comands) {
               break;
           }
         }
+        break;
+      case ('jumppad'):
+        jump()
         break;
     }
     draw();
@@ -455,20 +389,12 @@ function checkBlock() {
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F];
+    let items = [walls.A, walls.B, walls.C, walls.D, walls.E];
     for (let wall of items) {
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
       else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
       else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
-    }
-
-    let doors = [door.A, door.B]
-    for (let obj of doors) {
-      if (obj['state'] && num == 0 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) { block.left = true; }
-      else if (obj['state'] && num == 1 && pr.x >= obj['x'] && pr.x < obj['x'] + obj['w'] && pr.y < obj['y'] + obj['h'] && pr.y >= obj['y']) { block.right = true; }
-      else if (obj['state'] && num == 2 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) { block.up = true; }
-      else if (obj['state'] && num == 3 && pr.y >= obj['y'] && pr.y < obj['y'] + obj['h'] && pr.x < obj['x'] + obj['w'] && pr.x >= obj['x']) { block.down = true; }
     }
 
     doors = [codedoor.A]
@@ -488,20 +414,11 @@ function checkBlock() {
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
   if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
-  const sign1 = `Toto je laser. <br>Když se ho dotkneš ztratíš bod a začínáš tento level odzačátku. <br>Tvůj aktuální počet bodů je ${points}.`;
+  const sign1 = 'Tohle jsou jumppady. Když na ně stoupneš a napíšeš příkaz "jumppad.activate", dokážeš přeskočit i stěnu.';
   const sign2 = `codedoor1 = ${codedoor.A.code}`;
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
-
-  let turretts = [turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F]
-  for (let turret of turretts) {
-    for (let i = 1; i <= 2; i++) {
-      let x = turret.pro[`x${i}`]
-      let y = turret.pro[`y${i}`]
-      if (player.x == x && player.y == y) ded()
-    }
-  }
 }
 
 function timeout(work, num) {
@@ -542,8 +459,8 @@ backgroundImage.onload = function () {
 
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
-    document.getElementById('itex').innerHTML = 'Vyhrál jsi třetí level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
     block.down = true; block.left = true; block.right = true; block.up = true;
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi čtvrtý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
     var urlParams = new URLSearchParams(window.location.search);
     var url = window.location.pathname;
     var parts = url.split('/');
@@ -563,44 +480,25 @@ function win() {
     });
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
-setInterval(fire, 500)
-function fire() {
-  let turretts = [turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F]
-  for (let turret of turretts) {
-    let prp = turret['pro'];
-    let next = { x: turret.way[0] * player.size, y: turret.way[1] * player.size };
-    if (prp.state1 && (prp.a1 < prp.l) && (prp.a1 >= 0)) {
-      prp.x1 += next.x
-      prp.y1 += next.y
-    } else if (prp.state1 && (prp.a1 == prp.l)) {
-      prp.state1 = false
-      prp.x1 = 0
-      prp.y1 = 0
-      prp.a1 = -1
-    } else {
-      prp.state1 = true
-      prp.x1 = turret.x + next.x
-      prp.y1 = turret.y + next.y
-    }
-    if (prp.state2 && (prp.a2 < prp.l) && (prp.a2 >= 0)) {
-      prp.x2 += next.x
-      prp.y2 += next.y
-    } else if (prp.state2 && (prp.a2 == prp.l)) {
-      prp.state2 = false
-      prp.x2 = 0
-      prp.y2 = 0
-      prp.a2 = -1
-    } else {
-      prp.state2 = true
-      prp.x2 = turret.x + next.x
-      prp.y2 = turret.y + next.y
-    }
-    prp.a1++; prp.a2++;
+
+function jump(ask) {
+  let jumpp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+  for (let j of jumpp) {
+    let x = jumppad.x[j]
+    let y = jumppad.y[j]
+    let way = jumppad.way[j]
+
+    if (player.x == x && player.y == y) {
+      if (ask) {
+        return true
+      } else {
+        move(way)
+        move(way)
+        draw()
+        break;
+      }
+    } 
   }
-  draw(true)
+  if (ask) return false
 }
 
-function ded() {
-  strt()
-  if (points != 1) points--
-}
