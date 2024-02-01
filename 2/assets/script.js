@@ -501,7 +501,7 @@ backgroundImage.onload = function () {
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
     block.down = true; block.left = true; block.right = true; block.up = true;
-    document.getElementById('itex').innerHTML = 'Vyhrál jsi druhý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
+
     var urlParams = new URLSearchParams(window.location.search);
     var url = window.location.pathname;
     var parts = url.split('/');
@@ -519,6 +519,7 @@ function win() {
         console.error(error);
       }
     });
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi druhý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
   } else if (coin.colected < 4 && player.x == end.x && player.y == end.y) write('err', `Nedostatek peněz ${coin.colected}/4`);
 }
 
