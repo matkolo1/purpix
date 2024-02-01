@@ -604,23 +604,3 @@ function ded() {
   strt()
   if (points != 1) points--
 }
-
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
-  }
-  draw();
-});
