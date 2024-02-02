@@ -22,7 +22,7 @@ function siz(size) {
 }
 function sie(size) {
   size /= 60;
-  size *= Math.floor(canvas.width / 10);
+  size *= Math.floor(window.innerWidth / 10);
   return size;
 }
 var player = {

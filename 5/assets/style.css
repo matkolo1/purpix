@@ -2,12 +2,16 @@ body {
     margin: 0;
     overflow: hidden;
     background-color: #000000;
+    width: 100%;
+    height: 100%;
   }
   
   canvas {
     display: block;
     position: absolute;
     background-color: #000000;
+    left: 0;
+    top: 0;
   }
   
   .cntrl {
