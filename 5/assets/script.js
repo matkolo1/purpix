@@ -386,7 +386,7 @@ function checkBlock() {
   else document.getElementById('itex').innerHTML = '';
 }
 var b;
-function timeout(work, num) { console.log('timeout')
+function timeout(work, num) {
   switch (work) {
     case ('moveup'):
       checkBlock()
