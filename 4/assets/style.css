@@ -2,7 +2,6 @@ body {
   margin: 0;
   overflow: hidden;
   background-color: #000000;
-  font-family: sans-serif;
 }
 
 canvas {
@@ -17,10 +16,11 @@ canvas {
   position: absolute;
   display: block;
   background-color: #000000;
+  width: 299px;
+  height: 50vh;
+  border: 1px solid #000000;
   border-bottom: none;
   border-right: none;
-  font-family: 'Fira Mono';
-  border-radius: 10px;
 }
 
 #input {
@@ -31,7 +31,7 @@ canvas {
   background-color: #303030;
   color: #fff;
   display: flex;
-  border-radius: 10px;
+  margin-bottom: 5px;
 }
 
 .info {
@@ -39,25 +39,24 @@ canvas {
 }
 
 .err {
-  padding: 2px;
-  margin: 2px;
+  margin: 1px;
   color: #ff0000;
 }
 
 .cmd {
-  padding: 2px;
-  margin: 2px;
+  margin: 1px;
   color: #63de00;
 }
 
 .text {
-  font-family: sans-serif;
-  padding: 5px;
+  
   color: white;
+  width: 300px;
+  height: 50vh;
   position: absolute;
   display: block;
   right: 0;
   top: 0;
-  border-radius: 10px;
+  font-size: 25px;
   background-color: #000000;
 }
