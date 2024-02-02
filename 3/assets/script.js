@@ -492,7 +492,7 @@ function checkBlock() {
   const sign2 = `codedoor1 = ${codedoor.A.code}`;
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
-  else document.getElementById('itex').innerHTML = '';
+  else if (player.x != end.x && player.y != end.y) document.getElementById('itex').innerHTML = '';
 
   let turretts = [turrets.A, turrets.B, turrets.C, turrets.D, turrets.E, turrets.F]
   for (let turret of turretts) {
