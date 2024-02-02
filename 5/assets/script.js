@@ -266,7 +266,7 @@ function CMD(text, comands) {
 
     if (item == 'teleport') {
       if (work == 'send') {
-        if (teleporters.A.state || teleporters.B.state || teleporters.C.state || teleporters.D.state) {
+        if (port(true)) {
           state.work = [true, 'teleport',]
         } else state.work = [false, 'teleport', 'Nestojíte na teleportu.']
       } else state.work = [false, 'teleport', `${work} nebylo nalezeno.`]
@@ -413,11 +413,6 @@ function checkBlock() {
   const sign1 = 'Tohle jsou teleportéry. Když na ně stoupneš a napíšeš příkaz "teleport.send", přemístíš se na druhý teleportér se stejnou barvou.';
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else document.getElementById('itex').innerHTML = '';
-
-  let ports = [teleporters.A, teleporters.B, teleporters.C, teleporters.D]
-  for (let port of ports) {
-    if (player.x == port.x1 && player.y == port.y1 || player.x == port.x2 && player.y == port.y2) port.state = true;
-  }
 }
 var b;
 function timeout(work, num) {
@@ -504,17 +499,21 @@ function jump(ask) {
   if (ask) return false
 }
 
-function port() {
+function port(ask) {
   let ports = [teleporters.A, teleporters.B, teleporters.C, teleporters.D]
   for (let port of ports) {
-    if (port.state) {
-      if (player.x == port.x1) {
+    if (player.x == port.x1 && player.y == port.y1) {
+      if (ask) return true
+      else {
         for (let [loop, way] of port.way1) {
           for (let i = 0; i < loop; i++) {
             move(way);
           }
         }
-      } else if (player.x == port.x2) {
+      }
+    } else if (player.x == port.x2 && player.y == port.y2) {
+      if (ask) return true
+      else {
         for (let [loop, way] of port.way2) {
           for (let i = 0; i < loop; i++) {
             move(way);
@@ -523,4 +522,5 @@ function port() {
       }
     }
   }
+  if (ask) return false
 }

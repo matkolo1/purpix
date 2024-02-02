@@ -106,6 +106,13 @@ var teleporters = {
   A: { state: false, x1: bg.x + siz(720), x2: bg.x + siz(1280), y1: bg.y + siz(240), y2: bg.y + siz(540), way1: [[9, 2], [5, 4]], way2: [[9, 1], [5, 3]] },
 }
 
+var resizer = {
+  A: { x: bg.x + siz(480), y: bg.y + siz(300) },
+  B: { x: bg.x + siz(1020), y: bg.y + siz(300) },
+  C: { x: bg.x + siz(780), y: bg.y + siz(540) },
+  state: false,
+}
+
 var interval = 0;
 var myInt;
 
@@ -165,6 +172,9 @@ function move(side) {
     jumppad[prop].B += value;
     teleporters.A[`${prop}1`] += value;
     teleporters.A[`${prop}2`] += value;
+    resizer.A[prop] += value;
+    resizer.B[prop] += value;
+    resizer.C[prop] += value;
   }
 
 
@@ -199,7 +209,7 @@ input.addEventListener('keydown', (e) => {
 
 function CMD(text, comands) {
   let names = ['bot1', 'menu', 'jumppad', 'teleport'];
-  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
+  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft', 'size'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
   let work = workk.split('.')[1];
@@ -274,7 +284,7 @@ function CMD(text, comands) {
 
     if (item == 'teleport') {
       if (work == 'send') {
-        if (teleporters.A.state || teleporters.B.state || teleporters.C.state || teleporters.D.state) {
+        if (port(true)) {
           state.work = [true, 'teleport',]
         } else state.work = [false, 'teleport', 'Nestojíte na teleportu.']
       } else state.work = [false, 'teleport', `${work} nebylo nalezeno.`]
@@ -284,11 +294,33 @@ function CMD(text, comands) {
       for (let wok of works.bot) {
         if (work == wok) {
           state.work = [true, 'bot',];
-          if (String(Number(num.slice(0, num.length - 1))) == 'NaN') {
+          if (num == null) {
+            state.num = [false, 'Nebyl zadán příkaz.']
+            break;
+          } else if (String(Number(num.slice(0, num.length - 1))) == 'NaN' && work != 'size') {
             state.num = [false, `${num.slice(0, num.length - 1)} není číslo.`]
             break;
           } else if (num.at(num.length - 1) == ')') {
-            state.num = [true,]
+            if (work == 'size') {
+              if (!resize(num.slice(0, num.length - 1), true)[0]) {
+                state.num = [false, `Nestojíte na zmenšovači.`];
+                break;
+              } else if (resize(num.slice(0, num.length - 1), true)[1] && num == 'down)') {
+                state.num = [false, `Nemůžete se zmenšit`]
+                break;
+              } else if (resize(num.slice(0, num.length - 1), true)[1] && num == 'up)') {
+                state.num = [false, `Nemůžete se zvětšit.`]
+                break;
+              } else if (resize(num.slice(0, num.length - 1), true)[0]) {
+                state.num = [true,];
+                break;
+              }
+            } else {
+              state.num = [true,]
+              break;
+            }
+          } else if (work == 'size' && num != ('up' && 'down')) {
+            state.num = [false, `${num} nebylo nalezeno.`]
             break;
           } else {
             state.num = [false, `Nedokončená závorka.`]
@@ -340,7 +372,9 @@ function CMD(text, comands) {
   if (comands) {
     switch (item) {
       case ('bot1'):
-        myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
+        if (work == 'size') {
+          resize(num.slice(0, num.length - 1))
+        } else myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
@@ -424,11 +458,6 @@ function checkBlock() {
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
-
-  let ports = [teleporters.A]
-  for (let port of ports) {
-    if (player.x == port.x1 && player.y == port.y1 || player.x == port.x2 && player.y == port.y2) port.state = true;
-  }
 }
 
 var b;
@@ -476,7 +505,7 @@ backgroundImage.onload = function () {
 function win() {
   if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
     block.down = true; block.left = true; block.right = true; block.up = true;
-    document.getElementById('itex').innerHTML = 'Vyhrál jsi pátý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi šestý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
     var urlParams = new URLSearchParams(window.location.search);
     var url = window.location.pathname;
     var parts = url.split('/');
@@ -516,17 +545,23 @@ function jump(ask) {
   if (ask) return false
 }
 
-function port() {
+function port(ask) {
   let ports = [teleporters.A]
   for (let port of ports) {
-    if (port.state) {
-      if (player.x == port.x1) {
+    if (player.x == port.x1 && player.y == port.y1) {
+      if (ask) {
+        return true
+      } else {
         for (let [loop, way] of port.way1) {
           for (let i = 0; i < loop; i++) {
             move(way);
           }
         }
-      } else if (player.x == port.x2) {
+      }
+    } else if (player.x == port.x2 && player.y == port.y2) {
+      if (ask) {
+        return true
+      } else {
         for (let [loop, way] of port.way2) {
           for (let i = 0; i < loop; i++) {
             move(way);
@@ -535,12 +570,43 @@ function port() {
       }
     }
   }
+  if (ask) return false
 }
 
-function resize() {
-
+function resize(way, ask) {
+  let ress = [resizer.A, resizer.B, resizer.C]
+  for (let res of ress) {
+    if (
+      player.x == res.x && player.y == res.y ||
+      player.x == res.x + siz(20) && player.y == res.y + siz(20) ||
+      player.x == res.x + siz(40) && player.y == res.y + siz(40)
+    ) {
+      if (player.size == siz(60) && way == 'down') {
+        if (ask) return [true, false];
+        else {
+          player.size = siz(20)
+          move(2)
+          move(4)
+          draw()
+        }
+      } else if (player.size == siz(20) && way == 'down') {
+        if (ask) return [true, true];
+      } else if (player.size == siz(20) && way == 'up') {
+        if (ask) return [true, false];
+        else {
+          for (let i = 0; i<3; i++){
+            if (player.x != res.x) move(1)
+            if (player.y != res.y) move(3)
+          }
+          player.size = siz(60)
+        }
+      } else if (player.size == siz(60) && way == 'up') {
+        if (ask) return [true, true];
+      }
+    }
+  }
+  if (ask) return [false,]
 }
-
 // Posluchači klávesnice pro posunutí pozadí
 window.addEventListener("keydown", function (event) {
   checkBlock()
