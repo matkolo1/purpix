@@ -52,7 +52,7 @@ var walls = {
   A: { x: bg.x + siz(180), y: bg.y + siz(420), w: siz(320), h: siz(60) },
   B: { x: bg.x + siz(600), y: bg.y + siz(180), w: siz(60), h: siz(240) },
   C: { x: bg.x + siz(520), y: bg.y + siz(420), w: siz(300), h: siz(20) },
-  D: { x: bg.x + siz(500), y: bg.y + siz(460), w: siz(120), h: siz(20) },
+  D: { x: bg.x + siz(499), y: bg.y + siz(460), w: siz(120), h: siz(20) },
   E: { x: bg.x + siz(600), y: bg.y + siz(480), w: siz(20), h: siz(140) },
   F: { x: bg.x + siz(600), y: bg.y + siz(640), w: siz(60), h: siz(80) },
   G: { x: bg.x + siz(640), y: bg.y + siz(460), w: siz(20), h: siz(180) },
@@ -447,7 +447,11 @@ function checkBlock() {
 
   let coins = [coin.A, coin.B, coin.C, coin.D]
   for (coinObj of coins) {
-    if (coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y']) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    if (
+      coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y'] ||
+      player.x == coinObj['x'] + siz(20) && player.y == coinObj['y'] + siz(20) ||
+      player.x == coinObj['x'] + siz(40) && player.y == coinObj['y'] + siz(40)
+    ) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
   }
 
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
@@ -594,7 +598,7 @@ function resize(way, ask) {
       } else if (player.size == siz(20) && way == 'up') {
         if (ask) return [true, false];
         else {
-          for (let i = 0; i<3; i++){
+          for (let i = 0; i < 3; i++) {
             if (player.x != res.x) move(1)
             if (player.y != res.y) move(3)
           }
