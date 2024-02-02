@@ -58,10 +58,10 @@ $conn->close();
     ?>
     <div id="loginForm"
         style="position: fixed; bottom: 10px; left: 10px; width: 300px; height: auto; margin-bottom: 5px;">
-        <div class="lobby" style="width: 100%;"><b>Vítej v PurPix! &#x2B50;</b><br> Tady máš šanci ovládat malého
-            červeného kamaráda, který má za úkol co nejrychleji dorazit do cíle. <br>Při své cestě můžeš navíc sbírat
-            spoustu drobných pokladů - peníze! <br>Samozřejmě, aby to nebylo tak jednoduché, čekají tě i různé překážky,
-            takže pozor, ať tvůj čtvereček nepřijde o cestu k vítězství! &#x1F3C6;&#x1F579;&#x1F680;<br></div>
+        <div class="lobby" style="width: 100%;"><b>Vítejte v PurPix! &#x2B50;</b><br> Tady máte šanci ovládat malého
+            červeného kamaráda, který má za úkol co nejrychleji dorazit do cíle. <br>Při Vaší cestě můžete navíc sbírat
+            spoustu drobných pokladů - peníze! <br>Samozřejmě, aby to nebylo tak jednoduché, čekají Vás i různé překážky,
+            takže pozor, ať Váš čtvereček nepřijde o cestu k vítězství! &#x1F3C6;&#x1F579;&#x1F680;<br></div>
     </div>
     <div id="gameTitle">PurPix</div>
     <div id="loginForm">
