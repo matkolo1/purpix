@@ -1,7 +1,7 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
 canvas.height = window.innerHeight;
-canvas.width = window.innerWidth - sie(200);
+canvas.width = window.innerWidth - (sie(200));
 document.getElementById('console').style.width = `${sie(200)}px`
 document.getElementById('itex').style.width = `${sie(200)}px`;
 document.getElementById('itex').style.fontSize = `${siz(25)}px`;
@@ -22,7 +22,7 @@ function siz(size) {
 }
 function sie(size) {
   size /= 60;
-  size *= Math.floor(canvas.width / 10);
+  size *= Math.floor(window.innerWidth / 10);
   return size;
 }
 var player = {
@@ -67,17 +67,17 @@ var block = {
 const coinImg = new Image();
 coinImg.src = './assets/coin.jpg';
 var coin = {
-  A: { state: true, x: bg.x + siz(240), y: bg.y + siz(240) },
-  B: { state: true, x: bg.x + siz(360), y: bg.y + siz(240) },
-  C: { state: true, x: bg.x + siz(480), y: bg.y + siz(240) },
-  D: { state: true, x: bg.x + siz(600), y: bg.y + siz(240) },
+  A: { state: true, x: bg.x + siz(660), y: bg.y + siz(240) },
+  B: { state: true, x: bg.x + siz(1080), y: bg.y + siz(240) },
+  C: { state: true, x: bg.x + siz(1140), y: bg.y + siz(300) },
+  D: { state: true, x: bg.x + siz(600), y: bg.y + siz(300) },
   size: siz(60),
   colected: 0,
 }
 
 var end = {
-  x: bg.x + siz(1380),
-  y: bg.y + siz(720),
+  x: bg.x + siz(1440),
+  y: bg.y + siz(240),
 }
 
 var sign = {
@@ -90,9 +90,16 @@ var start = {
 }
 
 var jumppad = {
-  x: { A: bg.x + siz(720), B: bg.x + siz(840), C: bg.x + siz(1080), D: bg.x + siz(1200), E: bg.x + siz(960), F: bg.x + siz(960), G: bg.x + siz(1260), H: bg.x + siz(1260), I: bg.x + siz(1320), J: bg.x + siz(1400), },
-  y: { A: bg.y + siz(240), B: bg.y + siz(240), C: bg.y + siz(240), D: bg.y + siz(240), E: bg.y + siz(300), F: bg.y + siz(420), G: bg.y + siz(300), H: bg.y + siz(420), I: bg.y + siz(480), J: bg.y + siz(480), },
-  way: { A: 2, B: 1, C: 2, D: 1, E: 4, F: 3, G: 4, H: 3, I: 2, J: 1 }
+  x: { A: bg.x + siz(780), B: bg.x + siz(960), C: bg.x + siz(780), D: bg.x + siz(960), E: bg.x + siz(1200), F: bg.x + siz(1200), G: bg.x + siz(420), H: bg.x + siz(540), I: bg.x + siz(1200), J: bg.x + siz(1320), },
+  y: { A: bg.y + siz(300), B: bg.y + siz(300), C: bg.y + siz(480), D: bg.y + siz(480), E: bg.y + siz(360), F: bg.y + siz(480), G: bg.y + siz(960), H: bg.y + siz(960), I: bg.y + siz(960), J: bg.y + siz(960), },
+  way: { A: [2, 3], B: [1, 3], C: [2, 3], D: [1, 3], E: [4, 2], F: [3, 3], G: [2, 3], H: [1, 3], I: [2, 3], J: [1, 3] }
+}
+
+var teleporters = {
+  A: { state: false, x1: bg.x + siz(300), x2: bg.x + siz(720), y1: bg.y + siz(540), y2: bg.y + siz(900), way1: [[7, 2], [6, 4]], way2: [[7, 1], [6, 3]] },
+  B: { state: false, x1: bg.x + siz(600), x2: bg.x + siz(1080), y1: bg.y + siz(540), y2: bg.y + siz(900), way1: [[8, 2], [6, 4]], way2: [[8, 1], [6, 3]] },
+  C: { state: false, x1: bg.x + siz(240), x2: bg.x + siz(1020), y1: bg.y + siz(1080), y2: bg.y + siz(600), way1: [[13, 2], [8, 3]], way2: [[13, 1], [8, 4]] },
+  D: { state: false, x1: bg.x + siz(1440), x2: bg.x + siz(1440), y1: bg.y + siz(900), y2: bg.y + siz(540), way1: [[6, 3]], way2: [[6, 4]] }
 }
 
 var interval = 0;
@@ -142,6 +149,14 @@ function move(side) {
     jumppad[prop].H += value;
     jumppad[prop].I += value;
     jumppad[prop].J += value;
+    teleporters.A[`${prop}1`] += value;
+    teleporters.A[`${prop}2`] += value;
+    teleporters.B[`${prop}1`] += value;
+    teleporters.B[`${prop}2`] += value;
+    teleporters.C[`${prop}1`] += value;
+    teleporters.C[`${prop}2`] += value;
+    teleporters.D[`${prop}1`] += value;
+    teleporters.D[`${prop}2`] += value;
   }
 
 
@@ -175,8 +190,8 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'menu', 'jumppad'];
-  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'], jumppad: ['activate'] };
+  let names = ['bot1', 'menu', 'jumppad', 'teleport'];
+  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
   let work = workk.split('.')[1];
@@ -248,6 +263,15 @@ function CMD(text, comands) {
         } else state.work = [false, 'jumppad', `Nestojíte na jumppadu.`]
       } else state.work = [false, 'jumppad', `${work} nebylo nalezeno.`]
     }
+
+    if (item == 'teleport') {
+      if (work == 'send') {
+        if (teleporters.A.state || teleporters.B.state || teleporters.C.state || teleporters.D.state) {
+          state.work = [true, 'teleport',]
+        } else state.work = [false, 'teleport', 'Nestojíte na teleportu.']
+      } else state.work = [false, 'teleport', `${work} nebylo nalezeno.`]
+    }
+
     if (item == 'bot1') {
       for (let wok of works.bot) {
         if (work == wok) {
@@ -293,6 +317,8 @@ function CMD(text, comands) {
           }
         } else if (state.work[1] == 'jumppad') {
           return true
+        } else if (state.work[1] == 'teleport') {
+          return true
         }
       } else {
         write('err', state.work[2])
@@ -322,6 +348,9 @@ function CMD(text, comands) {
         break;
       case ('jumppad'):
         jump()
+        break;
+      case ('teleport'):
+        port()
         break;
     }
     draw();
@@ -384,6 +413,11 @@ function checkBlock() {
   const sign1 = 'Tohle jsou teleportéry. Když na ně stoupneš a napíšeš příkaz "teleport.send", přemístíš se na druhý teleportér se stejnou barvou.';
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else document.getElementById('itex').innerHTML = '';
+
+  let ports = [teleporters.A, teleporters.B, teleporters.C, teleporters.D]
+  for (let port of ports) {
+    if (player.x == port.x1 && player.y == port.y1 || player.x == port.x2 && player.y == port.y2) port.state = true;
+  }
 }
 var b;
 function timeout(work, num) {
@@ -437,7 +471,7 @@ function win() {
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
     var points = 1;
-    var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
+    var url = '.././points.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
       url: url,
@@ -456,14 +490,12 @@ function jump(ask) {
   for (let j of jumpp) {
     let x = jumppad.x[j]
     let y = jumppad.y[j]
-    let way = jumppad.way[j]
 
     if (player.x == x && player.y == y) {
       if (ask) {
         return true
       } else {
-        move(way)
-        move(way)
+        for (let i = 0; i < jumppad.way[j][1]; i++) move(jumppad.way[j][0]);
         draw()
         break;
       }
@@ -472,22 +504,23 @@ function jump(ask) {
   if (ask) return false
 }
 
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
+function port() {
+  let ports = [teleporters.A, teleporters.B, teleporters.C, teleporters.D]
+  for (let port of ports) {
+    if (port.state) {
+      if (player.x == port.x1) {
+        for (let [loop, way] of port.way1) {
+          for (let i = 0; i < loop; i++) {
+            move(way);
+          }
+        }
+      } else if (player.y == port.x2) {
+        for (let [loop, way] of port.way2) {
+          for (let i = 0; i < loop; i++) {
+            move(way);
+          }
+        }
+      }
+    }
   }
-  draw();
-});
+}
