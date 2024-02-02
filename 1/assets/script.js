@@ -130,6 +130,7 @@ function draw() {
 }
 
 function move(side) {
+  con
   function Move(prop, value) {
     bg[prop] += value;
     gameBox[prop] += value;
