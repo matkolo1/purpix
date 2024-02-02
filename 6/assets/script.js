@@ -33,11 +33,11 @@ var player = {
 };
 
 const backgroundImage = new Image();
-backgroundImage.src = './assets/lvl5_bg.jpg';
+backgroundImage.src = './assets/lvl6_bg.jpg';
 var bg = {
   x: player.x - siz(300),
   y: player.y - siz(240),
-  h: siz(660 * 2),
+  h: siz(450 * 2),
   w: siz(900 * 2)
 }
 
@@ -49,12 +49,18 @@ var gameBox = {
 }
 
 var walls = {
-  A: { x: bg.x + siz(180), y: bg.y + siz(660), w: siz(1440), h: siz(60) },
-  B: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(1440), h: siz(60) },
-  C: { x: bg.x + siz(480), y: bg.y + siz(180), w: siz(60), h: siz(960) },
-  D: { x: bg.x + siz(840), y: bg.y + siz(180), w: siz(120), h: siz(960) },
-  E: { x: bg.x + siz(1260), y: bg.y + siz(180), w: siz(60), h: siz(960) },
-  F: { x: bg.x + siz(540), y: bg.y + siz(420), w: siz(720), h: siz(60) }
+  A: { x: bg.x + siz(180), y: bg.y + siz(420), w: siz(320), h: siz(60) },
+  B: { x: bg.x + siz(600), y: bg.y + siz(180), w: siz(60), h: siz(240) },
+  C: { x: bg.x + siz(520), y: bg.y + siz(420), w: siz(300), h: siz(20) },
+  D: { x: bg.x + siz(500), y: bg.y + siz(460), w: siz(120), h: siz(20) },
+  E: { x: bg.x + siz(600), y: bg.y + siz(480), w: siz(20), h: siz(140) },
+  F: { x: bg.x + siz(600), y: bg.y + siz(640), w: siz(60), h: siz(80) },
+  G: { x: bg.x + siz(640), y: bg.y + siz(460), w: siz(20), h: siz(180) },
+  H: { x: bg.x + siz(660), y: bg.y + siz(460), w: siz(140), h: siz(20) },
+  I: { x: bg.x + siz(820), y: bg.y + siz(420), w: siz(13 * 60 + 20), h: siz(60) },
+  J: { x: bg.x + siz(1140), y: bg.y + siz(180), w: siz(60), h: siz(140) },
+  K: { x: bg.x + siz(1140), y: bg.y + siz(340), w: siz(60), h: siz(80) },
+  L: { x: bg.x + siz(1140), y: bg.y + siz(480), w: siz(60), h: siz(240) },
 }
 
 var block = {
@@ -81,7 +87,8 @@ var end = {
 }
 
 var sign = {
-  A: { state: false, x: bg.x + siz(360), y: bg.y + siz(420) },
+  A: { state: false, x: bg.x + siz(480), y: bg.y + siz(240) },
+  B: { state: false, x: bg.x + siz(960), y: bg.y + siz(600) }
 }
 
 var start = {
@@ -90,16 +97,13 @@ var start = {
 }
 
 var jumppad = {
-  x: { A: bg.x + siz(780), B: bg.x + siz(960), C: bg.x + siz(780), D: bg.x + siz(960), E: bg.x + siz(1200), F: bg.x + siz(1200), G: bg.x + siz(420), H: bg.x + siz(540), I: bg.x + siz(1200), J: bg.x + siz(1320), },
-  y: { A: bg.y + siz(300), B: bg.y + siz(300), C: bg.y + siz(480), D: bg.y + siz(480), E: bg.y + siz(360), F: bg.y + siz(480), G: bg.y + siz(960), H: bg.y + siz(960), I: bg.y + siz(960), J: bg.y + siz(960), },
-  way: { A: [2, 3], B: [1, 3], C: [2, 3], D: [1, 3], E: [4, 2], F: [3, 3], G: [2, 3], H: [1, 3], I: [2, 3], J: [1, 3] }
+  x: { A: bg.x + siz(960), B: bg.x + siz(960), },
+  y: { A: bg.y + siz(360), B: bg.y + siz(480), },
+  way: { A: [4, 2], B: [3, 2], }
 }
 
 var teleporters = {
-  A: { state: false, x1: bg.x + siz(300), x2: bg.x + siz(720), y1: bg.y + siz(540), y2: bg.y + siz(900), way1: [[7, 2], [6, 4]], way2: [[7, 1], [6, 3]] },
-  B: { state: false, x1: bg.x + siz(600), x2: bg.x + siz(1080), y1: bg.y + siz(540), y2: bg.y + siz(900), way1: [[8, 2], [6, 4]], way2: [[8, 1], [6, 3]] },
-  C: { state: false, x1: bg.x + siz(240), x2: bg.x + siz(1020), y1: bg.y + siz(1080), y2: bg.y + siz(600), way1: [[13, 2], [8, 3]], way2: [[13, 1], [8, 4]] },
-  D: { state: false, x1: bg.x + siz(1440), x2: bg.x + siz(1440), y1: bg.y + siz(900), y2: bg.y + siz(540), way1: [[6, 3]], way2: [[6, 4]] }
+  A: { state: false, x1: bg.x + siz(720), x2: bg.x + siz(1280), y1: bg.y + siz(240), y2: bg.y + siz(540), way1: [[9, 2], [5, 4]], way2: [[9, 1], [5, 3]] },
 }
 
 var interval = 0;
@@ -117,7 +121,18 @@ function draw() {
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 
-
+  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
+  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
+  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
+  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
+  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
+  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
+  c.strokeRect(walls.G.x, walls.G.y, walls.G.w, walls.G.h);
+  c.strokeRect(walls.H.x, walls.H.y, walls.H.w, walls.H.h);
+  c.strokeRect(walls.I.x, walls.I.y, walls.I.w, walls.I.h);
+  c.strokeRect(walls.J.x, walls.J.y, walls.J.w, walls.J.h);
+  c.strokeRect(walls.K.x, walls.K.y, walls.K.w, walls.K.h);
+  c.strokeRect(walls.L.x, walls.L.y, walls.L.w, walls.L.h);
 
   win()
 }
@@ -132,31 +147,24 @@ function move(side) {
     walls.D[prop] += value;
     walls.E[prop] += value;
     walls.F[prop] += value;
+    walls.G[prop] += value;
+    walls.H[prop] += value;
+    walls.I[prop] += value;
+    walls.J[prop] += value;
+    walls.K[prop] += value;
+    walls.L[prop] += value;
     coin.A[prop] += value;
     coin.B[prop] += value;
     coin.C[prop] += value;
     coin.D[prop] += value;
     end[prop] += value;
     sign.A[prop] += value;
+    sign.B[prop] += value;
     start[prop] += value;
     jumppad[prop].A += value;
     jumppad[prop].B += value;
-    jumppad[prop].C += value;
-    jumppad[prop].D += value;
-    jumppad[prop].E += value;
-    jumppad[prop].F += value;
-    jumppad[prop].G += value;
-    jumppad[prop].H += value;
-    jumppad[prop].I += value;
-    jumppad[prop].J += value;
     teleporters.A[`${prop}1`] += value;
     teleporters.A[`${prop}2`] += value;
-    teleporters.B[`${prop}1`] += value;
-    teleporters.B[`${prop}2`] += value;
-    teleporters.C[`${prop}1`] += value;
-    teleporters.C[`${prop}2`] += value;
-    teleporters.D[`${prop}1`] += value;
-    teleporters.D[`${prop}2`] += value;
   }
 
 
@@ -394,7 +402,7 @@ function checkBlock() {
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F];
+    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, walls.G, walls.H, walls.I, walls.J, walls.K, walls.L];
     for (let wall of items) {
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
@@ -409,16 +417,20 @@ function checkBlock() {
   }
 
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
+  if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
-  const sign1 = 'Tohle jsou teleportéry. Když na ně stoupneš a napíšeš příkaz "teleport.send", přemístíš se na druhý teleportér se stejnou barvou.';
+  const sign1 = 'Tohle jsou zmenšovače. Když na ně stoupneš a napíšeš příkaz "bot1.size(up)" nebo "bot1.size(down)", změníš svou velikost.';
+  const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady.'
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
+  else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
 
-  let ports = [teleporters.A, teleporters.B, teleporters.C, teleporters.D]
+  let ports = [teleporters.A]
   for (let port of ports) {
     if (player.x == port.x1 && player.y == port.y1 || player.x == port.x2 && player.y == port.y2) port.state = true;
   }
 }
+
 var b;
 function timeout(work, num) {
   switch (work) {
@@ -486,7 +498,7 @@ function win() {
 }
 
 function jump(ask) {
-  let jumpp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+  let jumpp = ['A', 'B']
   for (let j of jumpp) {
     let x = jumppad.x[j]
     let y = jumppad.y[j]
@@ -505,7 +517,7 @@ function jump(ask) {
 }
 
 function port() {
-  let ports = [teleporters.A, teleporters.B, teleporters.C, teleporters.D]
+  let ports = [teleporters.A]
   for (let port of ports) {
     if (port.state) {
       if (player.x == port.x1) {
@@ -524,3 +536,27 @@ function port() {
     }
   }
 }
+
+function resize() {
+
+}
+
+// Posluchači klávesnice pro posunutí pozadí
+window.addEventListener("keydown", function (event) {
+  checkBlock()
+  switch (event.key) {
+    case "ArrowLeft":
+      if (!block.left) move(1);
+      break;
+    case "ArrowRight":
+      if (!block.right) move(2);
+      break;
+    case 'ArrowUp':
+      if (!block.up) move(3);
+      break;
+    case 'ArrowDown':
+      if (!block.down) move(4);
+      break;
+  }
+  draw();
+});

@@ -1,0 +1,69 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #000000;
+    width: 100%;
+    height: 100%;
+  }
+  
+  canvas {
+    display: block;
+    position: absolute;
+    background-color: #000000;
+    left: 0;
+    top: 0;
+  }
+  
+  .cntrl {
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    display: block;
+    background-color: #303030;
+    width: 299px;
+    height: 50vh;
+    border: 1px solid #000000;
+    border-bottom: none;
+    border-right: none;
+  }
+  
+  #input {
+    width: 300px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: #303030;
+    color: greenyellow;
+    border-bottom: 1px solid white;
+    display: flex;
+  }
+  
+  .info {
+    margin-top: 2px;
+    width: 300px;
+    height: 19px;
+    color:greenyellow;
+  }
+  
+  .err {
+    background-color: #ff0000;
+    outline: 2px solid #850303 ;
+    outline-offset: -1px;
+  }
+  
+  .cmd {
+    outline: 2px solid black;
+    outline-offset: -1px;
+  }
+  
+  .text {
+    color: white;
+    width: 300px;
+    height: 50vh;
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    font-size: 25px;
+    background-color: #000000;
+  }
