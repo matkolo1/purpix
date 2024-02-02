@@ -471,7 +471,7 @@ function win() {
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
     var points = 1;
-    var url = '.././win.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
+    var url = '.././points.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
       url: url,
@@ -524,23 +524,3 @@ function port() {
     }
   }
 }
-
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
-  }
-  draw();
-});
