@@ -16,6 +16,12 @@ body {
     margin: 5px;
 }
 
+#gameTitle,
+#loginForm,
+#creditsForm {
+    text-align: left;
+}
+
 #gameTitle {
     font-family: sans-serif;
     font-size: 10em;
@@ -26,18 +32,24 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-#loginForm {
+#loginForm,
+#creditsForm {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: auto;
+    height: auto;
+    margin-bottom: 5px;
     background-color: black;
     color: white;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
-    text-align: left;
     opacity: 0;
     animation: slideIn 0.3s forwards 0.3s;
 }
 
 input {
-    margin: 10px 0;
+    margin: 2px 0;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -58,7 +70,6 @@ input[type="submit"]:hover {
     background-color: #238731;
 }
 
-/* Nový styl pro tlačítka */
 .level-button {
     margin: 2px;
     border: none;
@@ -68,7 +79,6 @@ input[type="submit"]:hover {
     transition: background-color 0.3s;
 }
 
-/* Styl pro tlačítka s různými stavy */
 .level-button.disabled {
     background-color: #fff;
     color: #000;
@@ -102,8 +112,6 @@ input[type="submit"]:hover {
     background-color: #fccf03;
 }
 
-/* Styl pro tabulku */
-/* Skrolovací lišta v tabulce */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -111,7 +119,6 @@ table {
     overflow-x: auto;
 }
 
-/* Styl pro první řádek tabulky */
 table th {
     background-color: white;
     color: black;
@@ -121,13 +128,11 @@ table th {
     border-bottom: 2px solid white;
 }
 
-/* Styl pro všechny řádky kromě prvního */
 table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
 
-/* Ohraničení spodního řádku mezi všemi řádky */
 table tr:last-child td {
     border-bottom: 2px solid white;
 }
@@ -151,5 +156,18 @@ table tr:last-child td {
 
     to {
         opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    #loginForm,
+    #creditsForm {
+        width: calc(100% - 20px);
+        /* Zmenšení o 20px */
+    }
+
+    .lobby b {
+        font-size: 14px;
     }
 }
