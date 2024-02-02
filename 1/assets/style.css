@@ -15,12 +15,13 @@ canvas {
   bottom: 0;
   position: absolute;
   display: block;
-  background-color: #303030;
+  background-color: #000000;
   width: 299px;
   height: 50vh;
-  border: 1px solid #000000;
+  border: 1px solid #ffffff;
   border-bottom: none;
   border-right: none;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 #input {
@@ -29,7 +30,7 @@ canvas {
   border: none;
   outline: none;
   background-color: #303030;
-  color: greenyellow;
+  color: green;
   border-bottom: 1px solid white;
   display: flex;
 }
@@ -38,7 +39,7 @@ canvas {
   margin-top: 2px;
   width: 300px;
   height: 19px;
-  color:greenyellow;
+  color:green;
 }
 
 .err {
@@ -53,7 +54,9 @@ canvas {
 }
 
 .text {
+  font-family: 'Times New Roman', Times, serif;
   color: white;
+  padding: 2px;
   width: 300px;
   height: 50vh;
   position: absolute;
