@@ -376,7 +376,7 @@ function CMD(text, comands) {
           resize(num.slice(0, num.length - 1))
         } else myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
-      case('console'):
+      case ('console'):
         if (work == 'open') consoleON(true);
         else consoleON(false);
         break;
@@ -453,8 +453,8 @@ function checkBlock() {
   for (coinObj of coins) {
     if (
       coinObj['state'] && ((player.x == coinObj['x'] && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
-      (player.x == coinObj['x'] + siz(20) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
-      (player.x == coinObj['x'] + siz(40) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))))
+        (player.x == coinObj['x'] + siz(20) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
+        (player.x == coinObj['x'] + siz(40) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))))
     ) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
   }
 
@@ -634,12 +634,36 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
+// Disable right-click context menu
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
 
+// Disable F12 key and Ctrl+U
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
+    e.preventDefault();
+  }
+});
+function enableActions() {
+  document.removeEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  document.removeEventListener('keydown', function (e) {
+    if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
+      e.preventDefault();
+    }
+  });
+
+  alert('Actions are now enabled.');
+  actionsDisabled = false;
+}
 function consoleON(on) {
   // tady -------------------------------------------------
   if (on) {
     //odemknout
-  }else{
+  } else {
     //zamknout
   }
 }
