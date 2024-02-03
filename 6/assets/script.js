@@ -208,7 +208,7 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'menu', 'jumppad', 'teleport', 'console'];
+  let names = ['bot1', 'menu', 'jumppad', 'teleport', 80085];
   let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft', 'size'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
@@ -227,6 +227,11 @@ function CMD(text, comands) {
         state.name = [false, `${item} nebyl nalezen.`]
       }
     }
+    if (item == 80085) {
+      state.work = [true, 'door',]
+      return true
+    }
+
     if (item != 'bot1') {
       for (let wok of works.door) {
         if (work == wok) {
@@ -376,9 +381,8 @@ function CMD(text, comands) {
           resize(num.slice(0, num.length - 1))
         } else myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
-      case ('console'):
-        if (work == 'open') consoleON(true);
-        else consoleON(false);
+      case ('80085'):
+        enableActions();
         break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
@@ -634,6 +638,8 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
+
+
 // Disable right-click context menu
 document.addEventListener('contextmenu', function (e) {
   e.preventDefault();
@@ -658,12 +664,4 @@ function enableActions() {
 
   alert('Actions are now enabled.');
   actionsDisabled = false;
-}
-function consoleON(on) {
-  // tady -------------------------------------------------
-  if (on) {
-    //odemknout
-  } else {
-    //zamknout
-  }
 }
