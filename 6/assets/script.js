@@ -208,7 +208,7 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'menu', 'jumppad', 'teleport'];
+  let names = ['bot1', 'menu', 'jumppad', 'teleport', 'console'];
   let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft', 'size'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
@@ -376,6 +376,10 @@ function CMD(text, comands) {
           resize(num.slice(0, num.length - 1))
         } else myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
+      case('console'):
+        if (work == 'open') consoleON(true);
+        else consoleON(false);
+        break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
           switch (work) {
@@ -448,9 +452,9 @@ function checkBlock() {
   let coins = [coin.A, coin.B, coin.C, coin.D]
   for (coinObj of coins) {
     if (
-      coinObj['state'] && player.x == coinObj['x'] && player.y == coinObj['y'] ||
-      player.x == coinObj['x'] + siz(20) && player.y == coinObj['y'] + siz(20) ||
-      player.x == coinObj['x'] + siz(40) && player.y == coinObj['y'] + siz(40)
+      coinObj['state'] && ((player.x == coinObj['x'] && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
+      (player.x == coinObj['x'] + siz(20) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
+      (player.x == coinObj['x'] + siz(40) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))))
     ) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
   }
 
@@ -458,7 +462,7 @@ function checkBlock() {
   if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
   const sign1 = 'Tohle jsou zmenšovače. Když na ně stoupneš a napíšeš příkaz "bot1.size(up)" nebo "bot1.size(down)", změníš svou velikost.';
-  const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady.'
+  const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady. <br>Peníze sbírat můžeš.'
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
@@ -630,3 +634,12 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
+
+function consoleON(on) {
+  // tady -------------------------------------------------
+  if (on) {
+    //odemknout
+  }else{
+    //zamknout
+  }
+}
