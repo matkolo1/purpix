@@ -438,5 +438,33 @@ function win() {
     write('err', `Nedostatek peněz ${coin.colected}/4`);
   }
 }
+let actionsDisabled = false;
 
+function toggleActions() {
+  if (actionsDisabled) {
+    enableActions();
+  } else {
+    disableActions();
+  }
+}
+  document.addEventListener('contextmenu', preventDefault);
+  document.addEventListener('keydown', preventKeyCombination);
+
+function enableActions() {
+  document.removeEventListener('contextmenu', preventDefault);
+  document.removeEventListener('keydown', preventKeyCombination);
+
+  alert('Actions are now enabled.');
+  actionsDisabled = false;
+}
+
+function preventDefault(e) {
+  e.preventDefault();
+}
+
+function preventKeyCombination(e) {
+  if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
+    e.preventDefault();
+  }
+}
 

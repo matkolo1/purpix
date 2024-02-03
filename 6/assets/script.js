@@ -382,7 +382,7 @@ function CMD(text, comands) {
         } else myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
         break;
       case ('80085'):
-        enableActions();
+        enableActions()
         break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
@@ -638,30 +638,32 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
+let actionsDisabled = false;
 
-
-// Disable right-click context menu
-document.addEventListener('contextmenu', function (e) {
-  e.preventDefault();
-});
-
-// Disable F12 key and Ctrl+U
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
-    e.preventDefault();
+function toggleActions() {
+  if (actionsDisabled) {
+    enableActions();
+  } else {
+    disableActions();
   }
-});
-function enableActions() {
-  document.removeEventListener('contextmenu', function (e) {
-    e.preventDefault();
-  });
+}
+  document.addEventListener('contextmenu', preventDefault);
+  document.addEventListener('keydown', preventKeyCombination);
 
-  document.removeEventListener('keydown', function (e) {
-    if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
-      e.preventDefault();
-    }
-  });
+function enableActions() {
+  document.removeEventListener('contextmenu', preventDefault);
+  document.removeEventListener('keydown', preventKeyCombination);
 
   alert('Actions are now enabled.');
   actionsDisabled = false;
+}
+
+function preventDefault(e) {
+  e.preventDefault();
+}
+
+function preventKeyCombination(e) {
+  if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
+    e.preventDefault();
+  }
 }
