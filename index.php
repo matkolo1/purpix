@@ -62,7 +62,20 @@ $conn->close();
     </div>
 
 
+    <script>
+        document.addEventListener('contextmenu', preventDefault);
+        document.addEventListener('keydown', preventKeyCombination);
+        function preventDefault(e) {
+            e.preventDefault();
+        }
 
+        function preventKeyCombination(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+            }
+        }
+
+    </script>
 </body>
 
 </html>
