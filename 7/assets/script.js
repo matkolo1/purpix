@@ -49,18 +49,20 @@ var gameBox = {
 }
 
 var walls = {
-  A: { x: bg.x + siz(180), y: bg.y + siz(420), w: siz(320), h: siz(60) },
-  B: { x: bg.x + siz(600), y: bg.y + siz(180), w: siz(60), h: siz(240) },
-  C: { x: bg.x + siz(520), y: bg.y + siz(420), w: siz(300), h: siz(20) },
-  D: { x: bg.x + siz(499), y: bg.y + siz(460), w: siz(120), h: siz(20) },
-  E: { x: bg.x + siz(600), y: bg.y + siz(480), w: siz(20), h: siz(140) },
-  F: { x: bg.x + siz(600), y: bg.y + siz(640), w: siz(60), h: siz(80) },
-  G: { x: bg.x + siz(640), y: bg.y + siz(460), w: siz(20), h: siz(180) },
-  H: { x: bg.x + siz(660), y: bg.y + siz(460), w: siz(140), h: siz(20) },
-  I: { x: bg.x + siz(820), y: bg.y + siz(420), w: siz(13 * 60 + 20), h: siz(60) },
-  J: { x: bg.x + siz(1140), y: bg.y + siz(180), w: siz(60), h: siz(140) },
-  K: { x: bg.x + siz(1140), y: bg.y + siz(340), w: siz(60), h: siz(80) },
-  L: { x: bg.x + siz(1140), y: bg.y + siz(480), w: siz(60), h: siz(240) },
+  A: { x: bg.x + siz(180), y: bg.y + siz(900), w: siz(660), h: siz(60) },
+  B: { x: bg.x + siz(780), y: bg.y + siz(960), w: siz(60), h: siz(660) },
+  C: { x: bg.x + siz(420), y: bg.y + siz(1480), w: siz(60), h: siz(140) },
+  D: { x: bg.x + siz(180), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
+  E: { x: bg.x + siz(360), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
+  F: { x: bg.x + siz(420), y: bg.y + siz(960), w: siz(60), h: siz(499) },
+  G: { x: bg.x + siz(480), y: bg.y + siz(1260), w: siz(300), h: siz(60) },
+  H: { x: bg.x + siz(900), y: bg.y + siz(180), w: siz(60), h: siz(660) },
+  I: { x: bg.x + siz(960), y: bg.y + siz(840), w: siz(660), h: siz(60) },
+  J: { x: bg.x + siz(960), y: bg.y + siz(360), w: siz(660), h: siz(60) },
+  K: { x: bg.x + siz(1260), y: bg.y + siz(180), w: siz(60), h: siz(180) },
+  L: { x: bg.x + siz(960), y: bg.y + siz(600), w: siz(360), h: siz(60) },
+  M: { x: bg.x + siz(1200), y: bg.y + siz(420), w: siz(60), h: siz(180) },
+  N: { x: bg.x + siz(1260), y: bg.y + siz(660), w: siz(60), h: siz(60) },
 }
 
 var block = {
@@ -88,7 +90,6 @@ var end = {
 
 var sign = {
   A: { state: false, x: bg.x + siz(480), y: bg.y + siz(240) },
-  B: { state: false, x: bg.x + siz(960), y: bg.y + siz(600) }
 }
 
 var start = {
@@ -96,20 +97,33 @@ var start = {
   y: player.y,
 }
 
+var door = {
+  A: { state: true, x: bg.x + siz(1260), y: bg.y + siz(719), w: siz(60), h: siz(122) },
+  num: { A: { x: bg.x + siz(1260), y: bg.y + siz(720) }, },
+}
+
+const codedoorImg = new Image();
+codedoorImg.src = './assets/CodedoorsW.jpg';
+var codedoor = {
+  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
+  num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
+}
+
 var jumppad = {
-  x: { A: bg.x + siz(960), B: bg.x + siz(960), },
-  y: { A: bg.y + siz(360), B: bg.y + siz(480), },
-  way: { A: [4, 2], B: [3, 2], }
+  x: { A: bg.x + siz(960), B: bg.x + siz(960), C: bg.x + siz(), D: bg.x + siz() },
+  y: { A: bg.y + siz(360), B: bg.y + siz(480), C: bg.y + siz(), D: bg.y + siz() },
+  way: { A: [2, 2], B: [1, 2], C: [2, 2], D: [1, 2], }
 }
 
 var teleporters = {
-  A: { state: false, x1: bg.x + siz(720), x2: bg.x + siz(1280), y1: bg.y + siz(240), y2: bg.y + siz(540), way1: [[9, 2], [5, 4]], way2: [[9, 1], [5, 3]] },
+  A: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(240), y1: bg.y + siz(240), y2: bg.y + siz(1020), way1: [[13, 1], [13, 4]], way2: [[13, 2], [13, 3]] },
+  B: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(60), y1: bg.y + siz(480), y2: bg.y + siz(1020), way1: [[7, 1], [9, 4]], way2: [[7, 2], [9, 3]] },
+  C: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(660), y1: bg.y + siz(720), y2: bg.y + siz(1440), way1: [[6, 1], [12, 4]], way2: [[6, 2], [12, 3]] },
 }
 
 var resizer = {
-  A: { x: bg.x + siz(480), y: bg.y + siz(300) },
-  B: { x: bg.x + siz(1020), y: bg.y + siz(300) },
-  C: { x: bg.x + siz(780), y: bg.y + siz(540) },
+  A: { x: bg.x + siz(300), y: bg.y + siz(1440) },
+  B: { x: bg.x + siz(540), y: bg.y + siz(1440) },
   state: false,
 }
 
@@ -128,18 +142,16 @@ function draw() {
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 
-  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
-  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
-  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
-  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
-  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
-  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
-  c.strokeRect(walls.G.x, walls.G.y, walls.G.w, walls.G.h);
-  c.strokeRect(walls.H.x, walls.H.y, walls.H.w, walls.H.h);
-  c.strokeRect(walls.I.x, walls.I.y, walls.I.w, walls.I.h);
-  c.strokeRect(walls.J.x, walls.J.y, walls.J.w, walls.J.h);
-  c.strokeRect(walls.K.x, walls.K.y, walls.K.w, walls.K.h);
-  c.strokeRect(walls.L.x, walls.L.y, walls.L.w, walls.L.h);
+  c.fillStyle = '#aaaaaa';
+  if (door.A.state) c.fillRect(door.A.x, door.A.y, door.A.w, door.A.h);
+
+  if (codedoor.A.state) c.drawImage(codedoorImg, codedoor.A.x, codedoor.A.y, codedoor.A.w, codedoor.A.h);
+
+  c.fillStyle = 'black';
+  c.font = '20px Verdana';
+  c.fillText('1', door.num.A.x, door.num.A.y);
+  c.fillText('1', codedoor.num.A.x, codedoor.num.A.y);
+
 
   win()
 }
@@ -160,21 +172,31 @@ function move(side) {
     walls.J[prop] += value;
     walls.K[prop] += value;
     walls.L[prop] += value;
+    walls.M[prop] += value;
+    walls.N[prop] += value;
     coin.A[prop] += value;
     coin.B[prop] += value;
     coin.C[prop] += value;
     coin.D[prop] += value;
     end[prop] += value;
     sign.A[prop] += value;
-    sign.B[prop] += value;
     start[prop] += value;
     jumppad[prop].A += value;
     jumppad[prop].B += value;
+    jumppad[prop].C += value;
+    jumppad[prop].D += value;
     teleporters.A[`${prop}1`] += value;
     teleporters.A[`${prop}2`] += value;
+    teleporters.B[`${prop}1`] += value;
+    teleporters.B[`${prop}2`] += value;
+    teleporters.C[`${prop}1`] += value;
+    teleporters.C[`${prop}2`] += value;
     resizer.A[prop] += value;
     resizer.B[prop] += value;
-    resizer.C[prop] += value;
+    door.A[prop] += value;
+    door.num.A[prop] += value;
+    codedoor.A[prop] += value;
+    codedoor.num.A[prop] += value;
   }
 
 
@@ -208,7 +230,7 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'menu', 'jumppad', 'teleport', 80085];
+  let names = ['bot1', 'menu', 'jumppad', 'teleport', 'door1', 'codedoor1', 80085];
   let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft', 'size'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
@@ -384,6 +406,10 @@ function CMD(text, comands) {
       case ('80085'):
         enableActions()
         break;
+      case ('door1'):
+        if (work == 'open') door.A.state = false
+        else door.A.state = true
+        break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
           switch (work) {
@@ -444,12 +470,20 @@ function checkBlock() {
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, walls.G, walls.H, walls.I, walls.J, walls.K, walls.L];
+    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, walls.G, walls.H, walls.I, walls.J, walls.K, walls.L, walls.M, walls.N];
     for (let wall of items) {
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
       else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
       else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
+    }
+
+    let item = [door.A, codedoor.A];
+    for (let wall of item) {
+      if (wall['state'] && num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
+      else if (wall['state'] && num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
+      else if (wall['state'] && num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
+      else if (wall['state'] && num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
   }
 
@@ -463,12 +497,12 @@ function checkBlock() {
   }
 
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
-  if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
+  //if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
   const sign1 = 'Tohle jsou zmenšovače. Když na ně stoupneš a napíšeš příkaz "bot1.size(up)" nebo "bot1.size(down)", změníš svou velikost.';
   const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady. <br>Peníze sbírat můžeš.'
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
-  else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
+  //else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
 }
 
@@ -539,7 +573,7 @@ function win() {
 }
 
 function jump(ask) {
-  let jumpp = ['A', 'B']
+  let jumpp = ['A', 'B', 'C', 'D']
   for (let j of jumpp) {
     let x = jumppad.x[j]
     let y = jumppad.y[j]
@@ -558,7 +592,7 @@ function jump(ask) {
 }
 
 function port(ask) {
-  let ports = [teleporters.A]
+  let ports = [teleporters.A, teleporters.B, teleporters.C]
   for (let port of ports) {
     if (player.x == port.x1 && player.y == port.y1) {
       if (ask) {
@@ -586,7 +620,7 @@ function port(ask) {
 }
 
 function resize(way, ask) {
-  let ress = [resizer.A, resizer.B, resizer.C]
+  let ress = [resizer.A, resizer.B]
   for (let res of ress) {
     if (
       (player.x == res['x'] && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40))) ||
@@ -619,6 +653,7 @@ function resize(way, ask) {
   }
   if (ask) return [false,]
 }
+
 // Posluchači klávesnice pro posunutí pozadí
 window.addEventListener("keydown", function (event) {
   checkBlock()
@@ -638,6 +673,7 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
+
 let actionsDisabled = false;
 
 function toggleActions() {
