@@ -673,16 +673,6 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
-
-let actionsDisabled = false;
-
-function toggleActions() {
-  if (actionsDisabled) {
-    enableActions();
-  } else {
-    disableActions();
-  }
-}
 document.addEventListener('contextmenu', preventDefault);
 document.addEventListener('keydown', preventKeyCombination);
 
