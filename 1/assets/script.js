@@ -187,7 +187,7 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'door1', 'door2', 'door3', 'menu'];
+  let names = ['bot1', 'door1', 'door2', 'door3', 'menu', 80085];
   let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
@@ -214,6 +214,10 @@ function CMD(text, comands) {
           state.work = [false, false, `${work} nebyl nalezen.`];
         }
       }
+    }
+    if (item == 80085) {
+      state.work = [true, 'door',]
+      return true
     }
     if (item == 'bot1') {
       for (let wok of works.bot) {
@@ -268,6 +272,9 @@ function CMD(text, comands) {
             door.A.state = true
             break;
         }
+        break;
+      case ('80085'):
+        enableActions();
         break;
       case ('door2'):
         switch (work) {
@@ -447,8 +454,8 @@ function toggleActions() {
     disableActions();
   }
 }
-  document.addEventListener('contextmenu', preventDefault);
-  document.addEventListener('keydown', preventKeyCombination);
+document.addEventListener('contextmenu', preventDefault);
+document.addEventListener('keydown', preventKeyCombination);
 
 function enableActions() {
   document.removeEventListener('contextmenu', preventDefault);

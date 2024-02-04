@@ -192,7 +192,7 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'menu', 'codedoor1', 'jumppad'];
+  let names = ['bot1', 'menu', 'codedoor1', 'jumppad', 80085];
   let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'], jumppad: ['activate'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
@@ -210,6 +210,10 @@ function CMD(text, comands) {
       } else {
         state.name = [false, `${item} nebyl nalezen.`]
       }
+    }
+    if (item == 80085) {
+      state.work = [true, 'door',]
+      return true
     }
     if (item != 'bot1') {
       for (let wok of works.door) {
@@ -336,6 +340,9 @@ function CMD(text, comands) {
               break;
           }
         }
+        break;
+      case ('80085'):
+        enableActions();
         break;
       case ('jumppad'):
         jump()
@@ -497,7 +504,7 @@ function jump(ask) {
         draw()
         break;
       }
-    } 
+    }
   }
   if (ask) return false
 }
@@ -511,8 +518,8 @@ function toggleActions() {
     disableActions();
   }
 }
-  document.addEventListener('contextmenu', preventDefault);
-  document.addEventListener('keydown', preventKeyCombination);
+document.addEventListener('contextmenu', preventDefault);
+document.addEventListener('keydown', preventKeyCombination);
 
 function enableActions() {
   document.removeEventListener('contextmenu', preventDefault);

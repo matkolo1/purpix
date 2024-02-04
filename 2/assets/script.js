@@ -204,7 +204,7 @@ input.addEventListener('keydown', (e) => {
 })
 
 function CMD(text, comands) {
-  let names = ['bot1', 'door1', 'door2', 'door3', 'menu', 'codedoor1', 'codedoor2'];
+  let names = ['bot1', 'door1', 'door2', 'door3', 'menu', 'codedoor1', 'codedoor2', 80085];
   let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft'], door: ['open', 'close'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
@@ -222,6 +222,10 @@ function CMD(text, comands) {
       } else {
         state.name = [false, `${item} nebyl nalezen.`]
       }
+    }
+    if (item == 80085) {
+      state.work = [true, 'door',]
+      return true
     }
     if (item != 'bot1') {
       for (let wok of works.door) {
@@ -245,7 +249,7 @@ function CMD(text, comands) {
               } else if (!(num.slice(0, num.length - 1) == (codedoor.A.code || codedoor.B.code))) {
                 state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
                 break;
-              } else if (num.at(num.length - 1) != ')'){
+              } else if (num.at(num.length - 1) != ')') {
                 state.num = [false, `Nedokončená závorka.`]
                 break;
               } else if (num.at(num.length - 1) === ')') {
@@ -254,7 +258,7 @@ function CMD(text, comands) {
                   break;
                 } else state.num = [false, `${num.slice(0, num.length - 1)} není správně.`]
                 break;
-              } 
+              }
             } else {
               state.code = [false, `${code} nebyl nalezen.`]
               break;
@@ -354,6 +358,9 @@ function CMD(text, comands) {
             door.C.state = true
             break;
         }
+        break;
+      case ('80085'):
+        enableActions();
         break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
@@ -537,8 +544,8 @@ function toggleActions() {
     disableActions();
   }
 }
-  document.addEventListener('contextmenu', preventDefault);
-  document.addEventListener('keydown', preventKeyCombination);
+document.addEventListener('contextmenu', preventDefault);
+document.addEventListener('keydown', preventKeyCombination);
 
 function enableActions() {
   document.removeEventListener('contextmenu', preventDefault);

@@ -33,11 +33,11 @@ var player = {
 };
 
 const backgroundImage = new Image();
-backgroundImage.src = './assets/lvl6_bg.jpg';
+backgroundImage.src = './assets/lvl7_bg.jpg';
 var bg = {
-  x: player.x - siz(300),
-  y: player.y - siz(240),
-  h: siz(450 * 2),
+  x: player.x - siz(240),
+  y: player.y - siz(1500),
+  h: siz(900 * 2),
   w: siz(900 * 2)
 }
 
@@ -128,6 +128,18 @@ function draw() {
   c.fillStyle = "red";
   c.fillRect(player.x, player.y, player.size, player.size);
 
+  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
+  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
+  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
+  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
+  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
+  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
+  c.strokeRect(walls.G.x, walls.G.y, walls.G.w, walls.G.h);
+  c.strokeRect(walls.H.x, walls.H.y, walls.H.w, walls.H.h);
+  c.strokeRect(walls.I.x, walls.I.y, walls.I.w, walls.I.h);
+  c.strokeRect(walls.J.x, walls.J.y, walls.J.w, walls.J.h);
+  c.strokeRect(walls.K.x, walls.K.y, walls.K.w, walls.K.h);
+  c.strokeRect(walls.L.x, walls.L.y, walls.L.w, walls.L.h);
 
   win()
 }
@@ -607,7 +619,25 @@ function resize(way, ask) {
   }
   if (ask) return [false,]
 }
-
+// Posluchači klávesnice pro posunutí pozadí
+window.addEventListener("keydown", function (event) {
+  checkBlock()
+  switch (event.key) {
+    case "ArrowLeft":
+      if (!block.left) move(1);
+      break;
+    case "ArrowRight":
+      if (!block.right) move(2);
+      break;
+    case 'ArrowUp':
+      if (!block.up) move(3);
+      break;
+    case 'ArrowDown':
+      if (!block.down) move(4);
+      break;
+  }
+  draw();
+});
 let actionsDisabled = false;
 
 function toggleActions() {
