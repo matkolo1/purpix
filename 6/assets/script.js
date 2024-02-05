@@ -451,7 +451,10 @@ function checkBlock() {
   }
 
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
-  if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
+  if ((player.x == sign.B['x'] && (player.y == sign.B['y'] || player.y == sign.B['y'] + siz(20) || player.y == sign.B['y'] + siz(40))) ||
+  (player.x == sign.B['x'] + siz(20) && (player.y == sign.B['y'] || player.y == sign.B['y'] + siz(20) || player.y == sign.B['y'] + siz(40))) ||
+  (player.x == sign.B['x'] + siz(40) && (player.y == sign.B['y'] || player.y == sign.B['y'] + siz(20) || player.y == sign.B['y'] + siz(40)))
+) sign.B.state = true; else sign.B.state = false;
 
   const sign1 = 'Tohle jsou zmenšovače. Když na ně stoupneš a napíšeš příkaz "bot1.size(up)" nebo "bot1.size(down)", změníš svou velikost.';
   const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady. <br>Peníze sbírat můžeš.'
