@@ -22,7 +22,7 @@ function siz(size) {
 }
 function sie(size) {
   size /= 60;
-  size *= Math.floor(window.innerWidth / 10);
+  size *= Math.floor(Math.floor(window.innerWidth / 10));
   return size;
 }
 var player = {
@@ -443,24 +443,29 @@ function checkBlock() {
 
   let coins = [coin.A, coin.B, coin.C, coin.D]
   for (coinObj of coins) {
-    if (
-      coinObj['state'] && ((player.x == coinObj['x'] && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
-        (player.x == coinObj['x'] + siz(20) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
-        (player.x == coinObj['x'] + siz(40) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))))
-    ) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    if (coinObj['state'] && (between(coinObj['x'], 1, player.x) && (between(coinObj['y'], 1, player.y) || between(coinObj['y'] + siz(20), 1, player.y) || between(coinObj['y'] + siz(40), 1, player.y)))) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    else if (coinObj['state'] && (between(coinObj['x'] + siz(20), 1, player.x) && (between(coinObj['y'], 1, player.y) || between(coinObj['y'] + siz(20), 1, player.y) || between(coinObj['y'] + siz(40), 1, player.y)))) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    else if (coinObj['state'] && (between(coinObj['x'] + siz(40), 1, player.x) && (between(coinObj['y'], 1, player.y) || between(coinObj['y'] + siz(20), 1, player.y) || between(coinObj['y'] + siz(40), 1, player.y)))) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
   }
 
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
-  if ((player.x == sign.B['x'] && (player.y == sign.B['y'] || player.y == sign.B['y'] + siz(20) || player.y == sign.B['y'] + siz(40))) ||
-  (player.x == sign.B['x'] + siz(20) && (player.y == sign.B['y'] || player.y == sign.B['y'] + siz(20) || player.y == sign.B['y'] + siz(40))) ||
-  (player.x == sign.B['x'] + siz(40) && (player.y == sign.B['y'] || player.y == sign.B['y'] + siz(20) || player.y == sign.B['y'] + siz(40)))
-) sign.B.state = true; else sign.B.state = false;
+  if ((between(sign.B['x'], 1, player.x) && (between(sign.B['y'], 1, player.y) || between(sign.B['y'] + siz(20), 1, player.y) || between(sign.B['y'] + siz(40), 1, player.y)))) { sign.B.state = true; }
+  else if ((between(sign.B['x'] + siz(20), 1, player.x) && (between(sign.B['y'], 1, player.y) || between(sign.B['y'] + siz(20), 1, player.y) || between(sign.B['y'] + siz(40), 1, player.y)))) { sign.B.state = true; }
+  else if ((between(sign.B['x'] + siz(40), 1, player.x) && (between(sign.B['y'], 1, player.y) || between(sign.B['y'] + siz(20), 1, player.y) || between(sign.B['y'] + siz(40), 1, player.y)))) { sign.B.state = true; }
+  else sign.B.state = false;
 
   const sign1 = 'Tohle jsou zmenšovače. Když na ně stoupneš a napíšeš příkaz "bot1.size(up)" nebo "bot1.size(down)", změníš svou velikost.';
   const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady. <br>Peníze sbírat můžeš.'
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
+}
+
+function between(x, range, test) {
+  for (let i = -range; i < range; i += 0.01) {
+    if ((Math.round(x) + i) == test) return true;
+  }
+  return false
 }
 
 var b;
@@ -579,11 +584,11 @@ function port(ask) {
 function resize(way, ask) {
   let ress = [resizer.A, resizer.B, resizer.C]
   for (let res of ress) {
-    if (
-      (player.x == res['x'] && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40))) ||
-      (player.x == res['x'] + siz(20) && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40))) ||
-      (player.x == res['x'] + siz(40) && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40)))
-    ) {
+    let r = false;
+    if ((between(res['x'], 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }
+    else if ((between(res['x'] + siz(20), 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }
+    else if ((between(res['x'] + siz(40), 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }
+    if (r) {
       if (player.size == siz(60) && way == 'down') {
         if (ask) return [true, false];
         else {
@@ -660,3 +665,23 @@ function preventKeyCombination(e) {
     e.preventDefault();
   }
 }
+
+// Posluchači klávesnice pro posunutí pozadí
+window.addEventListener("keydown", function (event) {
+  checkBlock()
+  switch (event.key) {
+    case "ArrowLeft":
+      if (!block.left) move(1);
+      break;
+    case "ArrowRight":
+      if (!block.right) move(2);
+      break;
+    case 'ArrowUp':
+      if (!block.up) move(3);
+      break;
+    case 'ArrowDown':
+      if (!block.down) move(4);
+      break;
+  }
+  draw();
+});
