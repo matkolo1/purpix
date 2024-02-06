@@ -35,7 +35,7 @@ $conn->close();
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="icon" href="./assets/images/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./assets/images/icon.png" type="image/x-icon">
-    <title>PurPix</title>
+    <title>Alba-rosa.cz | PurPix</title>
 </head>
 
 <body>
