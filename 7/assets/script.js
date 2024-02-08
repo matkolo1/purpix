@@ -60,9 +60,9 @@ var walls = {
   I: { x: bg.x + siz(960), y: bg.y + siz(840), w: siz(660), h: siz(60) },
   J: { x: bg.x + siz(960), y: bg.y + siz(360), w: siz(660), h: siz(60) },
   K: { x: bg.x + siz(1260), y: bg.y + siz(180), w: siz(60), h: siz(180) },
-  L: { x: bg.x + siz(960), y: bg.y + siz(600), w: siz(360), h: siz(60) },
+  L: { x: bg.x + siz(960), y: bg.y + siz(600), w: siz(359), h: siz(60) },
   M: { x: bg.x + siz(1200), y: bg.y + siz(420), w: siz(60), h: siz(180) },
-  N: { x: bg.x + siz(1260), y: bg.y + siz(660), w: siz(60), h: siz(60) },
+  N: { x: bg.x + siz(1260), y: bg.y + siz(660), w: siz(60), h: siz(59) },
 }
 
 var block = {
@@ -89,7 +89,7 @@ var end = {
 }
 
 var sign = {
-  A: { state: false, x: bg.x + siz(480), y: bg.y + siz(240) },
+  A: { state: false, x: bg.x + siz(600), y: bg.y + siz(1200) },
 }
 
 var start = {
@@ -105,13 +105,13 @@ var door = {
 const codedoorImg = new Image();
 codedoorImg.src = './assets/CodedoorsW.jpg';
 var codedoor = {
-  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
-  num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
+  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(239), y: bg.y + siz(1260), w: siz(122), h: siz(60) },
+  num: { A: { x: bg.x + siz(225), y: bg.y + siz(1278) } },
 }
 
 var jumppad = {
-  x: { A: bg.x + siz(960), B: bg.x + siz(960), C: bg.x + siz(), D: bg.x + siz() },
-  y: { A: bg.y + siz(360), B: bg.y + siz(480), C: bg.y + siz(), D: bg.y + siz() },
+  x: { A: bg.x + siz(1200), B: bg.x + siz(1320), C: bg.x + siz(1140), D: bg.x + siz(1260) },
+  y: { A: bg.y + siz(240), B: bg.y + siz(240), C: bg.y + siz(480), D: bg.y + siz(480) },
   way: { A: [2, 2], B: [1, 2], C: [2, 2], D: [1, 2], }
 }
 
@@ -429,7 +429,6 @@ function CMD(text, comands) {
         port()
         break;
     }
-    draw();
   }
 }
 
@@ -499,11 +498,18 @@ function checkBlock() {
   if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
   //if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
-  const sign1 = 'Tohle jsou zmenšovače. Když na ně stoupneš a napíšeš příkaz "bot1.size(up)" nebo "bot1.size(down)", změníš svou velikost.';
+  const sign1 = `codedoor1 = ${codedoor.A.code}`;
   const sign2 = 'Když seš zmenšený tak nemůžeš používat teleportéry ani jumppady. <br>Peníze sbírat můžeš.'
   if (sign.A.state) document.getElementById('itex').innerHTML = sign1;
   //else if (sign.B.state) document.getElementById('itex').innerHTML = sign2;
   else document.getElementById('itex').innerHTML = '';
+}
+
+function between(x, range, test) {
+  for (let i = -range; i < range; i += 0.01) {
+    if ((Math.round(x) + i) == test) return true;
+  }
+  return false
 }
 
 var b;
@@ -589,12 +595,13 @@ function jump(ask) {
     }
   }
   if (ask) return false
+  else draw()
 }
 
 function port(ask) {
   let ports = [teleporters.A, teleporters.B, teleporters.C]
   for (let port of ports) {
-    if (player.x == port.x1 && player.y == port.y1) {
+    if (between(port.x1, 1, player.x) && between(port.y1, 1, player.y)) {
       if (ask) {
         return true
       } else {
@@ -604,7 +611,7 @@ function port(ask) {
           }
         }
       }
-    } else if (player.x == port.x2 && player.y == port.y2) {
+    } else if (between(port.x2, 1, player.x) && between(port.y2, 1, player.y)) {
       if (ask) {
         return true
       } else {
@@ -617,16 +624,17 @@ function port(ask) {
     }
   }
   if (ask) return false
+  else draw()
 }
 
 function resize(way, ask) {
   let ress = [resizer.A, resizer.B]
   for (let res of ress) {
-    if (
-      (player.x == res['x'] && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40))) ||
-      (player.x == res['x'] + siz(20) && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40))) ||
-      (player.x == res['x'] + siz(40) && (player.y == res['y'] || player.y == res['y'] + siz(20) || player.y == res['y'] + siz(40)))
-    ) {
+    let r = false;
+    if ((between(res['x'], 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }
+    else if ((between(res['x'] + siz(20), 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }
+    else if ((between(res['x'] + siz(40), 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }
+    if (r) {
       if (player.size == siz(60) && way == 'down') {
         if (ask) return [true, false];
         else {
@@ -641,10 +649,11 @@ function resize(way, ask) {
         if (ask) return [true, false];
         else {
           for (let i = 0; i < 3; i++) {
-            if (player.x != res.x) move(1)
-            if (player.y != res.y) move(3)
+            if (!(between(res.x, 1, player.x))) move(1)
+            if (!(between(res.y, 1, player.y))) move(3)
           }
           player.size = siz(60)
+          draw()
         }
       } else if (player.size == siz(60) && way == 'up') {
         if (ask) return [true, true];
@@ -673,6 +682,7 @@ window.addEventListener("keydown", function (event) {
   }
   draw();
 });
+
 document.addEventListener('contextmenu', preventDefault);
 document.addEventListener('keydown', preventKeyCombination);
 
