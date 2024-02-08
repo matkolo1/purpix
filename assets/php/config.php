@@ -3,13 +3,13 @@
 $servername = "localhost";
 $username = 'root';
 $password = "";
-$dbname = "parla";
+$dbname = "purpix";
 
 // Přístupové údaje k databázi
 //$servername = "md75.wedos.net";
-//$username = 'a237642_m';
-//$password = "XxgDSx2L";
-//$dbname = "d237642_m";
+//$username = 'a237642_purpix';
+//$password = "DbEDmRSR";
+//$dbname = "d237642_purpix";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 $conn->set_charset("utf8");
