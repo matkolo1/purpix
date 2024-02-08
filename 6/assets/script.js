@@ -53,7 +53,7 @@ var walls = {
   B: { x: bg.x + siz(600), y: bg.y + siz(180), w: siz(60), h: siz(240) },
   C: { x: bg.x + siz(520), y: bg.y + siz(420), w: siz(300), h: siz(20) },
   D: { x: bg.x + siz(499), y: bg.y + siz(460), w: siz(120), h: siz(20) },
-  E: { x: bg.x + siz(600), y: bg.y + siz(480), w: siz(20), h: siz(140) },
+  E: { x: bg.x + siz(600), y: bg.y + siz(480), w: siz(19), h: siz(140) },
   F: { x: bg.x + siz(600), y: bg.y + siz(640), w: siz(60), h: siz(80) },
   G: { x: bg.x + siz(640), y: bg.y + siz(460), w: siz(20), h: siz(180) },
   H: { x: bg.x + siz(660), y: bg.y + siz(460), w: siz(140), h: siz(20) },
@@ -666,22 +666,3 @@ function preventKeyCombination(e) {
   }
 }
 
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
-  }
-  draw();
-});
