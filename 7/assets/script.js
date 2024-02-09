@@ -49,20 +49,20 @@ var gameBox = {
 }
 
 var walls = {
-  A: { x: bg.x + siz(180), y: bg.y + siz(900), w: siz(660), h: siz(60) },
-  B: { x: bg.x + siz(780), y: bg.y + siz(960), w: siz(60), h: siz(660) },
-  C: { x: bg.x + siz(420), y: bg.y + siz(1480), w: siz(60), h: siz(140) },
-  D: { x: bg.x + siz(180), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
-  E: { x: bg.x + siz(360), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
-  F: { x: bg.x + siz(420), y: bg.y + siz(960), w: siz(60), h: siz(499) },
-  G: { x: bg.x + siz(480), y: bg.y + siz(1260), w: siz(300), h: siz(60) },
-  H: { x: bg.x + siz(900), y: bg.y + siz(180), w: siz(60), h: siz(660) },
-  I: { x: bg.x + siz(960), y: bg.y + siz(840), w: siz(660), h: siz(60) },
-  J: { x: bg.x + siz(960), y: bg.y + siz(360), w: siz(660), h: siz(60) },
-  K: { x: bg.x + siz(1260), y: bg.y + siz(180), w: siz(60), h: siz(180) },
-  L: { x: bg.x + siz(960), y: bg.y + siz(600), w: siz(359), h: siz(60) },
-  M: { x: bg.x + siz(1200), y: bg.y + siz(420), w: siz(60), h: siz(180) },
-  N: { x: bg.x + siz(1260), y: bg.y + siz(660), w: siz(60), h: siz(59) },
+  A: { x: bg.x + Math.round(siz(180)), y: bg.y + siz(900), w: siz(660), h: siz(60) },
+  B: { x: bg.x + Math.round(siz(780)), y: bg.y + siz(960), w: siz(60), h: siz(660) },
+  C: { x: bg.x + Math.round(siz(420)), y: bg.y + siz(1480), w: siz(60), h: siz(140) },
+  D: { x: bg.x + Math.round(siz(180)), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
+  E: { x: bg.x + Math.round(siz(360)), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
+  F: { x: bg.x + Math.round(siz(420)), y: bg.y + siz(960), w: siz(60), h: siz(499) },
+  G: { x: bg.x + Math.round(siz(480)), y: bg.y + siz(1260), w: siz(300), h: siz(60) },
+  H: { x: bg.x + Math.round(siz(900)), y: bg.y + siz(180), w: siz(60), h: siz(660) },
+  I: { x: bg.x + Math.round(siz(960)), y: bg.y + siz(840), w: siz(660), h: siz(60) },
+  J: { x: bg.x + Math.round(siz(960)), y: bg.y + siz(360), w: siz(660), h: siz(60) },
+  K: { x: bg.x + Math.round(siz(1260)), y: bg.y + siz(180), w: siz(60), h: siz(180) },
+  L: { x: bg.x + Math.round(siz(960)), y: bg.y + siz(600), w: siz(359), h: siz(60) },
+  M: { x: bg.x + Math.round(siz(1200)), y: bg.y + siz(420), w: siz(60), h: siz(180) },
+  N: { x: bg.x + Math.round(siz(1260)), y: bg.y + siz(600), w: siz(60), h: siz(119) },
 }
 
 var block = {
@@ -75,17 +75,17 @@ var block = {
 const coinImg = new Image();
 coinImg.src = './assets/coin.jpg';
 var coin = {
-  A: { state: true, x: bg.x + siz(300), y: bg.y + siz(600) },
-  B: { state: true, x: bg.x + siz(420), y: bg.y + siz(540) },
-  C: { state: true, x: bg.x + siz(1320), y: bg.y + siz(300) },
-  D: { state: true, x: bg.x + siz(1440), y: bg.y + siz(240) },
+  A: { state: true, x: bg.x + siz(540), y: bg.y + siz(1140) },
+  B: { state: true, x: bg.x + siz(660), y: bg.y + siz(1140) },
+  C: { state: true, x: bg.x + siz(1500), y: bg.y + siz(540) },
+  D: { state: true, x: bg.x + siz(1500), y: bg.y + siz(660) },
   size: siz(60),
   colected: 0,
 }
 
 var end = {
-  x: bg.x + siz(1440),
-  y: bg.y + siz(600),
+  x: bg.x + siz(1500),
+  y: bg.y + siz(240),
 }
 
 var sign = {
@@ -117,7 +117,7 @@ var jumppad = {
 
 var teleporters = {
   A: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(240), y1: bg.y + siz(240), y2: bg.y + siz(1020), way1: [[13, 1], [13, 4]], way2: [[13, 2], [13, 3]] },
-  B: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(60), y1: bg.y + siz(480), y2: bg.y + siz(1020), way1: [[7, 1], [9, 4]], way2: [[7, 2], [9, 3]] },
+  B: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(600), y1: bg.y + siz(480), y2: bg.y + siz(1020), way1: [[7, 1], [9, 4]], way2: [[7, 2], [9, 3]] },
   C: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(660), y1: bg.y + siz(720), y2: bg.y + siz(1440), way1: [[6, 1], [12, 4]], way2: [[6, 2], [12, 3]] },
 }
 
@@ -477,25 +477,31 @@ function checkBlock() {
       else if (num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
 
-    let item = [door.A, codedoor.A];
-    for (let wall of item) {
+    items = [door.A];
+    for (let wall of items) {
       if (wall['state'] && num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (wall['state'] && num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
       else if (wall['state'] && num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
       else if (wall['state'] && num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.down = true;
     }
+
+    items = [codedoor.A];
+    for (let wall of items) {
+      if (wall['state'] && num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) { block.left = true; wall['near'] = true; }
+      else if (wall['state'] && num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) { block.right = true; wall['near'] = true; }
+      else if (wall['state'] && num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) { block.up = true; wall['near'] = true; }
+      else if (wall['state'] && num == 3 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) { block.down = true; wall['near'] = true; }
+    }
   }
 
   let coins = [coin.A, coin.B, coin.C, coin.D]
   for (coinObj of coins) {
-    if (
-      coinObj['state'] && ((player.x == coinObj['x'] && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
-        (player.x == coinObj['x'] + siz(20) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))) ||
-        (player.x == coinObj['x'] + siz(40) && (player.y == coinObj['y'] || player.y == coinObj['y'] + siz(20) || player.y == coinObj['y'] + siz(40))))
-    ) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    if (coinObj['state'] && (between(coinObj['x'], 1, player.x) && (between(coinObj['y'], 1, player.y) || between(coinObj['y'] + siz(20), 1, player.y) || between(coinObj['y'] + siz(40), 1, player.y)))) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    else if (coinObj['state'] && (between(coinObj['x'] + siz(20), 1, player.x) && (between(coinObj['y'], 1, player.y) || between(coinObj['y'] + siz(20), 1, player.y) || between(coinObj['y'] + siz(40), 1, player.y)))) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
+    else if (coinObj['state'] && (between(coinObj['x'] + siz(40), 1, player.x) && (between(coinObj['y'], 1, player.y) || between(coinObj['y'] + siz(20), 1, player.y) || between(coinObj['y'] + siz(40), 1, player.y)))) { coinObj['state'] = false; coin.colected++; write('cmd', `Posbíráno peněz: ${coin.colected}/4`); }
   }
 
-  if (player.x == sign.A.x && player.y == sign.A.y) sign.A.state = true; else sign.A.state = false;
+  if (between(sign.A.y, 1, player.y) && between(sign.A.x, 1, player.x)) sign.A.state = true; else sign.A.state = false;
   //if (player.x == sign.B.x && player.y == sign.B.y) sign.B.state = true; else sign.B.state = false;
 
   const sign1 = `codedoor1 = ${codedoor.A.code}`;
@@ -555,9 +561,9 @@ backgroundImage.onload = function () {
 };
 
 function win() {
-  if (coin.colected == 4 && player.x == end.x && player.y == end.y) {
+  if (coin.colected == 4 && between(end.x, 1, player.x) && between(end.y, 1, player.y)) {
     block.down = true; block.left = true; block.right = true; block.up = true;
-    document.getElementById('itex').innerHTML = 'Vyhrál jsi šestý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
+    document.getElementById('itex').innerHTML = 'Vyhrál jsi sedmý level. Když napíšeš "menu" vrátíš se do menu. <br> Neboj, body se ti zapsaly.'
     var urlParams = new URLSearchParams(window.location.search);
     var url = window.location.pathname;
     var parts = url.split('/');
@@ -584,7 +590,7 @@ function jump(ask) {
     let x = jumppad.x[j]
     let y = jumppad.y[j]
 
-    if (player.x == x && player.y == y) {
+    if (between(x, 1, player.x) && between(y, 1, player.y)) {
       if (ask) {
         return true
       } else {
@@ -601,7 +607,7 @@ function jump(ask) {
 function port(ask) {
   let ports = [teleporters.A, teleporters.B, teleporters.C]
   for (let port of ports) {
-    if (between(port.x1, 1, player.x) && between(port.y1, 1, player.y)) {
+    if (between(port.x1, 2, player.x) && between(port.y1, 2, player.y)) {
       if (ask) {
         return true
       } else {
@@ -611,7 +617,7 @@ function port(ask) {
           }
         }
       }
-    } else if (between(port.x2, 1, player.x) && between(port.y2, 1, player.y)) {
+    } else if (between(port.x2, 2, player.x) && between(port.y2, 2, player.y)) {
       if (ask) {
         return true
       } else {
@@ -662,26 +668,6 @@ function resize(way, ask) {
   }
   if (ask) return [false,]
 }
-
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
-  }
-  draw();
-});
 
 document.addEventListener('contextmenu', preventDefault);
 document.addEventListener('keydown', preventKeyCombination);
