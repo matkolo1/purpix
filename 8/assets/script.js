@@ -56,12 +56,21 @@ function strt() {
   }
 
   walls = {
-    A: { x: bg.x + siz(180), y: bg.y + siz(360), w: siz(240), h: siz(60) },
-    B: { x: bg.x + siz(540), y: bg.y + siz(360), w: siz(300), h: siz(60) },
-    C: { x: bg.x + siz(180), y: bg.y + siz(780), w: siz(240), h: siz(60) },
-    D: { x: bg.x + siz(540), y: bg.y + siz(780), w: siz(300), h: siz(60) },
-    E: { x: bg.x + siz(180), y: bg.y + siz(1380), w: siz(240), h: siz(60) },
-    F: { x: bg.x + siz(540), y: bg.y + siz(1380), w: siz(300), h: siz(60) },
+    A: { x: bg.x + siz(420), y: bg.y + siz(360), w: siz(120), h: siz(60) },
+    B: { x: bg.x + siz(600), y: bg.y + siz(360), w: siz(120), h: siz(60) },
+    C: { x: bg.x + siz(780), y: bg.y + siz(360), w: siz(120), h: siz(60) },
+    D: { x: bg.x + siz(960), y: bg.y + siz(360), w: siz(120), h: siz(60) },
+    E: { x: bg.x + siz(420), y: bg.y + siz(420), w: siz(11 * 60), h: siz(60) },
+    F: { x: bg.x + siz(420), y: bg.y + siz(480), w: siz(60), h: siz(9 * 60) },
+    G: { x: bg.x + siz(480), y: bg.y + siz(720), w: siz(6 * 60), h: siz(60) },
+    H: { x: bg.x + siz(720), y: bg.y + siz(480), w: siz(60), h: siz(9 * 60) },
+    I: { x: bg.x + siz(1320), y: bg.y + siz(180), w: siz(60), h: siz(3 * 60) },
+    J: { x: bg.x + siz(1200), y: bg.y + siz(360), w: siz(3 * 60), h: siz(2 * 60) },
+    K: { x: bg.x + siz(1380), y: bg.y + siz(420), w: siz(80), h: siz(60) },
+    L: { x: bg.x + siz(1479), y: bg.y + siz(420), w: siz(140), h: siz(60) },
+    M: { x: bg.x + siz(960), y: bg.y + siz(720), w: siz(8 * 60), h: siz(60) },
+    N: { x: bg.x + siz(1560), y: bg.y + siz(720), w: siz(60), h: siz(60) },
+    O: { x: bg.x + siz(1200), y: bg.y + siz(480), w: siz(60), h: siz(9 * 60) },
   }
 
   block = {
@@ -73,47 +82,47 @@ function strt() {
 
   coinImg.src = './assets/coin.jpg';
   coin = {
-    A: { state: true, x: bg.x + siz(720), y: bg.y + siz(480) },
-    B: { state: true, x: bg.x + siz(240), y: bg.y + siz(660) },
-    C: { state: true, x: bg.x + siz(720), y: bg.y + siz(1020) },
-    D: { state: true, x: bg.x + siz(720), y: bg.y + siz(1140) },
+    A: { state: true, x: bg.x + siz(600), y: bg.y + siz(540) },
+    B: { state: true, x: bg.x + siz(540), y: bg.y + siz(600) },
+    C: { state: true, x: bg.x + siz(240), y: bg.y + siz(840) },
+    D: { state: true, x: bg.x + siz(300), y: bg.y + siz(900) },
     size: siz(60),
     colected: 0,
   }
 
   end = {
-    x: bg.x + siz(660),
-    y: bg.y + siz(1500),
+    x: bg.x + siz(1440),
+    y: bg.y + siz(240),
   }
 
   door = {
-    A: { state: true, x: bg.x - 1 + siz(420), y: bg.y + siz(360), w: siz(122), h: siz(60) },
-    num: { A: { x: bg.x + siz(405), y: bg.y + siz(375) }, },
+    A: { state: true, x: bg.x - 1 + siz(1440), y: bg.y + siz(720), w: siz(122), h: siz(60) },
+    num: { A: { x: bg.x + siz(1425), y: bg.y + siz(738) }, },
   }
 
   codedoorImg.src = './assets/CodedoorsW.jpg';
   codedoor = {
-    A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(420), y: bg.y + siz(780), w: siz(120), h: siz(60) },
-    num: { A: { x: bg.x + siz(405), y: bg.y + siz(795) } },
+    A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(839), y: bg.y + siz(720), w: siz(122), h: siz(60) },
+    num: { A: { x: bg.x + siz(825), y: bg.y + siz(738) } },
   }
 
   turrets = {
     A: {
-      way: [-1, 0], x: bg.x + siz(600), y: bg.y + siz(420), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 5, a1: 0, a2: -1, },
+      way: [-1, 0], x: bg.x + siz(1260), y: bg.y + siz(180), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 18, a1: 0, a2: -1, },
     },
     B: {
-      way: [-1, 0], x: bg.x + siz(780), y: bg.y + siz(600), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 10, a1: 0, a2: -1, },
+      way: [-1, 0], x: bg.x + siz(1260), y: bg.y + siz(240), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 18, a1: 0, a2: -1, },
     },
     C: {
-      way: [-1, 0], x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60),
-      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 8, a1: 0, a2: -1, },
+      way: [-1, 0], x: bg.x + siz(1260), y: bg.y + siz(300), w: siz(60), h: siz(60),
+      pro: { state1: false, state2: false, x1: 0, y1: 0, x2: 0, y2: 0, l: 18, a1: 0, a2: -1, },
     },
   }
 
   sign = {
-    A: { state: false, x: bg.x + siz(540), y: bg.y + siz(480) },
+    A: { state: false, x: bg.x + siz(540), y: bg.y + siz(960) },
   }
 
   start = {
@@ -122,22 +131,22 @@ function strt() {
   }
 
   jumppad = {
-    x: { A: bg.x + siz(1200), B: bg.x + siz(1320), C: bg.x + siz(1140), D: bg.x + siz(1260) },
-    y: { A: bg.y + siz(240), B: bg.y + siz(240), C: bg.y + siz(480), D: bg.y + siz(480) },
-    way: { A: [2, 2], B: [1, 2], C: [2, 2], D: [1, 2], }
+    x: { A: bg.x + siz(660), B: bg.x + siz(780), C: bg.x + siz(600), D: bg.x + siz(600), E: bg.x + siz(1140), F: bg.x + siz(1260) },
+    y: { A: bg.y + siz(600), B: bg.y + siz(600), C: bg.y + siz(660), D: bg.y + siz(780), E: bg.y + siz(900), F: bg.y + siz(900) },
+    way: { A: [2, 2], B: [1, 2], C: [4, 2], D: [3, 2], E: [2, 2], F: [1, 2] }
   }
-  
+
   teleporters = {
-    A: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(240), y1: bg.y + siz(240), y2: bg.y + siz(1020), way1: [[13, 1], [13, 4]], way2: [[13, 2], [13, 3]] },
-    B: { state: false, x1: bg.x + siz(1020), x2: bg.x + siz(600), y1: bg.y + siz(480), y2: bg.y + siz(1020), way1: [[7, 1], [9, 4]], way2: [[7, 2], [9, 3]] },
+    A: { state: false, x1: bg.x + siz(180), x2: bg.x + siz(1200), y1: bg.y + siz(960), y2: bg.y + siz(240), way1: [[17, 2], [12, 3]], way2: [[12, 4], [17, 1]] },
+    B: { state: false, x1: bg.x + siz(360), x2: bg.x + siz(660), y1: bg.y + siz(960), y2: bg.y + siz(960), way1: [[5, 2]], way2: [[5, 1]] },
   }
-  
+
   resizer = {
-    A: { x: bg.x + siz(300), y: bg.y + siz(1440) },
-    B: { x: bg.x + siz(540), y: bg.y + siz(1440) },
+    A: { x: bg.x + siz(1500), y: bg.y + siz(300) },
+    B: { x: bg.x + siz(1500), y: bg.y + siz(540) },
     state: false,
   }
-  
+
 }
 
 var interval = 0;
@@ -167,19 +176,13 @@ function draw(fire) {
   c.fillRect(player.x, player.y, player.size, player.size);
 
   c.fillStyle = 'darkred';
-  if (turrets.A.pro.state1) c.fillRect(turrets.A.pro.x1, turrets.A.pro.y1, player.size, player.size);
-  if (turrets.B.pro.state1) c.fillRect(turrets.B.pro.x1, turrets.B.pro.y1, player.size, player.size);
-  if (turrets.C.pro.state1) c.fillRect(turrets.C.pro.x1, turrets.C.pro.y1, player.size, player.size);
-  if (turrets.A.pro.state2) c.fillRect(turrets.A.pro.x2, turrets.A.pro.y2, player.size, player.size);
-  if (turrets.B.pro.state2) c.fillRect(turrets.B.pro.x2, turrets.B.pro.y2, player.size, player.size);
-  if (turrets.C.pro.state2) c.fillRect(turrets.C.pro.x2, turrets.C.pro.y2, player.size, player.size);
+  if (turrets.A.pro.state1) c.fillRect(turrets.A.pro.x1, turrets.A.pro.y1, siz(60), siz(60));
+  if (turrets.B.pro.state1) c.fillRect(turrets.B.pro.x1, turrets.B.pro.y1, siz(60), siz(60));
+  if (turrets.C.pro.state1) c.fillRect(turrets.C.pro.x1, turrets.C.pro.y1, siz(60), siz(60));
+  if (turrets.A.pro.state2) c.fillRect(turrets.A.pro.x2, turrets.A.pro.y2, siz(60), siz(60));
+  if (turrets.B.pro.state2) c.fillRect(turrets.B.pro.x2, turrets.B.pro.y2, siz(60), siz(60));
+  if (turrets.C.pro.state2) c.fillRect(turrets.C.pro.x2, turrets.C.pro.y2, siz(60), siz(60));
 
-  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
-  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
-  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
-  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
-  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
-  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
 
   checkBlock()
   if (!fire) win()
@@ -195,17 +198,23 @@ function move(side) {
     walls.D[prop] += value;
     walls.E[prop] += value;
     walls.F[prop] += value;
+    walls.G[prop] += value;
+    walls.H[prop] += value;
+    walls.I[prop] += value;
+    walls.J[prop] += value;
+    walls.K[prop] += value;
+    walls.L[prop] += value;
+    walls.M[prop] += value;
+    walls.N[prop] += value;
+    walls.O[prop] += value;
     coin.A[prop] += value;
     coin.B[prop] += value;
     coin.C[prop] += value;
     coin.D[prop] += value;
     end[prop] += value;
     door.A[prop] += value;
-    door.B[prop] += value;
     door.num.A[prop] += value;
-    door.num.B[prop] += value;
     sign.A[prop] += value;
-    sign.B[prop] += value;
     start[prop] += value;
     codedoor.A[prop] += value;
     codedoor.num.A[prop] += value;
@@ -221,9 +230,9 @@ function move(side) {
     jumppad[prop].A += value;
     jumppad[prop].B += value;
     jumppad[prop].C += value;
-    jumppad[prop].A += value;
-    jumppad[prop].B += value;
-    jumppad[prop].C += value;
+    jumppad[prop].D += value;
+    jumppad[prop].E += value;
+    jumppad[prop].F += value;
     teleporters.A[`${prop}1`] += value;
     teleporters.A[`${prop}2`] += value;
     teleporters.B[`${prop}2`] += value;
@@ -264,7 +273,7 @@ input.addEventListener('keydown', (e) => {
 
 function CMD(text, comands) {
   let names = ['bot1', 'door1', 'menu', 'codedoor1', 'jumppad', 'teleport', 80085];
-  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft', 'size'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send']  };
+  let works = { bot: ['moveup', 'movedown', 'moveright', 'moveleft', 'size'], door: ['open', 'close'], jumppad: ['activate'], teleport: ['send'] };
   let item = text.split('.')[0];
   let workk = text.split('(')[0];
   let work = workk.split('.')[1];
@@ -359,9 +368,10 @@ function CMD(text, comands) {
             break;
           } else if (num.at(num.length - 1) == ')') {
             if (work == 'size') {
-              if (num.slice(0, num.length - 1) != ('down' || 'up')){
-                state.num = [false, `${num} nebylo nalezeno`]
-              }else if (!resize(num.slice(0, num.length - 1), true)[0]) {
+              if ((num.slice(0, num.length - 1) != 'down') && (num.slice(0, num.length - 1) != 'up')) {
+                state.num = [false, `${num.slice(0, num.length - 1)} nebylo nalezeno`]
+                break;
+              } else if (!resize(num.slice(0, num.length - 1), true)[0]) {
                 state.num = [false, `Nestojíte na zmenšovači.`];
                 break;
               } else if (resize(num.slice(0, num.length - 1), true)[1] && num == 'down)') {
@@ -504,7 +514,7 @@ function checkBlock() {
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, turrets.A, turrets.B, turrets.C];
+    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, walls.G, walls.H, walls.I, walls.J, walls.K, walls.L, walls.M, walls.N, walls.O, turrets.A, turrets.B, turrets.C];
     for (let wall of items) {
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
@@ -715,7 +725,7 @@ function fire() {
   let turretts = [turrets.A, turrets.B, turrets.C]
   for (let turret of turretts) {
     let prp = turret['pro'];
-    let next = { x: turret.way[0] * player.size, y: turret.way[1] * player.size };
+    let next = { x: turret.way[0] * siz(60), y: turret.way[1] * siz(60) };
     if (prp.state1 && (prp.a1 < prp.l) && (prp.a1 >= 0)) {
       prp.x1 += next.x
       prp.y1 += next.y
@@ -802,3 +812,4 @@ function preventKeyCombination(e) {
     e.preventDefault();
   }
 }
+

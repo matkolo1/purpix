@@ -329,9 +329,10 @@ function CMD(text, comands) {
             break;
           } else if (num.at(num.length - 1) == ')') {
             if (work == 'size') {
-              if (num.slice(0, num.length - 1) != ('down' || 'up')){
-                state.num = [false, `${num} nebylo nalezeno`]
-              }else if (!resize(num.slice(0, num.length - 1), true)[0]) {
+              if ((num.slice(0, num.length - 1) != 'down') && (num.slice(0, num.length - 1) != 'up')) {
+                state.num = [false, `${num.slice(0, num.length - 1)} nebylo nalezeno`]
+                break;
+              } else if (!resize(num.slice(0, num.length - 1), true)[0]) {
                 state.num = [false, `Nestojíte na zmenšovači.`];
                 break;
               } else if (resize(num.slice(0, num.length - 1), true)[1] && num == 'down)') {
@@ -399,7 +400,7 @@ function CMD(text, comands) {
       return false
     }
   }
-  
+
   if (comands) {
     switch (item) {
       case ('bot1'):
