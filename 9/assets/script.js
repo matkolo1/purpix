@@ -1,6 +1,24 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
-canvas.height = window.innerHeight;
+
+switch (Math.round(window.innerHeight / 10) % 3) {
+  case (0):
+    canvas.height = Math.round(window.innerHeight / 10) * 10;
+    console.log(0, canvas.height);
+    break;
+  case (1):
+    canvas.height = Math.round(window.innerHeight / 10) * 10 - 10;
+    console.log('-1', canvas.height);
+    break;
+  case (2):
+    canvas.height = Math.round(window.innerHeight / 10) * 10 - 20;
+    console.log('-2', canvas.height);
+    break;
+  default:
+    console.log('idk kurva')
+    break;
+}
+
 canvas.width = window.innerWidth - (sie(200));
 document.getElementById('console').style.width = `100%`;
 document.getElementById('cntrl').style.width = `${sie(200)}px`;
@@ -58,11 +76,47 @@ var walls = {
   G: { x: bg.x + siz(1179), y: bg.y + siz(1440), w: siz(120), h: siz(20) },
   H: { x: bg.x + siz(1079), y: bg.y + siz(1440), w: siz(80), h: siz(60) },
   I: { x: bg.x + siz(1020), y: bg.y + siz(1440), w: siz(60), h: siz(180) },
-  J: { x: bg.x + siz(900), y: bg.y + siz(1260), w: siz(9*60), h: siz(60) },
-  K: { x: bg.x + siz(1260), y: bg.y + siz(1080), w: siz(60), h: siz(6*60) },
-  L: { x: bg.x + siz(600), y: bg.y + siz(1060), w: siz(12*60), h: siz(19) },
-  M: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  N: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  J: { x: bg.x + siz(900), y: bg.y + siz(1260), w: siz(9 * 60), h: siz(60) },
+  K: { x: bg.x + siz(1260), y: bg.y + siz(1080), w: siz(60), h: siz(6 * 60) },
+  L: { x: bg.x + siz(599), y: bg.y + siz(1059), w: siz(12 * 60), h: siz(20) },
+  M: { x: bg.x + siz(840), y: bg.y + siz(1080), w: siz(60), h: siz(9 * 60) },
+  N: { x: bg.x + siz(600), y: bg.y + siz(1380), w: siz(120), h: siz(60) },
+  O: { x: bg.x + siz(580), y: bg.y + siz(1059), w: siz(19), h: siz(6 * 60 + 20) },
+  P: { x: bg.x + siz(600), y: bg.y + siz(1020), w: siz(12 * 60), h: siz(20) },
+  Q: { x: bg.x + siz(360), y: bg.y + siz(1600), w: siz(60), h: siz(20) },
+  R: { x: bg.x + siz(360), y: bg.y + siz(1420), w: siz(20), h: siz(200) },
+  S: { x: bg.x + siz(400), y: bg.y + siz(1380), w: siz(20), h: siz(200) },
+  T: { x: bg.x + siz(260), y: bg.y + siz(1420), w: siz(120), h: siz(20) },
+  U: { x: bg.x + siz(280), y: bg.y + siz(1380), w: siz(120), h: siz(20) },
+  V: { x: bg.x + siz(180), y: bg.y + siz(1380), w: siz(80), h: siz(60) },
+  W: { x: bg.x + siz(360), y: bg.y + siz(1140), w: siz(60), h: siz(4 * 60) },
+  X: { x: bg.x + siz(180), y: bg.y + siz(1080), w: siz(4 * 60), h: siz(60) },
+  Y: { x: bg.x + siz(420), y: bg.y + siz(1260), w: siz(120), h: siz(60) },
+  Z: { x: bg.x + siz(180), y: bg.y + siz(840), w: siz(60), h: siz(60) },
+  AA: { x: bg.x + siz(1440), y: bg.y + siz(300), w: siz(180), h: siz(60) },
+  AB: { x: bg.x + siz(1380), y: bg.y + siz(180), w: siz(60), h: siz(6 * 60) },
+  AC: { x: bg.x + siz(1260), y: bg.y + siz(900), w: siz(60), h: siz(120) },
+  AD: { x: bg.x + siz(840), y: bg.y + siz(900), w: siz(60), h: siz(120) },
+  AE: { x: bg.x + siz(780), y: bg.y + siz(840), w: siz(14 * 60), h: siz(60) },
+  AF: { x: bg.x + siz(840), y: bg.y + siz(820), w: siz(60), h: siz(20) },
+  AG: { x: bg.x + siz(1200), y: bg.y + siz(820), w: siz(60), h: siz(20) },
+  AH: { x: bg.x + siz(1240), y: bg.y + siz(480), w: siz(20), h: siz(5 * 60 + 20) },
+  AI: { x: bg.x + siz(1260), y: bg.y + siz(480), w: siz(120), h: siz(60) },
+  AJ: { x: bg.x + siz(1260), y: bg.y + siz(660), w: siz(6 * 60), h: siz(60) },
+  AK: { x: bg.x + siz(1200), y: bg.y + siz(180), w: siz(60), h: siz(180) },
+  AL: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AM: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AN: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AO: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AP: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AQ: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AR: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AS: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AT: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  all: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+    'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC',
+    'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP',
+    'AQ', 'AR', 'AS', 'AT']
 }
 
 var block = {
@@ -105,8 +159,8 @@ var start = {
 var door = {
   A: { state: true, x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
   B: { state: true, x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
-  C: { state: true, x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
-  num: { A: { x: bg.x + siz(1260), y: bg.y + siz(720) }, B: { x: bg.x + siz(1260), y: bg.y + siz(720) }, C: { x: bg.x + siz(1260), y: bg.y + siz(720) }, },
+  C: { state: true, x: bg.x + siz(1439), y: bg.y + siz(1260), w: siz(122), h: siz(60) },
+  num: { A: { x: bg.x + siz(1260), y: bg.y + siz(720) }, B: { x: bg.x + siz(1260), y: bg.y + siz(720) }, C: { x: bg.x + siz(1425), y: bg.y + siz(1278) }, },
 }
 
 const codedoorImgW = new Image();
@@ -115,9 +169,9 @@ codedoorImgW.src = './assets/CodedoorsW.jpg';
 codedoorImgH.src = './assets/CodedoorsH.jpg'
 var codedoor = {
   A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
-  B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1020), y: bg.y + siz(1319), w: siz(60), h: siz(122) },
-  C: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
-  num: { A: { x: bg.x + siz(225), y: bg.y + siz(1278) }, B: { x: bg.x + siz(1020), y: bg.y + siz(1318) }, C: { x: bg.x + siz(225), y: bg.y + siz(1278) }, },
+  B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(719), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
+  C: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1020), y: bg.y + siz(1319), w: siz(60), h: siz(122) },
+  num: { A: { x: bg.x + siz(225), y: bg.y + siz(1278) }, C: { x: bg.x + siz(1020), y: bg.y + siz(1318) }, B: { x: bg.x + siz(705), y: bg.y + siz(1398) }, },
 }
 
 var jumppad = {
@@ -158,6 +212,7 @@ var resizer = {
   G: { x: bg.x + siz(1140), y: bg.y + siz(1320) },
   H: { x: bg.x + siz(660), y: bg.y + siz(1500) },
   I: { x: bg.x + siz(1440), y: bg.y + siz(1500) },
+  J: { x: bg.x + siz(240), y: bg.y + siz(1200) },
   state: false,
 }
 
@@ -184,11 +239,11 @@ function draw() {
   if (door.C.state) c.fillRect(door.C.x, door.C.y, door.C.w, door.C.h);
 
   if (codedoor.A.state) c.drawImage(codedoorImgW, codedoor.A.x, codedoor.A.y, codedoor.A.w, codedoor.A.h);
-  if (codedoor.B.state) c.drawImage(codedoorImgH, codedoor.B.x, codedoor.B.y, codedoor.B.w, codedoor.B.h);
-  if (codedoor.C.state) c.drawImage(codedoorImgW, codedoor.C.x, codedoor.C.y, codedoor.C.w, codedoor.C.h);
+  if (codedoor.B.state) c.drawImage(codedoorImgW, codedoor.B.x, codedoor.B.y, codedoor.B.w, codedoor.B.h);
+  if (codedoor.C.state) c.drawImage(codedoorImgH, codedoor.C.x, codedoor.C.y, codedoor.C.w, codedoor.C.h);
 
   c.fillStyle = 'black';
-  c.font = '20px Verdana';
+  c.font = `${siz(20)}px Verdana`;
   c.fillText('1', door.num.A.x, door.num.A.y);
   c.fillText('1', codedoor.num.A.x, codedoor.num.A.y);
   c.fillText('2', door.num.B.x, door.num.B.y);
@@ -196,25 +251,9 @@ function draw() {
   c.fillText('3', door.num.C.x, door.num.C.y);
   c.fillText('3', codedoor.num.C.x, codedoor.num.C.y);
 
-  c.strokeRect(walls.A.x, walls.A.y, walls.A.w, walls.A.h);
-  c.strokeRect(walls.B.x, walls.B.y, walls.B.w, walls.B.h);
-  c.strokeRect(walls.C.x, walls.C.y, walls.C.w, walls.C.h);
-  c.strokeRect(walls.D.x, walls.D.y, walls.D.w, walls.D.h);
-  c.strokeRect(walls.E.x, walls.E.y, walls.E.w, walls.E.h);
-  c.strokeRect(walls.F.x, walls.F.y, walls.F.w, walls.F.h);
-  c.strokeRect(walls.G.x, walls.G.y, walls.G.w, walls.G.h);
-  c.strokeRect(walls.H.x, walls.H.y, walls.H.w, walls.H.h);
-  c.strokeRect(walls.I.x, walls.I.y, walls.I.w, walls.I.h);
-  c.strokeRect(walls.J.x, walls.J.y, walls.J.w, walls.J.h);
-  c.strokeRect(walls.K.x, walls.K.y, walls.K.w, walls.K.h);
-  c.strokeRect(walls.L.x, walls.L.y, walls.L.w, walls.L.h);
-  c.strokeRect(walls.M.x, walls.M.y, walls.M.w, walls.M.h);
-  c.strokeRect(walls.N.x, walls.N.y, walls.N.w, walls.N.h);
-
-
-
-
-
+  for (let z of walls.all) {
+    c.strokeRect(walls[z].x, walls[z].y, walls[z].w, walls[z].h);
+  }
 
   win()
 }
@@ -223,20 +262,9 @@ function move(side) {
   function Move(prop, value) {
     bg[prop] += value;
     gameBox[prop] += value;
-    walls.A[prop] += value;
-    walls.B[prop] += value;
-    walls.C[prop] += value;
-    walls.D[prop] += value;
-    walls.E[prop] += value;
-    walls.F[prop] += value;
-    walls.G[prop] += value;
-    walls.H[prop] += value;
-    walls.I[prop] += value;
-    walls.J[prop] += value;
-    walls.K[prop] += value;
-    walls.L[prop] += value;
-    walls.M[prop] += value;
-    walls.N[prop] += value;
+    for (let z of walls.all) {
+      walls[z][prop] += value;
+    }
     coin.A[prop] += value;
     coin.B[prop] += value;
     coin.C[prop] += value;
@@ -284,6 +312,7 @@ function move(side) {
     resizer.G[prop] += value;
     resizer.H[prop] += value;
     resizer.I[prop] += value;
+    resizer.J[prop] += value;
     door.A[prop] += value;
     door.num.A[prop] += value;
     door.B[prop] += value;
@@ -515,11 +544,11 @@ function CMD(text, comands) {
         else door.A.state = true
         break;
       case ('door2'):
-        if (work == 'open') door.A.state = false
+        if (work == 'open') door.B.state = false
         else door.B.state = true
         break;
       case ('door3'):
-        if (work == 'open') door.A.state = false
+        if (work == 'open') door.C.state = false
         else door.C.state = true
         break;
       case ('codedoor1'):
@@ -605,8 +634,8 @@ function checkBlock() {
     else if (!(pr.y + player.size <= gameBox.y + gameBox.h)) block.down = true;
     else if (!(pr.y >= gameBox.y)) block.up = true;
 
-    let items = [walls.A, walls.B, walls.C, walls.D, walls.E, walls.F, walls.G, walls.H, walls.I, walls.J, walls.K, walls.L, walls.M, walls.N];
-    for (let wall of items) {
+    for (let z of walls.all) {
+      let wall = walls[z];
       if (num == 0 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.left = true;
       else if (num == 1 && pr.x >= wall['x'] && pr.x < wall['x'] + wall['w'] && pr.y < wall['y'] + wall['h'] && pr.y >= wall['y']) block.right = true;
       else if (num == 2 && pr.y >= wall['y'] && pr.y < wall['y'] + wall['h'] && pr.x < wall['x'] + wall['w'] && pr.x >= wall['x']) block.up = true;
@@ -776,7 +805,7 @@ function port(ask) {
 }
 
 function resize(way, ask) {
-  let ress = [resizer.A, resizer.B, resizer.C, resizer.D, resizer.E, resizer.F, resizer.G, resizer.H, resizer.I]
+  let ress = [resizer.A, resizer.B, resizer.C, resizer.D, resizer.E, resizer.F, resizer.G, resizer.H, resizer.I, resizer.J]
   for (let res of ress) {
     let r = false;
     if ((between(res['x'], 1, player.x) && (between(res['y'], 1, player.y) || between(res['y'] + siz(20), 1, player.y) || between(res['y'] + siz(40), 1, player.y)))) { r = true }

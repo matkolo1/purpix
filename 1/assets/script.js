@@ -1,6 +1,24 @@
 var canvas = document.getElementById("gameCanvas");
 var c = canvas.getContext("2d");
-canvas.height = window.innerHeight;
+
+switch (Math.round(window.innerHeight / 10) % 3) {
+  case (0):
+    canvas.height = Math.round(window.innerHeight / 10) * 10;
+    console.log(0, canvas.height);
+    break;
+  case (1):
+    canvas.height = Math.round(window.innerHeight / 10) * 10 - 10;
+    console.log('-1', canvas.height);
+    break;
+  case (2):
+    canvas.height = Math.round(window.innerHeight / 10) * 10 - 20;
+    console.log('-2', canvas.height);
+    break;
+  default:
+    console.log('idk kurva')
+    break;
+}
+
 canvas.width = window.innerWidth - sie(200);
 document.getElementById('console').style.width = `100%`;
 document.getElementById('cntrl').style.width = `${sie(200)}px`;
