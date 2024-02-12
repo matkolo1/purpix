@@ -153,11 +153,11 @@ $conn->close();
                 <tbody>
                     <?php
                     include './assets/php/config.php';
-                    $query = "SELECT users.id, users.username, GROUP_CONCAT(logins.time SEPARATOR '<br>') AS login_times
-                        FROM users
-                        LEFT JOIN logins ON users.id = logins.user_id
-                        GROUP BY users.id, users.username
-                        ORDER BY MAX(logins.time) DESC";
+                    $query = "SELECT users.id, users.username, GROUP_CONCAT(DATE_FORMAT(logins.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS login_times
+                    FROM users
+                    LEFT JOIN logins ON users.id = logins.user_id
+                    GROUP BY users.id, users.username
+                    ORDER BY MAX(logins.time) DESC";
                     $result = $conn->query($query);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
@@ -185,7 +185,7 @@ $conn->close();
                 <tbody>
                     <?php
                     include './assets/php/config.php';
-                    $query = "SELECT users.id, users.username, GROUP_CONCAT(logouts.time SEPARATOR '<br>') AS logout_times
+                    $query = "SELECT users.id, users.username,  GROUP_CONCAT(DATE_FORMAT(logouts.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS logout_times
                         FROM users
                         LEFT JOIN logouts ON users.id = logouts.user_id
                         GROUP BY users.id, users.username
