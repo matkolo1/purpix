@@ -111,31 +111,6 @@ input[type="submit"]:hover {
     background-color: #fccf03;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    overflow-x: auto;
-}
-
-table th {
-    background-color: white;
-    color: black;
-    font-weight: bold;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 2px solid white;
-}
-
-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-table tr:last-child td {
-    border-bottom: 2px solid white;
-}
-
 @keyframes slideIn {
     from {
         transform: translateY(-100%);

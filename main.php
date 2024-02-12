@@ -6,6 +6,16 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 if (isset($_POST['logout'])) {
+    // Získání ID uživatele, který se odhlašuje
+    $userId = $_SESSION['user_id'];
+
+    // Uložení odhlášení do tabulky logouts
+    $insertLogout = $conn->prepare("INSERT INTO logouts (user_id) VALUES (?)");
+    $insertLogout->bind_param("i", $userId);
+    $insertLogout->execute();
+    $insertLogout->close();
+
+    // Zrušení relace a přesměrování na úvodní stránku
     session_unset();
     session_destroy();
     header("Location: ./index.php");
