@@ -90,34 +90,39 @@ $conn->close();
                     include './assets/php/config.php';
                     $currentUser = isset($_SESSION['username']) ? $_SESSION['username'] : '';
                     $sql = "SELECT id, username,
-                            COALESCE(SUM(CASE WHEN level_1 NOT IN (69, 96) THEN level_1 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_2 NOT IN (69, 96) THEN level_2 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_3 NOT IN (69, 96) THEN level_3 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_4 NOT IN (69, 96) THEN level_4 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_5 NOT IN (69, 96) THEN level_5 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_6 NOT IN (69, 96) THEN level_6 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0) +
-                            COALESCE(SUM(CASE WHEN level_10 NOT IN (69, 96) THEN level_10 ELSE 0 END), 0) AS total_score
-                        FROM users 
-                        GROUP BY id, username 
-                        ORDER BY total_score DESC";
+        COALESCE(SUM(CASE WHEN level_1 NOT IN (69, 96) THEN level_1 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_2 NOT IN (69, 96) THEN level_2 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_3 NOT IN (69, 96) THEN level_3 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_4 NOT IN (69, 96) THEN level_4 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_5 NOT IN (69, 96) THEN level_5 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_6 NOT IN (69, 96) THEN level_6 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0)  AS total_score
+    FROM users 
+    GROUP BY id, username 
+    ORDER BY total_score DESC";
                     $result = $conn->query($sql);
                     $medalCount = 0;
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $userId = $row['id'];
-                            $username = $row['username'];
-                            $currentScore = $row['total_score'];
-                            $highlight = ($username == $currentUser) ? 'highlight' : '';
-                            $medalCount++;
-                            $medal = getMedalIcon($medalCount);
-                            echo "<tr class='$highlight'><td>$medalCount $medal</td><td> $username</td><td>$currentScore</td></tr>";
+
+                    if ($result !== false) {
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $userId = $row['id'];
+                                $username = $row['username'];
+                                $currentScore = $row['total_score'];
+                                $highlight = ($username == $currentUser) ? 'highlight' : '';
+                                $medalCount++;
+                                $medal = getMedalIcon($medalCount);
+                                echo "<tr class='$highlight'><td>$medalCount $medal</td><td> $username</td><td>$currentScore</td></tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>Žádní uživatelé nenalezeni.</td></tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='3'>Žádní uživatelé nenalezeni.</td></tr>";
+                        echo "Chyba v dotazu: " . $conn->error;
                     }
+
                     echo '</table>';
                     $conn->close();
                     function getMedalIcon($position)
