@@ -139,7 +139,7 @@ function strt() {
 
 var interval = 0;
 var myInt;
-var points = 5;
+var points = 3;
 
 function draw(fire) {
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -562,7 +562,6 @@ function win() {
     var parts = url.split('/');
     var lastPart = parts[parts.length - 2];
     var levelId = parseInt(lastPart);
-    var points = 1;
     var url = '.././points.php?id=' + encodeURIComponent(levelId) + '&points=' + encodeURIComponent(points);
     $.ajax({
       type: 'GET',
