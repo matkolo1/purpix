@@ -66,22 +66,22 @@ var gameBox = {
   w: bg.w - siz(360)
 }
 
-var walls = {
+var walls = { // 52
   A: { x: bg.x + siz(1320), y: bg.y + siz(1440), w: siz(5 * 60), h: siz(60) },
   B: { x: bg.x + siz(1560), y: bg.y + siz(1260), w: siz(60), h: siz(60) },
-  C: { x: bg.x + siz(1260), y: bg.y + siz(1600), w: siz(59), h: siz(20) },
+  C: { x: bg.x + siz(1260), y: bg.y + siz(1600), w: siz(60), h: siz(20) },
   D: { x: bg.x + siz(1260), y: bg.y + siz(1480), w: siz(20), h: siz(140) },
-  E: { x: bg.x + siz(1300), y: bg.y + siz(1440), w: siz(19), h: siz(140) },
-  F: { x: bg.x + siz(1160), y: bg.y + siz(1480), w: siz(120), h: siz(19) },
-  G: { x: bg.x + siz(1179), y: bg.y + siz(1440), w: siz(120), h: siz(20) },
-  H: { x: bg.x + siz(1079), y: bg.y + siz(1440), w: siz(80), h: siz(60) },
+  E: { x: bg.x + siz(1300), y: bg.y + siz(1440), w: siz(20), h: siz(140) },
+  F: { x: bg.x + siz(1160), y: bg.y + siz(1480), w: siz(120), h: siz(20) },
+  G: { x: bg.x + siz(1180), y: bg.y + siz(1440), w: siz(120), h: siz(20) },
+  H: { x: bg.x + siz(1080), y: bg.y + siz(1440), w: siz(80), h: siz(60) },
   I: { x: bg.x + siz(1020), y: bg.y + siz(1440), w: siz(60), h: siz(180) },
   J: { x: bg.x + siz(900), y: bg.y + siz(1260), w: siz(9 * 60), h: siz(60) },
   K: { x: bg.x + siz(1260), y: bg.y + siz(1080), w: siz(60), h: siz(6 * 60) },
-  L: { x: bg.x + siz(599), y: bg.y + siz(1059), w: siz(12 * 60), h: siz(20) },
+  L: { x: bg.x + siz(600), y: bg.y + siz(1060), w: siz(12 * 60), h: siz(20) },
   M: { x: bg.x + siz(840), y: bg.y + siz(1080), w: siz(60), h: siz(9 * 60) },
   N: { x: bg.x + siz(600), y: bg.y + siz(1380), w: siz(120), h: siz(60) },
-  O: { x: bg.x + siz(580), y: bg.y + siz(1059), w: siz(19), h: siz(6 * 60 + 20) },
+  O: { x: bg.x + siz(580), y: bg.y + siz(1060), w: siz(20), h: siz(6 * 60 + 20) },
   P: { x: bg.x + siz(600), y: bg.y + siz(1020), w: siz(12 * 60), h: siz(20) },
   Q: { x: bg.x + siz(360), y: bg.y + siz(1600), w: siz(60), h: siz(20) },
   R: { x: bg.x + siz(360), y: bg.y + siz(1420), w: siz(20), h: siz(200) },
@@ -104,19 +104,26 @@ var walls = {
   AI: { x: bg.x + siz(1260), y: bg.y + siz(480), w: siz(120), h: siz(60) },
   AJ: { x: bg.x + siz(1260), y: bg.y + siz(660), w: siz(6 * 60), h: siz(60) },
   AK: { x: bg.x + siz(1200), y: bg.y + siz(180), w: siz(60), h: siz(180) },
-  AL: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AM: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AN: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AO: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AP: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AQ: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AR: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AS: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
-  AT: { x: bg.x + siz(0), y: bg.y + siz(0), w: siz(0), h: siz(0) },
+  AL: { x: bg.x + siz(1140), y: bg.y + siz(300), w: siz(60), h: siz(60) },
+  AM: { x: bg.x + siz(1200), y: bg.y + siz(480), w: siz(20), h: siz(6 * 60) },
+  AN: { x: bg.x + siz(900), y: bg.y + siz(300), w: siz(120), h: siz(60) },
+  AO: { x: bg.x + siz(840), y: bg.y + siz(180), w: siz(60), h: siz(140) },
+  AP: { x: bg.x + siz(900), y: bg.y + siz(480), w: siz(5 * 60), h: siz(60) },
+  AQ: { x: bg.x + siz(880), y: bg.y + siz(320), w: siz(20), h: siz(8 * 60) },
+  AR: { x: bg.x + siz(840), y: bg.y + siz(340), w: siz(20), h: siz(8 * 60) },
+  AS: { x: bg.x + siz(600), y: bg.y + siz(840), w: siz(60), h: siz(60) },
+  AT: { x: bg.x + siz(600), y: bg.y + siz(660), w: siz(240), h: siz(60) },
+  AU: { x: bg.x + siz(540), y: bg.y + siz(180), w: siz(60), h: siz(200) },
+  AV: { x: bg.x + siz(580), y: bg.y + siz(380), w: siz(20), h: siz(11 * 60) },
+  AW: { x: bg.x + siz(540), y: bg.y + siz(400), w: siz(20), h: siz(17 * 60 + 20) },
+  AX: { x: bg.x + siz(360), y: bg.y + siz(840), w: siz(180), h: siz(60) },
+  AY: { x: bg.x + siz(360), y: bg.y + siz(660), w: siz(60), h: siz(180) },
+  AZ: { x: bg.x + siz(180), y: bg.y + siz(660), w: siz(180), h: siz(60) },
+  BA: { x: bg.x + siz(180), y: bg.y + siz(420), w: siz(6*60), h: siz(60) },
   all: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
     'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC',
     'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP',
-    'AQ', 'AR', 'AS', 'AT']
+    'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ', 'BA']
 }
 
 var block = {
@@ -157,10 +164,10 @@ var start = {
 }
 
 var door = {
-  A: { state: true, x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
-  B: { state: true, x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
+  A: { state: true, x: bg.x + siz(239), y: bg.y + siz(840), w: siz(122), h: siz(60) },
+  B: { state: true, x: bg.x + siz(659), y: bg.y + siz(840), w: siz(122), h: siz(60) },
   C: { state: true, x: bg.x + siz(1439), y: bg.y + siz(1260), w: siz(122), h: siz(60) },
-  num: { A: { x: bg.x + siz(1260), y: bg.y + siz(720) }, B: { x: bg.x + siz(1260), y: bg.y + siz(720) }, C: { x: bg.x + siz(1425), y: bg.y + siz(1278) }, },
+  num: { A: { x: bg.x + siz(365), y: bg.y + siz(858) }, B: { x: bg.x + siz(645), y: bg.y + siz(858) }, C: { x: bg.x + siz(1425), y: bg.y + siz(1278) }, },
 }
 
 const codedoorImgW = new Image();
@@ -168,10 +175,10 @@ const codedoorImgH = new Image();
 codedoorImgW.src = './assets/CodedoorsW.jpg';
 codedoorImgH.src = './assets/CodedoorsH.jpg'
 var codedoor = {
-  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(0), y: bg.y + siz(0), w: siz(120), h: siz(60) },
+  A: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1019), y: bg.y + siz(300), w: siz(122), h: siz(60) },
   B: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(719), y: bg.y + siz(1380), w: siz(122), h: siz(60) },
   C: { state: true, near: false, code: Math.floor(Math.random() * 100000), x: bg.x + siz(1020), y: bg.y + siz(1319), w: siz(60), h: siz(122) },
-  num: { A: { x: bg.x + siz(225), y: bg.y + siz(1278) }, C: { x: bg.x + siz(1020), y: bg.y + siz(1318) }, B: { x: bg.x + siz(705), y: bg.y + siz(1398) }, },
+  num: { A: { x: bg.x + siz(1005), y: bg.y + siz(318) }, C: { x: bg.x + siz(1020), y: bg.y + siz(1318) }, B: { x: bg.x + siz(705), y: bg.y + siz(1398) }, },
 }
 
 var jumppad = {
