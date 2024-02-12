@@ -258,10 +258,6 @@ function draw() {
   c.fillText('3', door.num.C.x, door.num.C.y);
   c.fillText('3', codedoor.num.C.x, codedoor.num.C.y);
 
-  for (let z of walls.all) {
-    c.strokeRect(walls[z].x, walls[z].y, walls[z].w, walls[z].h);
-  }
-
   win()
 }
 
@@ -897,23 +893,3 @@ function preventKeyCombination(e) {
     e.preventDefault();
   }
 }
-
-// Posluchači klávesnice pro posunutí pozadí
-window.addEventListener("keydown", function (event) {
-  checkBlock()
-  switch (event.key) {
-    case "ArrowLeft":
-      if (!block.left) move(1);
-      break;
-    case "ArrowRight":
-      if (!block.right) move(2);
-      break;
-    case 'ArrowUp':
-      if (!block.up) move(3);
-      break;
-    case 'ArrowDown':
-      if (!block.down) move(4);
-      break;
-  }
-  draw();
-});
