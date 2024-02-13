@@ -21,7 +21,7 @@ body, html {
 }
 
 table {
-    background-color: #436db9;
+    background-color: #1C2833;
     width: 100%;
     padding: 10px;
     border: none;
@@ -43,15 +43,12 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #2d497d;
+    background-color: #27457b;
 }
 
 .highlight {
     background-color: #acd3f4;
-    color: #000000;
-}
-.lobby {
-    margin: 1px;
+    color: #1C2833;
 }
 
 #gameTitle,
@@ -67,7 +64,7 @@ tr:nth-child(even) {
     opacity: 0;
     animation: fadeIn 0.3s forwards 0.3s;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 4px 4px 8px #1C2833;
 }
 
 #loginForm,
@@ -77,7 +74,7 @@ tr:nth-child(even) {
     width: auto;
     height: auto;
     margin-bottom: 5px;
-    background-color: black;
+    background-color: #1C2833;
     color: white;
     padding: 10px;
     border-radius: 10px;
@@ -97,14 +94,14 @@ input[type="submit"] {
     padding: 8px;
     border: none;
     border-radius: 5px;
-    background-color: #1fa232;
+    background-color: #27457b;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 input[type="submit"]:hover {
-    background-color: #238731;
+    background-color: #27457b;
 }
 
 .level-button {
@@ -118,7 +115,7 @@ input[type="submit"]:hover {
 
 .level-button.disabled {
     background-color: #fff;
-    color: #000;
+    color: #1C2833;
     cursor: not-allowed;
 }
 
@@ -142,7 +139,7 @@ input[type="submit"]:hover {
 
 .level-button.active {
     background-color: #f4fc03;
-    color: black;
+    color: #1C2833;
 }
 
 .level-button.active:hover {
