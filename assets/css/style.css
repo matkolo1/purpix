@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: url('../images/index_bg.jpg') no-repeat center center fixed;
+    background: url('../images/background.jpg')no-repeat center center fixed;
     background-size: cover;
     font-family: sans-serif;
     display: flex;
@@ -9,11 +9,49 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: auto;
     animation: fadeIn 0.3s ease-in-out;
 }
 
-.lobby {
-    margin: 1px;
+#container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+table {
+    background-color: #436db9;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    margin: 5px;
+    border-radius: 10px;
+    max-height: 700px;
+    /* Přizpůsobte podle požadavků na počet viditelných řádků */
+    overflow-y: auto;
+    display: block;
+    /* Nutné pro použití max-height na celou tabulku */
+}
+
+th,
+td {
+    padding: 3px;
+    text-align: left;
+    color: #ffffff;
+}
+
+th {
+    background-color: #2d497d;
+}
+
+tr:nth-child(even) {
+    background-color: #2d497d;
+}
+
+.highlight {
+    background-color: #acd3f4;
+    color: #000000;
 }
 
 #gameTitle,
@@ -109,31 +147,6 @@ input[type="submit"]:hover {
 
 .level-button.active:hover {
     background-color: #fccf03;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    overflow-x: auto;
-}
-
-table th {
-    background-color: white;
-    color: black;
-    font-weight: bold;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 2px solid white;
-}
-
-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-table tr:last-child td {
-    border-bottom: 2px solid white;
 }
 
 @keyframes slideIn {

@@ -53,8 +53,7 @@ $conn->close();
     COALESCE(SUM(CASE WHEN level_6 NOT IN (69, 96) THEN level_6 ELSE 0 END), 0) +
     COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
     COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0) +
-    COALESCE(SUM(CASE WHEN level_10 NOT IN (69, 96) THEN level_10 ELSE 0 END), 0) AS total_score
+    COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0) AS total_score
 FROM users 
 GROUP BY id, username 
 ORDER BY total_score DESC";
