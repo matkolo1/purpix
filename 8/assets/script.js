@@ -170,6 +170,7 @@ function strt() {
 var interval = 0;
 var myInt;
 var points = 3;
+var moved = false
 
 function draw(fire) {
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -463,7 +464,10 @@ function CMD(text, comands) {
       case ('bot1'):
         if (work == 'size') {
           resize(num.slice(0, num.length - 1))
-        } else myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
+        } else if (!moved) {
+          myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
+          moved = true;
+        }
         break;
       case ('80085'):
         enableActions()
@@ -621,6 +625,7 @@ function timeout(work, num) {
     interval = 0
     myInt = null;
     b = null;
+    movef = false
   }
 }
 
