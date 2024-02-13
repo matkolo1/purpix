@@ -43,7 +43,7 @@ if ($urlNumber > 0) {
 	<link rel="stylesheet" href="./assets/style.css">
 	<link rel="icon" href="../assets/images/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="../assets/images/icon.png" type="image/x-icon">
-    <title>Alba-rosa.cz | PurPix | 5</title>
+    <title>Alba-rosa.cz | Purpix | 5</title>
 </head>
 
 <body>

@@ -36,10 +36,10 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/test.css">
     <link rel="icon" href="./assets/images/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./assets/images/icon.png" type="image/x-icon">
-    <title>Alba-rosa.cz | PurPix</title>
+    <title>Alba-rosa.cz | Purpix</title>
     <style>
     </style>
 </head>
@@ -68,13 +68,13 @@ $conn->close();
     ?>
     <div id="loginForm"
         style="position: fixed; bottom: 10px; left: 10px; width: 300px; height: auto; margin-bottom: 5px;">
-        <div class="lobby" style="width: 100%;"><b>Vítejte v PurPix! &#x2B50;</b><br> Tady máte šanci ovládat malého
+        <div class="lobby" style="width: 100%;"><b>Vítejte v Purpixu! &#x2B50;</b><br> Tady máte šanci ovládat malého
             červeného kamaráda, který má za úkol co nejrychleji dorazit do cíle. <br>Při Vaší cestě můžete navíc sbírat
             spoustu drobných pokladů - peníze! <br>Samozřejmě, aby to nebylo tak jednoduché, čekají Vás i různé
             překážky,
             takže pozor, ať Váš čtvereček nepřijde o cestu k vítězství! &#x1F3C6;&#x1F579;&#x1F680;<br></div>
     </div>
-    <div id="gameTitle">PurPix</div>
+    <div id="gameTitle">Purpix</div>
     <div id="loginForm">
         <div class="lobby"><b>Přihlášen jako</b>:
             <?php echo $userData['username']; ?><br>
@@ -108,7 +108,7 @@ $conn->close();
     </div>
 
     <div id="creditsForm"
-        style="background-color: black; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
+        style="background-color: #1C2833; color: white; padding: 10px; border-radius: 10px; text-align: left; opacity: 0; animation: slideIn 0.3s forwards 0.3s; margin-top: 5px;">
         <div class="lobby"><b>Na tvorbě hry spolupracovali:</b><br>Matěj Kořalka<br>Matěj Beránek<br>Jiří Boucník</div>
     </div>
 

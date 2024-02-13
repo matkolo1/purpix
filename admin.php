@@ -27,62 +27,22 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/test.css">
     <link rel="icon" href="./assets/images/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="./assets/images/icon.png" type="image/x-icon">
-    <title>Alba-rosa.cz | PurPix</title>
-    <style>
-        #contentContainer {
-            display: flex;
-            overflow-x: auto;
-        }
-
-        .tableContainer {
-            margin-right: 10px;
-            flex-shrink: 0;
-            max-width: 300px;
-            /* Maximální šířka jedné tabulky */
-        }
-
-        table {
-            color: #ffffff;
-            /* Šedé ohraničení tabulky */
-            width: 100%;
-            /* Šířka 100% */
-            background-color: #000000;
-            /* Černé pozadí tabulky */
-            border-collapse: collapse;
-            /* Odstranění mezery mezi buňkami */
-            max-height: 320px;
-            /* Maximální výška tabulky */
-            overflow-y: auto;
-            /* Přidání scrollování, pokud přesáhne maximální výšku */
-        }
-
-        th,
-        td,
-        tr {
-            /* Šedé ohraničení buněk */
-            padding: 8px;
-            text-align: left;
-        }
-
-        .highlight {
-            background-color: white;
-            color: black;
-        }
-    </style>
+    <title>Alba-rosa.cz | Purpix</title>
 </head>
 
 <body>
-    <div id="contentContainer">
-        <div class="tableContainer">
+    <div id="gameTitle">Purpix</div>
+    <div id="container">
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th></th>
                         <th>Název</th>
-                        <th>Přihlášení</th>
+                        <th>Skóre</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,7 +102,7 @@ $conn->close();
                 </tbody>
             </table>
         </div>
-        <div class="tableContainer">
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -167,14 +127,14 @@ $conn->close();
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='2'>Žádní admini přihlášení.</td></tr>";
+                        echo "<tr><td colspan='2'>Žádní uživatelé nenalezeni.</td></tr>";
                     }
                     $conn->close();
                     ?>
                 </tbody>
             </table>
         </div>
-        <div class="tableContainer">
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -199,7 +159,7 @@ $conn->close();
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='2'>Žádní admini odhlášení.</td></tr>";
+                        echo "<tr><td colspan='2'>Žádní uživatelé nenalezeni.</td></tr>";
                     }
                     $conn->close();
                     ?>

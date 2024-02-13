@@ -1,0 +1,46 @@
+body, html {
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+#container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+table {
+    background-color: #436db9;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    margin: 5px;
+    border-radius: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: block;
+}
+
+th, td {
+    padding: 3px;
+    text-align: left;
+    color: #ffffff;
+}
+
+th {
+    background-color: #2d497d;
+}
+
+tr:nth-child(even) {
+    background-color: #2d497d;
+}
+
+.highlight {
+    background-color: #acd3f4;
+    color: #000000;
+}
