@@ -76,7 +76,6 @@ $conn->close();
 
 <body>
     <div id="contentContainer">
-
         <div class="tableContainer">
             <table>
                 <thead>
