@@ -122,6 +122,7 @@ var teleporters = {
 
 var interval = 0;
 var myInt;
+var moved = false
 
 function draw() {
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -354,8 +355,11 @@ function CMD(text, comands) {
   if (comands) {
     switch (item) {
       case ('bot1'):
+      if (!moved) {
         myInt = setInterval(timeout, 500, work, num.slice(0, num.length - 1));
-        break;
+        moved = true;
+      }
+      break;
       case ('codedoor1'):
         if (codedoor.A.near && num.slice(0, num.length - 1) == codedoor.A.code) {
           switch (work) {
@@ -473,6 +477,7 @@ function timeout(work, num) {
     interval = 0
     myInt = null;
     b = null;
+    moved = false
   }
 }
 
