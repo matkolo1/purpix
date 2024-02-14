@@ -531,6 +531,7 @@ function timeout(work, num) {
 backgroundImage.onload = function () {
   draw();
   checkBlock();
+  draw();
 };
 
 function win() {

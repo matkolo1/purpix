@@ -495,6 +495,7 @@ function CMD(text, comands) {
         port()
         break;
     }
+    draw();
   }
 }
 
@@ -632,6 +633,7 @@ function timeout(work, num) {
 backgroundImage.onload = function () {
   draw();
   checkBlock();
+  draw();
 };
 
 function win() {
