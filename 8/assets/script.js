@@ -626,7 +626,7 @@ function timeout(work, num) {
     interval = 0
     myInt = null;
     b = null;
-    movef = false
+    moved = false
   }
 }
 
