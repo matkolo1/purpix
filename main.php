@@ -1,17 +1,17 @@
 <?php
 include './assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['idusers'])) {
     header("Location: ./index.php");
     exit();
 }
 if (isset($_POST['logout'])) {
     // Získání ID uživatele, který se odhlašuje
-    $userId = $_SESSION['user_id'];
+    $idusers = $_SESSION['idusers'];
 
     // Uložení odhlášení do tabulky logouts
-    $insertLogout = $conn->prepare("INSERT INTO logouts (user_id) VALUES (?)");
-    $insertLogout->bind_param("i", $userId);
+    $insertLogout = $conn->prepare("INSERT INTO logouts_alba_rosa_purpix (idusers) VALUES (?)");
+    $insertLogout->bind_param("i", $idusers);
     $insertLogout->execute();
     $insertLogout->close();
 
@@ -21,9 +21,9 @@ if (isset($_POST['logout'])) {
     header("Location: ./index.php");
     exit();
 }
-$userId = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT username FROM users WHERE id = ?");
-$stmt->bind_param("i", $userId);
+$idusers = $_SESSION['idusers'];
+$stmt = $conn->prepare("SELECT username FROM users_alba_rosa WHERE idusers = ?");
+$stmt->bind_param("i", $idusers);
 $stmt->execute();
 $stmt->bind_result($username);
 $stmt->fetch();
@@ -49,10 +49,10 @@ $conn->close();
     include './assets/php/config.php';
 
     // Získání dat o uživateli
-    $userId = $_SESSION['user_id'];
-    $sqlUser = "SELECT * FROM users WHERE id = ?";
+    $idusers = $_SESSION['idusers'];
+    $sqlUser = "SELECT * FROM users_alba_rosa WHERE idusers = ?";
     $stmtUser = $conn->prepare($sqlUser);
-    $stmtUser->bind_param("i", $userId);
+    $stmtUser->bind_param("i", $idusers);
     $stmtUser->execute();
     $resultUser = $stmtUser->get_result();
     $userData = $resultUser->fetch_assoc();

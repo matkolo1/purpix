@@ -2,40 +2,56 @@
 include './assets/php/config.php';
 session_start();
 
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['idusers'])) {
+    // Uložení přihlášení do tabulky logouts
+    $idusers = $_SESSION['idusers'];
+    $insertLogout = $conn->prepare("INSERT INTO logins_alba_rosa_purpix (idusers) VALUES (?)");
+    $insertLogout->bind_param("i", $idusers);
+    $insertLogout->execute();
+    $insertLogout->close();
     header("Location: ./main.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $enteredUsername = $_POST["username"];
-    $enteredPassword = $_POST["password"];
+    $enteredEmail = $_POST["email"];
+    $enteredPassword = $_POST["password"]; // Získání zadaného hesla z formuláře
 
-    $stmt = $conn->prepare("SELECT id, username FROM users WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
+    // Získání uživatele z databáze podle zadaného emailu
+    $stmt = $conn->prepare("SELECT idusers, username, password FROM users_alba_rosa WHERE email = ?");
+    $stmt->bind_param("s", $enteredEmail);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($userId, $username);
+        $stmt->bind_result($userId, $username, $dbPassword); // Změněný název proměnné pro uložení hesla z databáze
         $stmt->fetch();
 
-        // Uložení přihlášení do tabulky logins
-        $insertLogin = $conn->prepare("INSERT INTO logins (user_id) VALUES (?)");
-        $insertLogin->bind_param("i", $userId);
-        $insertLogin->execute();
-        $insertLogin->close();
-
-        $_SESSION['user_id'] = $userId;
-        $_SESSION['username'] = $username;
-        header("Location: ./main.php");
-        exit();
+        // Ověření hesla pomocí password_verify
+        if (password_verify($enteredPassword, $dbPassword)) {
+            // Heslo je správné, provede se přihlášení
+            $_SESSION['idusers'] = $userId;
+            $_SESSION['username'] = $username;
+            // Uložení přihlášení do tabulky logouts
+            $idusers = $_SESSION['idusers'];
+            $insertLogout = $conn->prepare("INSERT INTO logins_alba_rosa_purpix (idusers) VALUES (?)");
+            $insertLogout->bind_param("i", $idusers);
+            $insertLogout->execute();
+            $insertLogout->close();
+            header("Location: ./main.php");
+            exit();
+        } else {
+            // Heslo není správné
+            $loginError = "Nesprávné přihlašovací údaje!";
+        }
     } else {
-        $loginError = "Nesprávné přihlašovací údaje!";
+        // Uživatel s daným emailem neexistuje
+        $loginError = "Uživatel nenalezen!";
     }
 
     $stmt->close();
 }
+
 
 $conn->close();
 ?>
@@ -61,7 +77,7 @@ $conn->close();
         }
         ?>
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input type="text" name="username" required placeholder="Uživatelské jméno">
+            <input type="email" name="email" required placeholder="Email">
             <br>
             <input type="password" name="password" required placeholder="Heslo">
             <br>

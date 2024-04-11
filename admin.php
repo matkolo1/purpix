@@ -1,7 +1,7 @@
 <?php
 include './assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['idusers'])) {
     header("Location: ./index.php");
     exit();
 }
@@ -11,8 +11,8 @@ if (isset($_POST['logout'])) {
     header("Location: ./index.php");
     exit();
 }
-$userId = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT username FROM users WHERE id = ?");
+$userId = $_SESSION['idusers'];
+$stmt = $conn->prepare("SELECT username FROM users_alba_rosa WHERE id = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $stmt->bind_result($username);
@@ -59,7 +59,7 @@ $conn->close();
         COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
         COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
         COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0)  AS total_score
-    FROM users 
+    FROM users_alba_rosa 
     GROUP BY id, username 
     ORDER BY total_score DESC";
                     $result = $conn->query($sql);
@@ -114,7 +114,7 @@ $conn->close();
                     <?php
                     include './assets/php/config.php';
                     $query = "SELECT users.id, users.username, GROUP_CONCAT(DATE_FORMAT(logins.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS login_times
-                    FROM users
+                    FROM users_alba_rosa
                     LEFT JOIN logins ON users.id = logins.user_id
                     GROUP BY users.id, users.username
                     ORDER BY MAX(logins.time) DESC";
@@ -146,7 +146,7 @@ $conn->close();
                     <?php
                     include './assets/php/config.php';
                     $query = "SELECT users.id, users.username,  GROUP_CONCAT(DATE_FORMAT(logouts.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS logout_times
-                        FROM users
+                        FROM users_alba_rosa
                         LEFT JOIN logouts ON users.id = logouts.user_id
                         GROUP BY users.id, users.username
                         ORDER BY MAX(logouts.time) DESC";

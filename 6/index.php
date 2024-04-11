@@ -1,7 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['idusers'])) {
 	header("Location: ./index.php");
 	exit();
 }
@@ -12,14 +12,14 @@ if (isset($_POST['logout'])) {
 	exit();
 }
 
-$userId = $_SESSION['user_id'];
+$userId = $_SESSION['idusers'];
 
 // Získání čísla z URL
 $urlNumber = isset($_SERVER['REQUEST_URI']) ? intval(preg_replace('/[^0-9]/', '', $_SERVER['REQUEST_URI'])) : 0;
 
 // Kontrola hodnoty ve sloupci level_XXX
 if ($urlNumber > 0) {
-	$stmt = $conn->prepare("SELECT level_$urlNumber FROM users WHERE id = ?");
+	$stmt = $conn->prepare("SELECT level_$urlNumber FROM users_alba_rosa WHERE idusers = ?");
 	$stmt->bind_param("i", $userId);
 	$stmt->execute();
 	$stmt->bind_result($userLevel);

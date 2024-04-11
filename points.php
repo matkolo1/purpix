@@ -1,24 +1,24 @@
 <?php
 session_start();
 include './assets/php/config.php';
-function getUserId()
+function getidusers()
 {
-    return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    return isset($_SESSION['idusers']) ? $_SESSION['idusers'] : null;
 }
-function updateLevel($userId, $levelNumber, $points)
+function updateLevel($idusers, $levelNumber, $points)
 {
     global $conn;
     $columnName = "level_" . $levelNumber;
     $nextLevel = $levelNumber + 1;
     $nextColumnName = "level_" . $nextLevel;
     if ($columnName === "level_9") {
-        $sql = "UPDATE users SET $columnName = ? WHERE id = ?";
+        $sql = "UPDATE users_alba_rosa SET $columnName = ? WHERE id = ?";
     } else {
-        $sql = "UPDATE users SET $columnName = ?, $nextColumnName = CASE WHEN $nextColumnName = 69 THEN 96 ELSE $nextColumnName END WHERE id = ?";
+        $sql = "UPDATE users_alba_rosa SET $columnName = ?, $nextColumnName = CASE WHEN $nextColumnName = 69 THEN 96 ELSE $nextColumnName END WHERE id = ?";
     }
     $points = (int) $points;
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $points, $userId);
+    $stmt->bind_param("ii", $points, $idusers);
     if ($stmt->execute()) {
         echo "\033[32mRecord updated successfully.\033[0m\n";
         if ($columnName === "level_9") {
@@ -32,9 +32,9 @@ function updateLevel($userId, $levelNumber, $points)
 if (isset($_GET['id'], $_GET['points'])) {
     $levelNumber = $_GET['id'];
     $points = $_GET['points'];
-    $userId = getUserId();
-    if ($userId) {
-        updateLevel($userId, $levelNumber, $points);
+    $idusers = getidusers();
+    if ($idusers) {
+        updateLevel($idusers, $levelNumber, $points);
         exit();
     } else {
         echo "\033[31mThe user is not logged in.\033[0m\n";
