@@ -1,6 +1,6 @@
 # Alba-rosa.cz | Purpix
 
-## Popis
+#Popis
 
 Vítejte v přihlašovacím systému Alba-rosa.cz pro hru Purpix. Tento skript zajišťuje ověření uživatelů a jejich přesměrování na hlavní stránku hry po úspěšném přihlášení.
 
