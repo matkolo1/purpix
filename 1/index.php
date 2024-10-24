@@ -17,9 +17,9 @@ $userId = $_SESSION['idusers'];
 // Získání čísla z URL
 $urlNumber = isset($_SERVER['REQUEST_URI']) ? intval(preg_replace('/[^0-9]/', '', $_SERVER['REQUEST_URI'])) : 0;
 
-// Kontrola hodnoty ve sloupci level_XXX
+// Kontrola hodnoty ve sloupci purpix_purpix_level_XXX
 if ($urlNumber > 0) {
-	$stmt = $conn->prepare("SELECT level_$urlNumber FROM users_alba_rosa WHERE idusers = ?");
+	$stmt = $conn->prepare("SELECT purpix_purpix_level_$urlNumber FROM users_alba_rosa WHERE idusers = ?");
 	$stmt->bind_param("i", $userId);
 	$stmt->execute();
 	$stmt->bind_result($userLevel);
