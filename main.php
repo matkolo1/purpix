@@ -86,7 +86,7 @@ $conn->close();
             <?php
             foreach ($userData as $columnName => $columnValue) {
                 if (strpos($columnName, 'purpix_level_') === 0) {
-                    $levelNumber = substr($columnName, 6);
+                    $levelNumber = substr($columnName, 13);
                     $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
                     if ($columnValue == 69) {
                         echo "<button class='level-button disabled' disabled>$levelName</button>";
