@@ -8,10 +8,10 @@ function getidusers()
 function updateLevel($idusers, $levelNumber, $points)
 {
     global $conn;
-    $columnName = "level_" . $levelNumber;
+    $columnName = "purpix_level_" . $levelNumber;
     $nextLevel = $levelNumber + 1;
-    $nextColumnName = "level_" . $nextLevel;
-    if ($columnName === "level_9") {
+    $nextColumnName = "purpix_level_" . $nextLevel;
+    if ($columnName === "purpix_level_9") {
         $sql = "UPDATE users_alba_rosa SET $columnName = ? WHERE id = ?";
     } else {
         $sql = "UPDATE users_alba_rosa SET $columnName = ?, $nextColumnName = CASE WHEN $nextColumnName = 69 THEN 96 ELSE $nextColumnName END WHERE id = ?";
@@ -21,8 +21,8 @@ function updateLevel($idusers, $levelNumber, $points)
     $stmt->bind_param("ii", $points, $idusers);
     if ($stmt->execute()) {
         echo "\033[32mRecord updated successfully.\033[0m\n";
-        if ($columnName === "level_9") {
-            echo "\033[32mSpecial action for 'level_9'.\033[0m\n";
+        if ($columnName === "purpix_level_9") {
+            echo "\033[32mSpecial action for 'purpix_level_9'.\033[0m\n";
         }
     } else {
         echo "\033[31mError updating record: \033[0m\n" . $stmt->error;

@@ -50,15 +50,15 @@ $conn->close();
                     include './assets/php/config.php';
                     $currentUser = isset($_SESSION['username']) ? $_SESSION['username'] : '';
                     $sql = "SELECT id, username,
-        COALESCE(SUM(CASE WHEN level_1 NOT IN (69, 96) THEN level_1 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_2 NOT IN (69, 96) THEN level_2 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_3 NOT IN (69, 96) THEN level_3 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_4 NOT IN (69, 96) THEN level_4 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_5 NOT IN (69, 96) THEN level_5 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_6 NOT IN (69, 96) THEN level_6 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_7 NOT IN (69, 96) THEN level_7 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_8 NOT IN (69, 96) THEN level_8 ELSE 0 END), 0) +
-        COALESCE(SUM(CASE WHEN level_9 NOT IN (69, 96) THEN level_9 ELSE 0 END), 0)  AS total_score
+        COALESCE(SUM(CASE WHEN purpix_level_1 NOT IN (69, 96) THEN purpix_level_1 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_2 NOT IN (69, 96) THEN purpix_level_2 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_3 NOT IN (69, 96) THEN purpix_level_3 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_4 NOT IN (69, 96) THEN purpix_level_4 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_5 NOT IN (69, 96) THEN purpix_level_5 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_6 NOT IN (69, 96) THEN purpix_level_6 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_7 NOT IN (69, 96) THEN purpix_level_7 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_8 NOT IN (69, 96) THEN purpix_level_8 ELSE 0 END), 0) +
+        COALESCE(SUM(CASE WHEN purpix_level_9 NOT IN (69, 96) THEN purpix_level_9 ELSE 0 END), 0)  AS total_score
     FROM users_alba_rosa 
     GROUP BY id, username 
     ORDER BY total_score DESC";
