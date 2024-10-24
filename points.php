@@ -12,9 +12,9 @@ function updateLevel($idusers, $levelNumber, $points)
     $nextLevel = $levelNumber + 1;
     $nextColumnName = "purpix_level_" . $nextLevel;
     if ($columnName === "purpix_level_9") {
-        $sql = "UPDATE users_alba_rosa SET $columnName = ? WHERE id = ?";
+        $sql = "UPDATE users_alba_rosa SET $columnName = ? WHERE idusers = ?";
     } else {
-        $sql = "UPDATE users_alba_rosa SET $columnName = ?, $nextColumnName = CASE WHEN $nextColumnName = 69 THEN 96 ELSE $nextColumnName END WHERE id = ?";
+        $sql = "UPDATE users_alba_rosa SET $columnName = ?, $nextColumnName = CASE WHEN $nextColumnName = 69 THEN 96 ELSE $nextColumnName END WHERE idusers = ?";
     }
     $points = (int) $points;
     $stmt = $conn->prepare($sql);

@@ -61,7 +61,7 @@ $conn->close();
     // Získání aktuálního skóre
     $currentScore = 0;
     foreach ($userData as $columnName => $columnValue) {
-        if (strpos($columnName, 'purpix_level_') === 0 && $columnValue != 69 && $columnValue != 96) {
+        if (strpos($columnName, 'level_') === 0 && $columnValue != 69 && $columnValue != 96) {
             $currentScore += $columnValue;
         }
     }
@@ -85,7 +85,7 @@ $conn->close();
         <div class="lobby"> <b> Úrovně: </b>
             <?php
             foreach ($userData as $columnName => $columnValue) {
-                if (strpos($columnName, 'purpix_level_') === 0) {
+                if (strpos($columnName, 'level_') === 0) {
                     $levelNumber = substr($columnName, 6);
                     $levelName = ucfirst(str_replace('_', ' ', $levelNumber));
                     if ($columnValue == 69) {
