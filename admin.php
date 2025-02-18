@@ -12,7 +12,7 @@ if (isset($_POST['logout'])) {
     exit();
 }
 $userId = $_SESSION['idusers'];
-$stmt = $conn->prepare("SELECT username FROM users_alba_rosa WHERE id = ?");
+$stmt = $conn->prepare("SELECT username FROM users_alba_rosa WHERE idusers = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $stmt->bind_result($username);
@@ -68,7 +68,7 @@ $conn->close();
                     if ($result !== false) {
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                $userId = $row['id'];
+                                $userId = $row['idusers'];
                                 $username = $row['username'];
                                 $currentScore = $row['total_score'];
                                 $highlight = ($username == $currentUser) ? 'highlight' : '';
@@ -113,11 +113,13 @@ $conn->close();
                 <tbody>
                     <?php
                     include './assets/php/config.php';
-                    $query = "SELECT users.idusers, users.username, GROUP_CONCAT(DATE_FORMAT(logins.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS login_times
-                    FROM users_alba_rosa
-                    LEFT JOIN logins ON users.idusers = logins.idusers
-                    GROUP BY users.idusers, users.username
-                    ORDER BY MAX(logins.time) DESC";
+                    $query = "SELECT users_alba_rosa.idusers, users_alba_rosa.username, 
+                    GROUP_CONCAT(DATE_FORMAT(logins_alba_rosa_purpix.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS login_times
+              FROM users_alba_rosa
+              LEFT JOIN logins_alba_rosa_purpix ON users_alba_rosa.idusers = logins_alba_rosa_purpix.idusers
+              GROUP BY users_alba_rosa.idusers, users_alba_rosa.username
+              ORDER BY MAX(logins_alba_rosa_purpix.time) DESC";
+
                     $result = $conn->query($query);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
@@ -145,11 +147,12 @@ $conn->close();
                 <tbody>
                     <?php
                     include './assets/php/config.php';
-                    $query = "SELECT users.id, users.username,  GROUP_CONCAT(DATE_FORMAT(logouts.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS logout_times
-                        FROM users_alba_rosa
-                        LEFT JOIN logouts ON users.id = logouts.user_id
-                        GROUP BY users.id, users.username
-                        ORDER BY MAX(logouts.time) DESC";
+                    $query = "SELECT users_alba_rosa.idusers, users_alba_rosa.username, 
+                  GROUP_CONCAT(DATE_FORMAT(logouts_alba_rosa_purpix.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS logout_times
+            FROM users_alba_rosa
+            LEFT JOIN logouts_alba_rosa_purpix ON users_alba_rosa.idusers = logouts_alba_rosa_purpix.idusers
+            GROUP BY users_alba_rosa.idusers, users_alba_rosa.username
+            ORDER BY MAX(logouts_alba_rosa_purpix.time) DESC";
                     $result = $conn->query($query);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
