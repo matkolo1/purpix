@@ -49,7 +49,7 @@ $conn->close();
                     <?php
                     include './assets/php/config.php';
                     $currentUser = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-                    $sql = "SELECT id, username,
+                    $sql = "SELECT idusers, username,
         COALESCE(SUM(CASE WHEN purpix_level_1 NOT IN (69, 96) THEN purpix_level_1 ELSE 0 END), 0) +
         COALESCE(SUM(CASE WHEN purpix_level_2 NOT IN (69, 96) THEN purpix_level_2 ELSE 0 END), 0) +
         COALESCE(SUM(CASE WHEN purpix_level_3 NOT IN (69, 96) THEN purpix_level_3 ELSE 0 END), 0) +
@@ -60,7 +60,7 @@ $conn->close();
         COALESCE(SUM(CASE WHEN purpix_level_8 NOT IN (69, 96) THEN purpix_level_8 ELSE 0 END), 0) +
         COALESCE(SUM(CASE WHEN purpix_level_9 NOT IN (69, 96) THEN purpix_level_9 ELSE 0 END), 0)  AS total_score
     FROM users_alba_rosa 
-    GROUP BY id, username 
+    GROUP BY idusers, username 
     ORDER BY total_score DESC";
                     $result = $conn->query($sql);
                     $medalCount = 0;
@@ -113,10 +113,10 @@ $conn->close();
                 <tbody>
                     <?php
                     include './assets/php/config.php';
-                    $query = "SELECT users.id, users.username, GROUP_CONCAT(DATE_FORMAT(logins.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS login_times
+                    $query = "SELECT users.idusers, users.username, GROUP_CONCAT(DATE_FORMAT(logins.time, '%d.%m.%Y %H:%i:%s') SEPARATOR '<br>') AS login_times
                     FROM users_alba_rosa
-                    LEFT JOIN logins ON users.id = logins.user_id
-                    GROUP BY users.id, users.username
+                    LEFT JOIN logins ON users.idusers = logins.idusers
+                    GROUP BY users.idusers, users.username
                     ORDER BY MAX(logins.time) DESC";
                     $result = $conn->query($query);
                     if ($result->num_rows > 0) {

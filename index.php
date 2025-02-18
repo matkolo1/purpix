@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Uživatel s daným emailem neexistuje
-        $loginError = "Uživatel nenalezen! <br>Zaregistrujte se <a href='http://localhost/alba-rosa.cz/' target='_blank' style='color: #ff0000;'>ZDE</a> a poté se sem vraťte zpět. <br>Kartu nezavírejte!";
+        $loginError = "Uživatel nenalezen! <br>Zaregistrujte se <a href='http://alba-rosa.cz/' target='_blank' style='color: #ff0000;'>ZDE</a> a poté se sem vraťte zpět. <br>Kartu nezavírejte!";
     }
 
     $stmt->close();
